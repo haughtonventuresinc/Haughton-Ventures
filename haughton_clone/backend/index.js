@@ -9,7 +9,7 @@ const app = express();
 const PORT = 3001;
 
 app.use(cors({
-  origin: 'https://www.haughtonventures.com/',
+  origin: 'https://www.haughtonventures.com',
   credentials: true
 }));
 
