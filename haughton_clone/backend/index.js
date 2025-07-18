@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
@@ -7,6 +8,8 @@ const multer = require('multer');
 
 const app = express();
 const PORT = 3001;
+// --- LOGIN ENDPOINT ---
+const jwt = require('jsonwebtoken');
 
 app.use(cors());
 
@@ -93,6 +96,24 @@ app.post('/api/delete-insight', (req, res) => {
         fs.writeFileSync(metaPath, JSON.stringify(newData, null, 2), 'utf8');
         res.json({ success: true });
     });
+});
+
+
+
+app.post('/api/login', (req, res) => {
+    const { username, password } = req.body;
+    const envUser = process.env.DASHBOARD_USER;
+    const envPass = process.env.DASHBOARD_PASS;
+    const secret = process.env.SESSION_SECRET || 'keyboardcat';
+    if (!username || !password) {
+        return res.status(400).json({ error: 'Missing username or password' });
+    }
+    if (username === envUser && password === envPass) {
+        const token = jwt.sign({ username }, secret, { expiresIn: '2h' });
+        return res.json({ success: true, token });
+    } else {
+        return res.status(401).json({ error: 'Invalid credentials' });
+    }
 });
 
 app.listen(PORT, () => {

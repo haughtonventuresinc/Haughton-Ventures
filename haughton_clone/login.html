@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Insights Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-100 to-green-100 min-h-screen flex items-center justify-center">
+  <div class="bg-white shadow-xl rounded-2xl p-8 max-w-md w-full">
+    <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">Login to Dashboard</h2>
+    <form id="loginForm" class="flex flex-col gap-4">
+      <input type="text" id="username" placeholder="Username" required class="rounded-lg border border-gray-300 px-4 py-3 focus:ring-2 focus:ring-blue-400 focus:outline-none text-gray-800 bg-white/90 shadow-sm transition">
+      <div class="relative">
+  <input type="password" id="password" placeholder="Password" required class="rounded-lg border border-gray-300 px-4 py-3 pr-12 focus:ring-2 focus:ring-blue-400 focus:outline-none text-gray-800 bg-white/90 shadow-sm transition w-full">
+  <button type="button" id="togglePassword" tabindex="-1" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-700 focus:outline-none">
+    <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+    </svg>
+  </button>
+</div>
+      <button type="submit" class="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-bold py-3 rounded-xl shadow-lg transition text-lg">Login</button>
+      <div id="loginError" class="text-red-500 text-center mt-2 hidden"></div>
+    </form>
+  </div>
+  <script>
+    const BASE_URL = 'http://localhost:3001';
+    //const BASE_URL = 'https://haughton-ventures-production.up.railway.app';
+
+    document.getElementById('loginForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const resp = await fetch(`${BASE_URL}/api/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
+
+
+      const data = await resp.json();
+      if (data.success && data.token) {
+        localStorage.setItem('dashboard_token', data.token);
+        window.location.href = 'dashboard.html';
+      } else {
+        document.getElementById('loginError').textContent = data.error || 'Login failed';
+        document.getElementById('loginError').classList.remove('hidden');
+      }
+    });
+  </script>
+<script>
+// Password visibility toggle
+const passwordInput = document.getElementById('password');
+const togglePassword = document.getElementById('togglePassword');
+const eyeIcon = document.getElementById('eyeIcon');
+let passwordVisible = false;
+togglePassword.addEventListener('click', function () {
+  passwordVisible = !passwordVisible;
+  passwordInput.type = passwordVisible ? 'text' : 'password';
+  // Toggle SVG icon
+  if (passwordVisible) {
+    eyeIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7a10.056 10.056 0 012.293-3.95m3.249-2.568A9.956 9.956 0 0112 5c4.478 0 8.268 2.943 9.542 7a9.956 9.956 0 01-4.293 5.032M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3l18 18" />`;
+  } else {
+    eyeIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />\n<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268-2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />`;
+  }
+});
+</script>
+</body>
+</html>
