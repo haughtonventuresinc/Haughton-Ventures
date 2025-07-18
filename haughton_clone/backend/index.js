@@ -48,6 +48,7 @@ const INSIGHTS_DIR = path.join(__dirname, '..', 'insights');
 
 // Save (overwrite) an insight HTML file
 app.post('/api/save-insight', (req, res) => {
+    console.log('[SAVE] Saving insight:', req.body);
     const { id, content } = req.body;
     if (!id || !content) {
         return res.status(400).json({ error: 'Missing id or content' });
@@ -55,6 +56,7 @@ app.post('/api/save-insight', (req, res) => {
     const filePath = path.join(INSIGHTS_DIR, `${id}.html`);
     fs.writeFile(filePath, content, 'utf8', err => {
         if (err) {
+            console.error('[SAVE] Failed to save file:', err);
             return res.status(500).json({ error: 'Failed to save file', details: err.message });
         }
         res.json({ success: true });
