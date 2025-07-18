@@ -64,6 +64,18 @@ app.post('/api/save-insight', (req, res) => {
     });
 });
 
+
+app.get('/api/insights-data', (req, res) => {
+    const metaPath = path.join(__dirname, 'insights-data.json');
+    if (!fs.existsSync(metaPath)) return res.json([]);
+    try {
+        const data = JSON.parse(fs.readFileSync(metaPath, 'utf8'));
+        res.json(data);
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to read insights data', details: err.message });
+    }
+});
+
 // Save or update insight metadata
 app.post('/api/save-insight-meta', (req, res) => {
     const { id, title, category, date, excerpt, image, link } = req.body;
@@ -82,21 +94,37 @@ app.post('/api/save-insight-meta', (req, res) => {
 // Delete an insight HTML file and remove its metadata
 app.post('/api/delete-insight', (req, res) => {
     const { id } = req.body;
+    console.log('[DELETE] Request to delete id:', id);
     if (!id) return res.status(400).json({ error: 'Missing id' });
+
     const filePath = path.join(INSIGHTS_DIR, `${id}.html`);
-    // Remove HTML file
+    const metaPath = path.join(__dirname, 'insights-data.json');
+
     fs.unlink(filePath, err => {
         if (err && err.code !== 'ENOENT') {
+            console.error('[DELETE] Failed to delete HTML file:', err);
             return res.status(500).json({ error: 'Failed to delete HTML file', details: err.message });
         }
-        // Remove from insights-data.json
-        const metaPath = path.join(__dirname, '..', 'insights-data.json');
         let data = [];
         if (fs.existsSync(metaPath)) {
-            data = JSON.parse(fs.readFileSync(metaPath, 'utf8'));
+            try {
+                const raw = fs.readFileSync(metaPath, 'utf8');
+                data = JSON.parse(raw);
+                console.log('[DELETE] Loaded data:', data);
+            } catch (readErr) {
+                console.error('[DELETE] Failed to read insights-data.json:', readErr);
+                return res.status(500).json({ error: 'Failed to read insights-data.json', details: readErr.message });
+            }
         }
         const newData = data.filter(item => item.id !== id);
-        fs.writeFileSync(metaPath, JSON.stringify(newData, null, 2), 'utf8');
+        console.log('[DELETE] New data after filter:', newData);
+        try {
+            fs.writeFileSync(metaPath, JSON.stringify(newData, null, 2), 'utf8');
+            console.log('[DELETE] Successfully wrote new data');
+        } catch (writeErr) {
+            console.error('[DELETE] Failed to write insights-data.json:', writeErr);
+            return res.status(500).json({ error: 'Failed to update insights-data.json', details: writeErr.message });
+        }
         res.json({ success: true });
     });
 });

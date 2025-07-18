@@ -1,0 +1,38 @@
+[
+  {
+    "id": "hv-invests-in-rentberry",
+    "title": "HV Invests in Rentberry to Redefine the Rental Experience",
+    "category": "Team Update",
+    "date": "2023-02-15",
+    "excerpt": "Hic aut et eligendi fugit dolores omnis. Soluta consectetur quo velit dicta quos. Laudantium perspiciatis architecto sed et.",
+    "image": "../cdn.prod.website-files.com/687563dc787e44a7f4a50afc/6876879d53ca79538f2f0caf_Rentberry-Blockchain-Rental-Platform.jpg",
+    "link": "insights/hv-invests-in-rentberry.html"
+  },
+  {
+    "id": "haughton-ventures-backs-superphone",
+    "title": "Haughton Ventures Backs SuperPhone® to Power the Future of Direct-to-Consumer Messaging",
+    "category": "Case Study",
+    "date": "2023-02-15",
+    "excerpt": "SuperPhone® is a revolutionary messaging platform created by Grammy-nominated artist and entrepreneur Ryan Leslie. Originally developed as a tool to engage his fanbase directly, it evolved into a powerful SaaS solution helping creators, brands, and enterprises monetize relationships through personalized SMS and voice communication.",
+    "image": "../cdn.prod.website-files.com/687563dc787e44a7f4a50afc/68768583a3cde4944d9925a1_61532be71b39c948d8dd6068_Website_OpenGraph_FINAL.png",
+    "link": "insights/haughton-ventures-backs-superphone.html"
+  },
+  {
+    "id": "powering-next-gen-content",
+    "title": "Powering Next-Gen Content: Haughton Ventures Invests in ArtSky",
+    "category": "Team Update",
+    "date": "2023-02-15",
+    "excerpt": "ArtSky is a full-service media and entertainment company specializing in content creation that captivates audiences and defines culture. With a focus on storytelling and innovation, ArtSky bridges the gap between traditional media and the digital landscape.",
+    "image": "../cdn.prod.website-files.com/687563dc787e44a7f4a50afc/68768d1ad1d644b9fad94871_artsky-LOGO.png",
+    "link": "insights/powering-next-gen-content.html"
+  },
+  {
+    "id": "sustainable-living-reinvented",
+    "title": "Sustainable Living Reinvented: Backing Azure Printed Homies",
+    "category": "Collaboration",
+    "date": "2025-07-17",
+    "excerpt": "Azure Printed Homes is redefining residential construction through innovative 3D printing technology. By utilizing recycled plastics and advanced fabrication techniques, Azure builds sustainable backyard studios, ADUs, and homes that are both affordable and eco-friendly.",
+    "image": "../cdn.prod.website-files.com/687563dc787e44a7f4a50afc/687688050e1b0aff898b652c_Azure-Printed-Homes_logo.png",
+    "link": "insights/sustainable-living-reinvented.html"
+  }
+]
