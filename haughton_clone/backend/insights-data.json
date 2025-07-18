@@ -34,5 +34,14 @@
     "excerpt": "Azure Printed Homes is redefining residential construction through innovative 3D printing technology. By utilizing recycled plastics and advanced fabrication techniques, Azure builds sustainable backyard studios, ADUs, and homes that are both affordable and eco-friendly.",
     "image": "../cdn.prod.website-files.com/687563dc787e44a7f4a50afc/687688050e1b0aff898b652c_Azure-Printed-Homes_logo.png",
     "link": "insights/sustainable-living-reinvented.html"
+  },
+  {
+    "id": "test-1752851630686",
+    "title": "test",
+    "category": "test",
+    "date": "2025-07-18",
+    "excerpt": "ArtSky is a full-service media and entertainment company specializing in content creation that captivates audiences and defines culture. With a focus on storytelling and innovation, ArtSky bridges the gap between traditional media and the digital landscape.",
+    "image": "http://localhost:3001/uploads/pexels-pixabay-104827 (1)-1752851630676.jpg",
+    "link": "insights/test-1752851630686.html"
   }
 ]

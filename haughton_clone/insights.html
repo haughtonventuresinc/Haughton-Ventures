@@ -19,7 +19,7 @@ fetch(`${BASE_URL}/api/insights-data`)
       const item = document.createElement('div');
       item.className = 'insights-item';
       item.innerHTML = `
-        <a href="${insight.link}" class="insight-link-block w-inline-block">
+        <a href="${insight.link}" class="insight-link-block w-inline-block" target="_blank">
           <div class="insight-thumbnail">
             <div class="insight-category-tag">${insight.category}</div>
             ${insight.image ? `<img alt="${insight.title}" loading="lazy" width="808" src="${insight.image}" class="insight-cover-image"/>` : ''}

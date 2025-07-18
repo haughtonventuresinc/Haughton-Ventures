@@ -16,6 +16,8 @@ app.use(cors());
 // Ensure uploads directory exists
 const UPLOADS_DIR = path.join(__dirname, '..', 'uploads');
 if (!fs.existsSync(UPLOADS_DIR)) fs.mkdirSync(UPLOADS_DIR);
+app.use('/insights', express.static(path.join(__dirname, 'insights')));
+
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -44,6 +46,7 @@ app.use(express.json({ limit: '2mb' }));
 // Serve uploaded images statically
 app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
 
+
 const INSIGHTS_DIR = path.join(__dirname, '..', 'insights');
 if (!fs.existsSync(INSIGHTS_DIR)) fs.mkdirSync(INSIGHTS_DIR);
 
@@ -60,7 +63,17 @@ app.post('/api/save-insight', (req, res) => {
             return res.status(500).json({ error: 'Failed to save file', details: err.message });
         }
         res.json({ success: true });
+        console.log('[SAVE] Writing HTML to:', filePath);
     });
+});
+
+// Serve the insight template HTML file
+app.get('/api/insight-template', (req, res) => {
+    const templatePath = path.join(__dirname, 'insight-template.html');
+    if (!fs.existsSync(templatePath)) {
+        return res.status(404).send('Template not found');
+    }
+    res.sendFile(templatePath);
 });
 
 
