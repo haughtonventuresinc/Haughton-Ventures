@@ -49,7 +49,6 @@ if (!fs.existsSync(INSIGHTS_DIR)) fs.mkdirSync(INSIGHTS_DIR);
 
 // Save (overwrite) an insight HTML file
 app.post('/api/save-insight', (req, res) => {
-    console.log('[SAVE] Saving insight:', req.body);
     const { id, content } = req.body;
     if (!id || !content) {
         return res.status(400).json({ error: 'Missing id or content' });
@@ -79,7 +78,6 @@ app.get('/api/insights-data', (req, res) => {
 // Save or update insight metadata
 app.post('/api/save-insight-meta', (req, res) => {
     const { id, title, category, date, excerpt, image, link } = req.body;
-    console.log(`[META] Saving insight meta for id=${id}, image=${image}, link=${link}`);
     if (!id || !title || !category || !date || !excerpt || !link) {
         return res.status(400).json({ error: 'Missing required fields' });
     }
@@ -87,6 +85,7 @@ app.post('/api/save-insight-meta', (req, res) => {
         saveInsightMeta({ id, title, category, date, excerpt, image, link });
         res.json({ success: true });
     } catch (err) {
+        console.error('[SAVE] Failed to save meta:', err);
         res.status(500).json({ error: 'Failed to save meta', details: err.message });
     }
 });

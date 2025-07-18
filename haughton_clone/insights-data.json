@@ -1,0 +1,29 @@
+[
+  {
+    "id": "test-1752848535375",
+    "title": "test",
+    "category": "test",
+    "date": "2025-07-18",
+    "excerpt": "ArtSky is a full-service media and entertainment company specializing in content creation that captivates audiences and defines culture. With a focus on storytelling and innovation, ArtSky bridges the gap between traditional media and the digital landscape.",
+    "image": "http://localhost:3001/uploads/pexels-pixabay-104827 (1)-1752848535368.jpg",
+    "link": "insights/test-1752848535375.html"
+  },
+  {
+    "id": "test-1752848826688",
+    "title": "test",
+    "category": "test",
+    "date": "2025-07-18",
+    "excerpt": "ArtSky is a full-service media and entertainment company specializing in content creation that captivates audiences and defines culture. With a focus on storytelling and innovation, ArtSky bridges the gap between traditional media and the digital landscape.",
+    "image": "http://localhost:3001/uploads/pexels-pixabay-104827 (1)-1752848826676.jpg",
+    "link": "insights/test-1752848826688.html"
+  },
+  {
+    "id": "test-1752848868142",
+    "title": "test",
+    "category": "test",
+    "date": "2025-07-18",
+    "excerpt": "ArtSky is a full-service media and entertainment company specializing in content creation that captivates audiences and defines culture. With a focus on storytelling and innovation, ArtSky bridges the gap between traditional media and the digital landscape.",
+    "image": "http://localhost:3001/uploads/pexels-pixabay-104827 (1)-1752848868136.jpg",
+    "link": "insights/test-1752848868142.html"
+  }
+]

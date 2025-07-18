@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const DATA_PATH = path.join(__dirname, '..', 'insights-data.json');
+const DATA_PATH = path.join(__dirname, 'insights-data.json');
 
 function saveInsightMeta(meta) {
     let data = [];

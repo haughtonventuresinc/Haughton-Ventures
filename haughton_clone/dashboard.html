@@ -138,8 +138,8 @@
     <script>
     // === CONFIGURABLE BACKEND BASE URL ===
     // Change this when deploying!
-    const BASE_URL = 'http://localhost:3001';
-    //const BASE_URL = 'https://haughton-ventures-production.up.railway.app';
+    //const BASE_URL = 'http://localhost:3001';
+    const BASE_URL = 'https://haughton-ventures-production.up.railway.app';
 
         // Auto-upload image on form submit (Add and Edit)
         async function uploadImageIfPresent(fileInputId) {
@@ -328,7 +328,10 @@ fetch(`${BASE_URL}/api/insights-data`).then(r => r.json()).then(d => localStorag
                     .then(metaResp => {
                         if (metaResp.success) {
                             alert('Insight added successfully!');
-                            location.reload();
+                            updateInsightsTable();
+                            //clear form
+                            newInsightForm.reset();
+                            addQuill.root.innerHTML = '';
                         } else {
                             alert('Added file, but failed to update list: ' + (metaResp.error || 'Unknown error'));
                         }
