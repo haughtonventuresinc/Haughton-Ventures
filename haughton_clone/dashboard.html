@@ -56,16 +56,17 @@
       </div>
       <div class="flex flex-col gap-2">
         <label for="edit-date" class="text-lg font-medium text-gray-700">Date</label>
-        <input type="text" id="edit-date" placeholder="Date" required class="rounded-lg border border-gray-300 px-4 py-3 focus:ring-2 focus:ring-blue-400 focus:outline-none text-gray-800 bg-white/90 shadow-sm transition" />
+        <input type="date" id="edit-date" required class="rounded-lg border border-gray-300 px-4 py-3 focus:ring-2 focus:ring-blue-400 focus:outline-none text-gray-800 bg-white/90 shadow-sm transition" />
       </div>
       <div class="flex flex-col gap-2">
         <label for="edit-excerpt" class="text-lg font-medium text-gray-700">Excerpt</label>
         <input type="text" id="edit-excerpt" placeholder="Excerpt" required class="rounded-lg border border-gray-300 px-4 py-3 focus:ring-2 focus:ring-blue-400 focus:outline-none text-gray-800 bg-white/90 shadow-sm transition" />
       </div>
       <div class="flex flex-col gap-2">
-        <label for="edit-image" class="text-lg font-medium text-gray-700">Image URL</label>
-        <input type="text" id="edit-image" placeholder="Image URL" class="rounded-lg border border-gray-300 px-4 py-3 focus:ring-2 focus:ring-blue-400 focus:outline-none text-gray-800 bg-white/90 shadow-sm transition" />
-      </div>
+  <label for="edit-image" class="text-lg font-medium text-gray-700">Image URL</label>
+  <img id="edit-image-preview" src="" alt="Current Image Preview" style="max-width:120px;max-height:90px;border-radius:0.5rem;margin-bottom:0.5rem;display:none;object-fit:cover;border:1px solid #e5e7eb;" />
+  <input type="text" id="edit-image" placeholder="Image URL" class="rounded-lg border border-gray-300 px-4 py-3 focus:ring-2 focus:ring-blue-400 focus:outline-none text-gray-800 bg-white/90 shadow-sm transition" />
+</div>
       <div class="flex flex-col gap-2">
         <label for="edit-image-file" class="text-lg font-medium text-gray-700">Upload Image</label>
         <input type="file" id="edit-image-file" accept="image/*" class="rounded-lg border border-gray-300 px-4 py-2 bg-white/90 shadow-sm transition" />
@@ -100,7 +101,7 @@
     </div>
     <div class="flex flex-col gap-2">
       <label for="date" class="text-lg font-medium text-gray-700">Date</label>
-      <input type="text" id="date" placeholder="Date" required class="rounded-lg border border-gray-300 px-4 py-3 focus:ring-2 focus:ring-blue-400 focus:outline-none text-gray-800 bg-white/90 shadow-sm transition" />
+      <input type="date" id="date" required class="rounded-lg border border-gray-300 px-4 py-3 focus:ring-2 focus:ring-blue-400 focus:outline-none text-gray-800 bg-white/90 shadow-sm transition" />
     </div>
     <div class="flex flex-col gap-2">
       <label for="excerpt" class="text-lg font-medium text-gray-700">Excerpt</label>
@@ -125,8 +126,8 @@
     <script>
     // === CONFIGURABLE BACKEND BASE URL ===
     // Change this when deploying!
-    //const BASE_URL = 'http://localhost:3001';
-    const BASE_URL = 'https://haughton-ventures-production.up.railway.app';
+    const BASE_URL = 'http://localhost:3001';
+    //const BASE_URL = 'https://haughton-ventures-production.up.railway.app';
 
         // Auto-upload image on form submit (Add and Edit)
         async function uploadImageIfPresent(fileInputId) {
@@ -144,12 +145,21 @@
             }
             return null;
         }
+        // Format date as 'Month DD, YYYY' for display
+        function formatDateWords(dateStr) {
+        const date = new Date(dateStr);
+        if (isNaN(date)) return dateStr;
+        // Format: Month DD, YYYY
+        return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: '2-digit' });
+        }
+
         const insightsData = 'insights-data.json'; // Local fetch for static file
 
 
         // Load and display insights with Edit button
         function updateInsightsTable() {
-            fetch(insightsData)
+            // Add cache-busting parameter to prevent caching issues
+            fetch(`${insightsData}?_=${new Date().getTime()}`)
                 .then(response => response.json())
                 .then(data => {
                     const insightsTable = document.getElementById('insightsBody');
@@ -174,46 +184,8 @@
         updateInsightsTable();
 
         // Show edit form and load content
-        function editInsight(id) {
-            fetch(insightsData)
-                .then(response => response.json())
-                .then(data => {
-                    const insight = data.find(i => i.id === id);
-                    if (!insight) return;
-                    document.getElementById('edit-id').value = insight.id;
-                    document.getElementById('edit-title').value = insight.title;
-                    document.getElementById('edit-category').value = insight.category;
-                    document.getElementById('edit-date').value = insight.date;
-                    document.getElementById('edit-excerpt').value = insight.excerpt;
-                    document.getElementById('edit-image').value = insight.image || '';
-                    // Load HTML content from file
-                    fetch(`insights/${id}.html`)
-    .then(resp => resp.text())
-    .then(html => {
-        // Extract .w-richtext inner HTML and flatten to plain text
-        let match = html.match(/<div class=\"w-richtext\">([\s\S]*?)<\/div>/);
-        let paragraphs = '';
-        if (match) {
-            // Remove all tags except <p>
-            let temp = document.createElement('div');
-            temp.innerHTML = match[1];
-            paragraphs = Array.from(temp.querySelectorAll('p')).map(p => p.textContent).join('\n');
-        } else {
-            // fallback: try to extract all <p>...</p> in <body>
-            let bodyMatch = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
-            if (bodyMatch) {
-                let temp = document.createElement('div');
-                temp.innerHTML = bodyMatch[1];
-                paragraphs = Array.from(temp.querySelectorAll('p')).map(p => p.textContent).join('\n');
-            } else {
-                paragraphs = html;
-            }
-        }
-        document.getElementById('edit-content').value = paragraphs.trim();
-        document.getElementById('editInsightForm').style.display = '';
-    });
-                });
-        }
+       
+        
         function hideEditForm() {
             document.getElementById('editInsightForm').style.display = 'none';
         }
@@ -255,7 +227,7 @@
                                 <img alt="${post.title}" loading="lazy" width="808" src="${post.image || ''}" class="insight-cover-image"/>
                             </div>
                             <div class="insights-text-box">
-                                <div class="post-date">${post.date}</div>
+                                <div class="post-date">${formatDateWords(post.date)}</div>
                                 <h3 class="paragraph x-large">${post.title}</h3>
                                 <p class="paragraph small dark-grey">${post.excerpt}</p>
                                 <div class="post-arrow-link">Read now</div>
@@ -268,7 +240,7 @@
                     .replace(/{{DESCRIPTION}}/g, excerpt)
                     .replace(/{{IMAGE_URL}}/g, image)
                     .replace(/{{CATEGORY}}/g, category)
-                    .replace(/{{DATE}}/g, date)
+                    .replace(/{{DATE}}/g, formatDateWords(date))
                     .replace(/{{SUMMARY}}/g, excerpt)
                     .replace(/{{CONTENT}}/g, bodyContent)
                     .replace(/{{OTHER_POSTS}}/g, `<div class=\"insights-grid-wrapper w-dyn-list\"><div role=\"list\" class=\"insights-grid w-dyn-items\">${otherPostsHtml}</div></div>`);
@@ -340,8 +312,8 @@
                             if (metaResp.success) {
                                 alert('Insight saved and listed successfully!');
                                 // hideEditForm();
-// location.reload();
-alert('Meta save complete! Check backend logs.');
+                            // location.reload();
+                            alert('Meta save complete! Check backend logs.');
                             } else {
                                 alert('Saved file, but failed to update list: ' + (metaResp.error || 'Unknown error'));
                             }
@@ -393,7 +365,7 @@ alert('Meta save complete! Check backend logs.');
                                 <img alt="${post.title}" loading="lazy" width="808" src="${post.image || ''}" class="insight-cover-image"/>
                             </div>
                             <div class="insights-text-box">
-                                <div class="post-date">${post.date}</div>
+                                <div class="post-date">${formatDateWords(post.date)}</div>
                                 <h3 class="paragraph x-large">${post.title}</h3>
                                 <p class="paragraph small dark-grey">${post.excerpt}</p>
                                 <div class="post-arrow-link">Read now</div>
@@ -406,7 +378,7 @@ alert('Meta save complete! Check backend logs.');
                     .replace(/{{DESCRIPTION}}/g, excerpt)
                     .replace(/{{IMAGE_URL}}/g, image)
                     .replace(/{{CATEGORY}}/g, category)
-                    .replace(/{{DATE}}/g, date)
+                    .replace(/{{DATE}}/g, formatDateWords(date))
                     .replace(/{{SUMMARY}}/g, excerpt)
                     .replace(/{{CONTENT}}/g, bodyContent)
                     .replace(/{{OTHER_POSTS}}/g, `<div class=\"insights-grid-wrapper w-dyn-list\"><div role=\"list\" class=\"insights-grid w-dyn-items\">${otherPostsHtml}</div></div>`);
@@ -531,7 +503,7 @@ window.generateOtherPostsHtml = function(currentId) {
                         <img alt="${post.title}" loading="lazy" width="808" src="${post.image || ''}" class="insight-cover-image"/>
                     </div>
                     <div class="insights-text-box">
-                        <div class="post-date">${post.date}</div>
+                        <div class="post-date">${formatDateWords(post.date)}</div>
                         <h3 class="paragraph x-large">${post.title}</h3>
                         <p class="paragraph small dark-grey">${post.excerpt}</p>
                         <div class="post-arrow-link">Read now</div>
@@ -579,14 +551,14 @@ fetch('insights-data.json').then(r => r.json()).then(d => localStorage.setItem('
             let otherPostsHtml = '';
             for (const post of others) {
                 let href = post.link.startsWith('insights/') ? post.link.replace('insights/', '') : post.link;
-                otherPostsHtml += `\n                    <div role="listitem" class="insights-item w-dyn-item">\n                        <a href="${href}" class="insight-link-block w-inline-block">\n                            <div class="insight-thumbnail">\n                                <div class="insight-category-tag">${post.category}</div>\n                                <img alt="${post.title}" loading="lazy" width="808" src="${post.image || ''}" class="insight-cover-image"/>\n                            </div>\n                            <div class="insights-text-box">\n                                <div class="post-date">${post.date}</div>\n                                <h3 class="paragraph x-large">${post.title}</h3>\n                                <p class="paragraph small dark-grey">${post.excerpt}</p>\n                                <div class="post-arrow-link">Read now</div>\n                            </div>\n                        </a>\n                    </div>`;
+                otherPostsHtml += `\n                    <div role="listitem" class="insights-item w-dyn-item">\n                        <a href="${href}" class="insight-link-block w-inline-block">\n                            <div class="insight-thumbnail">\n                                <div class="insight-category-tag">${post.category}</div>\n                                <img alt="${post.title}" loading="lazy" width="808" src="${post.image || ''}" class="insight-cover-image"/>\n                            </div>\n                            <div class="insights-text-box">\n                                <div class="post-date">${formatDateWords(post.date)}</div>\n                                <h3 class="paragraph x-large">${post.title}</h3>\n                                <p class="paragraph small dark-grey">${post.excerpt}</p>\n                                <div class="post-arrow-link">Read now</div>\n                            </div>\n                        </a>\n                    </div>`;
             }
             let htmlContent = template
                 .replace(/{{TITLE}}/g, title)
                 .replace(/{{DESCRIPTION}}/g, excerpt)
                 .replace(/{{IMAGE_URL}}/g, image)
                 .replace(/{{CATEGORY}}/g, category)
-                .replace(/{{DATE}}/g, date)
+                .replace(/{{DATE}}/g, formatDateWords(date))
                 .replace(/{{SUMMARY}}/g, excerpt)
                 .replace(/{{CONTENT}}/g, bodyContent)
                 .replace(/{{OTHER_POSTS}}/g, `<div class=\"insights-grid-wrapper w-dyn-list\"><div role=\"list\" class=\"insights-grid w-dyn-items\">${otherPostsHtml}</div></div>`);
@@ -643,6 +615,14 @@ fetch('insights-data.json').then(r => r.json()).then(d => localStorage.setItem('
                 document.getElementById('edit-date').value = insight.date;
                 document.getElementById('edit-excerpt').value = insight.excerpt;
                 document.getElementById('edit-image').value = insight.image || '';
+var previewImg = document.getElementById('edit-image-preview');
+if (insight.image) {
+  previewImg.src = insight.image;
+  previewImg.style.display = '';
+} else {
+  previewImg.src = '';
+  previewImg.style.display = 'none';
+}
                 // Load HTML content from file
                 fetch(`insights/${id}.html`)
                     .then(resp => resp.text())
@@ -688,14 +668,14 @@ fetch('insights-data.json').then(r => r.json()).then(d => localStorage.setItem('
             let otherPostsHtml = '';
             for (const post of others) {
                 let href = post.link.startsWith('insights/') ? post.link.replace('insights/', '') : post.link;
-                otherPostsHtml += `\n                    <div role="listitem" class="insights-item w-dyn-item">\n                        <a href="${href}" class="insight-link-block w-inline-block">\n                            <div class="insight-thumbnail">\n                                <div class="insight-category-tag">${post.category}</div>\n                                <img alt="${post.title}" loading="lazy" width="808" src="${post.image || ''}" class="insight-cover-image"/>\n                            </div>\n                            <div class="insights-text-box">\n                                <div class="post-date">${post.date}</div>\n                                <h3 class="paragraph x-large">${post.title}</h3>\n                                <p class="paragraph small dark-grey">${post.excerpt}</p>\n                                <div class="post-arrow-link">Read now</div>\n                            </div>\n                        </a>\n                    </div>`;
+                otherPostsHtml += `\n                    <div role="listitem" class="insights-item w-dyn-item">\n                        <a href="${href}" class="insight-link-block w-inline-block">\n                            <div class="insight-thumbnail">\n                                <div class="insight-category-tag">${post.category}</div>\n                                <img alt="${post.title}" loading="lazy" width="808" src="${post.image || ''}" class="insight-cover-image"/>\n                            </div>\n                            <div class="insights-text-box">\n                                <div class="post-date">${formatDateWords(post.date)}</div>\n                                <h3 class="paragraph x-large">${post.title}</h3>\n                                <p class="paragraph small dark-grey">${post.excerpt}</p>\n                                <div class="post-arrow-link">Read now</div>\n                            </div>\n                        </a>\n                    </div>`;
             }
             let htmlContent = template
                 .replace(/{{TITLE}}/g, title)
                 .replace(/{{DESCRIPTION}}/g, excerpt)
                 .replace(/{{IMAGE_URL}}/g, image)
                 .replace(/{{CATEGORY}}/g, category)
-                .replace(/{{DATE}}/g, date)
+                .replace(/{{DATE}}/g, formatDateWords(date))
                 .replace(/{{SUMMARY}}/g, excerpt)
                 .replace(/{{CONTENT}}/g, bodyContent)
                 .replace(/{{OTHER_POSTS}}/g, `<div class=\"insights-grid-wrapper w-dyn-list\"><div role=\"list\" class=\"insights-grid w-dyn-items\">${otherPostsHtml}</div></div>`);
