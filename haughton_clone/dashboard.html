@@ -311,19 +311,20 @@ fetch(`${BASE_URL}/api/insights-data`).then(r => r.json()).then(d => localStorag
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    fetch(BASE_URL + '/api/save-insight-meta', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            id,
-                            title,
-                            category,
-                            date,
-                            excerpt,
-                            image,
-                            link: `insights/${id}.html`
-                        })
-                    })
+                  fetch(BASE_URL + '/api/save-insight-meta', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({
+                              id,
+                              title,
+                              category,
+                              date,
+                              excerpt,
+                              image,
+                              link: `insights/${id}.html`,
+                              content: bodyContent // <-- add this line
+                          })
+                      })
                     .then(resp => resp.json())
                     .then(metaResp => {
                         if (metaResp.success) {
@@ -431,19 +432,20 @@ fetch(`${BASE_URL}/api/insights-data`).then(r => r.json()).then(d => localStorag
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    fetch(BASE_URL + '/api/save-insight-meta', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            id,
-                            title,
-                            category,
-                            date,
-                            excerpt,
-                            image,
-                            link: `insights/${id}.html`
+                  fetch(BASE_URL + '/api/save-insight-meta', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                id,
+                                title,
+                                category,
+                                date,
+                                excerpt,
+                                image,
+                                link: `insights/${id}.html`,
+                                content: bodyContent // <-- add this line
+                            })
                         })
-                    })
                     .then(resp => resp.json())
                     .then(metaResp => {
                         if (metaResp.success) {

@@ -11,7 +11,7 @@ function saveInsightMeta(meta) {
     // Remove old entry if exists
     const idx = data.findIndex(item => item.id === meta.id);
     if (idx !== -1) {
-        data[idx] = meta;
+        data[idx] = { ...data[idx], ...meta };
     } else {
         data.push(meta);
     }

@@ -90,12 +90,12 @@ app.get('/api/insights-data', (req, res) => {
 
 // Save or update insight metadata
 app.post('/api/save-insight-meta', (req, res) => {
-    const { id, title, category, date, excerpt, image, link } = req.body;
+    const { id, title, category, date, excerpt, image, link, content } = req.body;
     if (!id || !title || !category || !date || !excerpt || !link) {
         return res.status(400).json({ error: 'Missing required fields' });
     }
     try {
-        saveInsightMeta({ id, title, category, date, excerpt, image, link });
+        saveInsightMeta({ id, title, category, date, excerpt, image, link, content });
         res.json({ success: true });
     } catch (err) {
         console.error('[SAVE] Failed to save meta:', err);
