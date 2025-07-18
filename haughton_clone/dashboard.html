@@ -363,7 +363,7 @@ alert('Meta save complete! Check backend logs.');
             const date = document.getElementById('date').value;
             const excerpt = document.getElementById('excerpt').value;
             let image = document.getElementById('add-image').value;
-            const bodyContent = addQuill.root.innerHTML;
+            const bodyContent = document.getElementById('add-content').value;
             // Try to upload image file if any
             try {
                 const uploaded = await uploadImageIfPresent('add-image-file');
@@ -615,9 +615,7 @@ fetch('insights-data.json').then(r => r.json()).then(d => localStorage.setItem('
                     .then(metaResp => {
                         if (metaResp.success) {
                             alert('Insight added successfully!');
-                            updateInsightsTable();
-                            document.getElementById('newInsightForm').reset();
-                            document.getElementById('addInsightPanel').style.display = 'none';
+                            location.reload();
                         } else {
                             alert('Added file, but failed to update list: ' + (metaResp.error || 'Unknown error'));
                         }

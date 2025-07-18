@@ -8,10 +8,7 @@ const multer = require('multer');
 const app = express();
 const PORT = 3001;
 
-app.use(cors({
-  origin: 'https://www.haughtonventures.com',
-  credentials: true
-}));
+app.use(cors());
 
 
 
