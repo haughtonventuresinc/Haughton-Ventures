@@ -363,7 +363,7 @@ alert('Meta save complete! Check backend logs.');
             const date = document.getElementById('date').value;
             const excerpt = document.getElementById('excerpt').value;
             let image = document.getElementById('add-image').value;
-            const bodyContent = document.getElementById('add-content').value;
+            const bodyContent = addQuill.root.innerHTML;
             // Try to upload image file if any
             try {
                 const uploaded = await uploadImageIfPresent('add-image-file');
