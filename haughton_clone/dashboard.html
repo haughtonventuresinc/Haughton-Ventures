@@ -128,7 +128,7 @@
       <input type="file" id="add-image-file" accept="image/*" class="rounded-lg border border-gray-300 px-4 py-2 bg-white/90 shadow-sm transition" />
     </div>
     <div class="md:col-span-2 flex flex-col gap-2">
-      <label for="add-content" class="text-lg font-medium text-gray-700">Insight Body</label>
+      <label for="add-quill" class="text-lg font-medium text-gray-700">Insight Body</label>
       <div id="add-quill" class="rounded-lg border border-gray-300 bg-white/90 shadow-sm" style="height: 250px;"></div>
     </div>
     <div class="md:col-span-2 flex justify-end gap-4 mt-6 sticky bottom-0 bg-white/80 py-4 z-10">
@@ -347,7 +347,7 @@
             const date = document.getElementById('date').value;
             const excerpt = document.getElementById('excerpt').value;
             let image = document.getElementById('add-image').value;
-            const bodyContent = document.getElementById('add-content').value;
+            const bodyContent = document.getElementById('add-quill').value;
             // Try to upload image file if any
             try {
                 const uploaded = await uploadImageIfPresent('add-image-file');
@@ -420,7 +420,7 @@
                             .then(resp => resp.json())
                             .then(metaResp => {
                                 if (metaResp.success) {
-    alert('Insight added successfully!');
+                                    alert('Insight added successfully!');
                                     updateInsightsTable();
                                     document.getElementById('newInsightForm').reset();
                                     document.getElementById('addInsightPanel').style.display = 'none';
@@ -436,47 +436,10 @@
                         alert('Error saving: ' + err.message);
                     });
                 });
-            // Save HTML file and metadata after htmlContent is defined
-            fetch(BASE_URL + '/api/save-insight', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id, content: htmlContent })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    fetch(BASE_URL + '/api/save-insight-meta', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            id,
-                            title,
-                            category,
-                            date,
-                            excerpt,
-                            image,
-                            link: `insights/${id}.html`
-                        })
-                    })
-                    .then(resp => resp.json())
-                    .then(metaResp => {
-                        if (metaResp.success) {
-                            alert('Insight added successfully!');
-                            updateInsightsTable();
-                            document.getElementById('newInsightForm').reset();
-                            document.getElementById('addInsightPanel').style.display = 'none';
-                        } else {
-                            alert('Added file, but failed to update list: ' + (metaResp.error || 'Unknown error'));
-                        }
-                    });
-                } else {
-                    alert('Failed to add: ' + (data.error || 'Unknown error'));
-                }
-            })
-            .catch(err => {
-                alert('Error adding: ' + err.message);
-            });
+                
+
         });
+    
 
         // Dummy delete function
         function deleteInsight(id) {
@@ -627,14 +590,14 @@ fetch('insights-data.json').then(r => r.json()).then(d => localStorage.setItem('
                 document.getElementById('edit-date').value = insight.date;
                 document.getElementById('edit-excerpt').value = insight.excerpt;
                 document.getElementById('edit-image').value = insight.image || '';
-var previewImg = document.getElementById('edit-image-preview');
-if (insight.image) {
-  previewImg.src = insight.image;
-  previewImg.style.display = '';
-} else {
-  previewImg.src = '';
-  previewImg.style.display = 'none';
-}
+                var previewImg = document.getElementById('edit-image-preview');
+                if (insight.image) {
+                previewImg.src = insight.image;
+                previewImg.style.display = '';
+                } else {
+                previewImg.src = '';
+                previewImg.style.display = 'none';
+                }
                 // Load HTML content from file
                 fetch(`insights/${id}.html`)
                     .then(resp => resp.text())
