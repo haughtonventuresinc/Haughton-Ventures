@@ -1,0 +1,35 @@
+{
+    "heroTitle": "A next-generation venture firm leading profitable consumer, media, and technology companies",
+    "heroImages": [
+      {
+        "src": "../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50b08_Top%20LeFt%20Corner%20Block.svg",
+        "alt": "",
+        "class": "top-left-corner-block"
+      },
+      {
+        "src": "../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50b07_mailchimp-lAx4E6Gl06s-unsplash%201.avif",
+        "alt": "",
+        "class": "home-hero-image",
+        "srcset": "https://cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50b07_mailchimp-lAx4E6Gl06s-unsplash%201.avif 500w, https://cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50b07_mailchimp-lAx4E6Gl06s-unsplash%201.avif 800w, https://cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50b07_mailchimp-lAx4E6Gl06s-unsplash%201.avif 1080w, https://cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50b07_mailchimp-lAx4E6Gl06s-unsplash%201.avif 2724w",
+        "sizes": "100vw"
+      }
+    ],
+    "heroSlider": [
+      {
+        "logo": "../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687648b4af16be1a0198dc58_rentberry-logo-white.svg",
+        "logoWidth": 150,
+        "logoClass": "image-2",
+        "tags": ["real estate"],
+        "description": "Real estate platform streamlining long-term rental processes with transparent pricing and digital lease agreements.",
+        "link": "portfolio.html"
+      },
+      {
+        "logo": "../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/68764a559e36daaa264b2272_azure-printed-homes.webp",
+        "logoWidth": 178,
+        "logoClass": "company-hero-logo",
+        "tags": ["Clean Tech", "3D Printing"],
+        "description": "Uses 3D printing and recycled materials to build sustainable backyard studios, ADUs, and homes at affordable prices.",
+        "link": "portfolio.html"
+      }
+    ]
+  }

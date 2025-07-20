@@ -21,10 +21,218 @@
     }
 })();
 </script>
-    <div class="flex items-center justify-between m-8">
+<div class="flex min-h-screen h-screen w-full flex-col md:flex-row">
+  <!-- Sidebar (responsive) -->
+  <nav id="sidebarNav" class="w-full md:w-64 bg-gradient-to-b from-blue-600 to-green-500 text-white flex md:flex-col flex-row items-center md:py-10 py-4 shadow-xl md:fixed md:left-0 md:top-0 md:h-full z-30">
+    <div class="flex justify-between items-center w-full md:block px-4 md:px-0">
+      <h2 class="text-2xl font-bold mb-0 md:mb-10 tracking-wide">Dashboard</h2>
+      <button id="sidebarToggle" class="md:hidden block text-white text-3xl focus:outline-none ml-auto">&#9776;</button>
+    </div>
+    <div id="sidebarLinks" class="flex flex-row md:flex-col w-full md:mt-8 md:space-y-0 md:space-x-0 space-x-2 md:space-x-0 space-y-0 md:space-y-2 justify-center md:justify-start items-center md:items-stretch">
+      <a href="#home" class="w-full px-3 md:px-6 py-2 md:py-3 mb-0 md:mb-2 rounded-lg hover:bg-white hover:text-blue-700 transition text-base md:text-lg text-center md:text-left">Home</a>
+      <a href="#about" class="w-full px-3 md:px-6 py-2 md:py-3 mb-0 md:mb-2 rounded-lg hover:bg-white hover:text-blue-700 transition text-base md:text-lg text-center md:text-left">About</a>
+      <a href="#insight" class="w-full px-3 md:px-6 py-2 md:py-3 mb-0 md:mb-2 rounded-lg hover:bg-white hover:text-blue-700 transition text-base md:text-lg text-center md:text-left">Insight</a>
+      <a href="#contact" class="w-full px-3 md:px-6 py-2 md:py-3 mb-0 md:mb-2 rounded-lg hover:bg-white hover:text-blue-700 transition text-base md:text-lg text-center md:text-left">Contact</a>
+    </div>
+  </nav>
+  <!-- Main content -->
+  <div class="flex-1 md:ml-64 w-full overflow-y-auto" style="scroll-behavior: smooth;">
+
+  <!-- Sidebar -->
+  <nav class="w-64 bg-gradient-to-b from-blue-600 to-green-500 text-white flex flex-col items-center py-10 shadow-xl fixed left-0 top-0 h-full z-30">
+    <h2 class="text-2xl font-bold mb-10 tracking-wide">Dashboard</h2>
+    <a href="#home" class="w-full px-6 py-3 mb-2 rounded-lg hover:bg-white hover:text-blue-700 transition text-lg text-left">Home</a>
+    <a href="#about" class="w-full px-6 py-3 mb-2 rounded-lg hover:bg-white hover:text-blue-700 transition text-lg text-left">About</a>
+    <a href="#insight" class="w-full px-6 py-3 mb-2 rounded-lg hover:bg-white hover:text-blue-700 transition text-lg text-left">Insight</a>
+    <a href="#contact" class="w-full px-6 py-3 mb-2 rounded-lg hover:bg-white hover:text-blue-700 transition text-lg text-left">Contact</a>
+  </nav>
+  <!-- Main content -->
+  <div class="flex-1 ml-64 overflow-y-auto" style="scroll-behavior: smooth;">
+    <section id="home" class="w-full">
+  <!-- Editable Home Content Card -->
+  <div class="max-w-3xl mx-auto bg-white/90 rounded-2xl shadow-lg p-6 mt-8 mb-8 border border-gray-200">
+    <h2 class="text-2xl font-bold text-blue-700 mb-2">Edit Homepage Content</h2>
+    <form id="homepageEditor" class="space-y-6">
+  <label class="block">
+    <span class="font-semibold">Hero Title</span>
+    <input type="text" id="heroTitleInput" class="w-full border rounded p-2 mt-1" />
+  </label>
+  <div id="heroImagesEditor">
+    <span class="font-semibold">Hero Images</span>
+    <div id="heroImagesList"></div>
+    <button type="button" id="addHeroImageBtn" class="mt-2 bg-green-500 text-white px-3 py-1 rounded">Add Image</button>
+  </div>
+  <div id="heroSliderEditor">
+    <span class="font-semibold">Hero Slider</span>
+    <div id="heroSliderList"></div>
+    <button type="button" id="addHeroSlideBtn" class="mt-2 bg-green-500 text-white px-3 py-1 rounded">Add Slide</button>
+  </div>
+  <div class="flex gap-4">
+    <button type="submit" id="saveHomepageBtn" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-2 rounded-xl shadow">Save</button>
+    <button type="button" id="cancelHomepageEditBtn" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold px-6 py-2 rounded-xl shadow">Cancel</button>
+  </div>
+  <div>
+    <h3 class="text-lg font-semibold text-gray-700 mb-1">Live Preview:</h3>
+    <div id="homepagePreview" class="prose max-w-none bg-gray-50 rounded-xl p-4 border border-gray-100 min-h-[100px]"></div>
+  </div>
+</form>
+<script type="module">
+import BASE_URL from './base_url.js';
+let homepageData = {};
+
+function renderHeroImagesEditor(images) {
+  const list = document.getElementById('heroImagesList');
+  list.innerHTML = '';
+  images.forEach((img, i) => {
+    const div = document.createElement('div');
+    div.className = 'flex gap-2 mb-2';
+    div.innerHTML = `<input type="text" placeholder="src" value="${img.src||''}" class="border rounded p-1 w-1/3" data-field="src" data-idx="${i}" />
+      <input type="text" placeholder="alt" value="${img.alt||''}" class="border rounded p-1 w-1/4" data-field="alt" data-idx="${i}" />
+      <input type="text" placeholder="class" value="${img.class||''}" class="border rounded p-1 w-1/4" data-field="class" data-idx="${i}" />
+      <input type="text" placeholder="sizes" value="${img.sizes||''}" class="border rounded p-1 w-1/6" data-field="sizes" data-idx="${i}" />
+      <input type="text" placeholder="srcset" value="${img.srcset||''}" class="border rounded p-1 w-1/6" data-field="srcset" data-idx="${i}" />
+      <button type="button" class="bg-red-500 text-white px-2 rounded removeHeroImageBtn" data-idx="${i}">Remove</button>`;
+    list.appendChild(div);
+  });
+}
+function renderHeroSliderEditor(slides) {
+  const list = document.getElementById('heroSliderList');
+  list.innerHTML = '';
+  slides.forEach((slide, i) => {
+    const div = document.createElement('div');
+    div.className = 'flex flex-wrap gap-2 mb-2 border p-2 rounded';
+    div.innerHTML = `<input type="text" placeholder="Logo src" value="${slide.logo||''}" class="border rounded p-1 w-1/4" data-field="logo" data-idx="${i}" />
+      <input type="number" placeholder="Logo width" value="${slide.logoWidth||''}" class="border rounded p-1 w-1/12" data-field="logoWidth" data-idx="${i}" />
+      <input type="text" placeholder="Logo class" value="${slide.logoClass||''}" class="border rounded p-1 w-1/6" data-field="logoClass" data-idx="${i}" />
+      <input type="text" placeholder="Tags (comma)" value="${(slide.tags||[]).join(', ')}" class="border rounded p-1 w-1/4" data-field="tags" data-idx="${i}" />
+      <input type="text" placeholder="Description" value="${slide.description||''}" class="border rounded p-1 w-1/2" data-field="description" data-idx="${i}" />
+      <input type="text" placeholder="Link" value="${slide.link||''}" class="border rounded p-1 w-1/4" data-field="link" data-idx="${i}" />
+      <button type="button" class="bg-red-500 text-white px-2 rounded removeHeroSlideBtn" data-idx="${i}">Remove</button>`;
+    list.appendChild(div);
+  });
+}
+function updatePreview() {
+  const preview = document.getElementById('homepagePreview');
+  let html = `<div class='home-title-box'><h1 class='heading h1'>${homepageData.heroTitle||''}</h1></div><div class='spacer _48'></div>`;
+  if (Array.isArray(homepageData.heroImages)) {
+    html += `<div class='home-hero-image-block'>`;
+    homepageData.heroImages.forEach(img => {
+      html += `<img src='${img.src||''}' alt='${img.alt||''}' class='${img.class||''}' ${img.sizes?`sizes='${img.sizes}'`:''} ${img.srcset?`srcset='${img.srcset}'`:''} />`;
+    });
+    if (Array.isArray(homepageData.heroSlider) && homepageData.heroSlider.length > 0) {
+      html += `<div class='company-hero-slider w-slider'><div class='w-slider-mask'>`;
+      homepageData.heroSlider.forEach(slide => {
+        html += `<div class='company-hero-slide w-slide'><div class='company-hero-slide-content'><div><img src='${slide.logo||''}' width='${slide.logoWidth||150}' class='${slide.logoClass||''}' /></div><div class='company-tag-row'>`;
+        if (Array.isArray(slide.tags)) slide.tags.forEach(tag=>{ html += `<div class='company-tag'>${tag}</div>`; });
+        html += `</div><div class='company-divider'></div><div class='text-box _250px'><p class='paragraph medium'>${slide.description||''}</p></div><a href='${slide.link||'#'}' class='underline-link white'>View Profile</a></div></div>`;
+      });
+      html += `</div></div>`;
+    }
+    html += `</div>`;
+  }
+  preview.innerHTML = html;
+}
+function bindEditorEvents() {
+  document.getElementById('heroTitleInput').addEventListener('input', e => {
+    homepageData.heroTitle = e.target.value;
+    updatePreview();
+  });
+  document.getElementById('addHeroImageBtn').onclick = () => {
+    homepageData.heroImages.push({src:'',alt:'',class:'',sizes:'',srcset:''});
+    renderHeroImagesEditor(homepageData.heroImages);
+    updatePreview();
+  };
+  document.getElementById('addHeroSlideBtn').onclick = () => {
+    homepageData.heroSlider.push({logo:'',logoWidth:150,logoClass:'',tags:[],description:'',link:''});
+    renderHeroSliderEditor(homepageData.heroSlider);
+    updatePreview();
+  };
+  document.getElementById('heroImagesList').addEventListener('input', e => {
+    const idx = +e.target.dataset.idx;
+    const field = e.target.dataset.field;
+    homepageData.heroImages[idx][field] = e.target.value;
+    updatePreview();
+  });
+  document.getElementById('heroImagesList').addEventListener('click', e => {
+    if (e.target.classList.contains('removeHeroImageBtn')) {
+      const idx = +e.target.dataset.idx;
+      homepageData.heroImages.splice(idx,1);
+      renderHeroImagesEditor(homepageData.heroImages);
+      updatePreview();
+    }
+  });
+  document.getElementById('heroSliderList').addEventListener('input', e => {
+    const idx = +e.target.dataset.idx;
+    const field = e.target.dataset.field;
+    if (field === 'tags') {
+      homepageData.heroSlider[idx].tags = e.target.value.split(',').map(t=>t.trim()).filter(Boolean);
+    } else if (field === 'logoWidth') {
+      homepageData.heroSlider[idx][field] = +e.target.value;
+    } else {
+      homepageData.heroSlider[idx][field] = e.target.value;
+    }
+    updatePreview();
+  });
+  document.getElementById('heroSliderList').addEventListener('click', e => {
+    if (e.target.classList.contains('removeHeroSlideBtn')) {
+      const idx = +e.target.dataset.idx;
+      homepageData.heroSlider.splice(idx,1);
+      renderHeroSliderEditor(homepageData.heroSlider);
+      updatePreview();
+    }
+  });
+  document.getElementById('cancelHomepageEditBtn').onclick = () => {
+    fetch(BASE_URL+'/api/homepage').then(r=>r.json()).then(data=>{
+      homepageData = Object.assign({}, data, {
+        heroImages: Array.isArray(data.heroImages)?[...data.heroImages]:[],
+        heroSlider: Array.isArray(data.heroSlider)?[...data.heroSlider]:[]
+      });
+      document.getElementById('heroTitleInput').value = homepageData.heroTitle||'';
+      renderHeroImagesEditor(homepageData.heroImages);
+      renderHeroSliderEditor(homepageData.heroSlider);
+      updatePreview();
+    });
+  };
+}
+document.addEventListener('DOMContentLoaded', () => {
+  fetch(BASE_URL+'/api/homepage').then(r=>r.json()).then(data=>{
+    homepageData = Object.assign({}, data, {
+      heroImages: Array.isArray(data.heroImages)?[...data.heroImages]:[],
+      heroSlider: Array.isArray(data.heroSlider)?[...data.heroSlider]:[]
+    });
+    document.getElementById('heroTitleInput').value = homepageData.heroTitle||'';
+    renderHeroImagesEditor(homepageData.heroImages);
+    renderHeroSliderEditor(homepageData.heroSlider);
+    updatePreview();
+    bindEditorEvents();
+  });
+  document.getElementById('homepageEditor').onsubmit = function(e) {
+    e.preventDefault();
+    fetch(BASE_URL+'/api/homepage', {
+      method: 'PUT',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(homepageData)
+    })
+    .then(r=>r.json())
+    .then(resp=>{
+      if(resp.success) {
+        alert('Homepage content saved!');
+      } else {
+        alert('Failed to save: '+(resp.error||'Unknown error'));
+      }
+    })
+    .catch(err=>alert('Error: '+err.message));
+  };
+});
+</script>
+  </div>
+
+<div class="flex items-center justify-between m-8">
   <h1 class="text-3xl font-bold text-center text-gray-800">Insights Dashboard</h1>
   <button onclick="logoutDashboard()" class="ml-4 bg-red-500 hover:bg-red-600 text-white font-semibold px-6 py-2 rounded-xl shadow transition text-lg">Logout</button>
 </div>
+    </section>
+    <section id="insight" class="w-full">
     <div class="bg-white shadow-xl rounded-2xl p-4 md:p-8 mb-8">
   <h2 class="text-xl font-semibold text-gray-700 mb-4">All Insights</h2>
   <div class="overflow-x-auto">
@@ -95,6 +303,20 @@
   </div>
 </div>
 
+</section>
+<section id="about" class="w-full">
+  <div class="w-full max-w-6xl mx-auto bg-white/80 shadow-2xl rounded-3xl p-8 mb-8 overflow-hidden border border-gray-200">
+    <h2 class="text-3xl font-bold text-blue-700 mb-4">About</h2>
+    <p class="text-lg text-gray-700">This is the About section. Add your company or dashboard description here.</p>
+  </div>
+</section>
+<section id="contact" class="w-full">
+  <div class="w-full max-w-6xl mx-auto bg-white/80 shadow-2xl rounded-3xl p-8 mb-8 overflow-hidden border border-gray-200">
+    <h2 class="text-3xl font-bold text-blue-700 mb-4">Contact</h2>
+    <p class="text-lg text-gray-700">This is the Contact section. Add your contact details or form here.</p>
+  </div>
+</section>
+<section id="add-insight-panel" class="w-full">
 <div id="addInsightPanel" class="w-full max-w-6xl mx-auto bg-white/80 shadow-2xl rounded-3xl p-0 md:p-0 mb-8 overflow-hidden border border-gray-200">
   <!-- Add Insight Panel: visible only when not editing -->
   <!-- Header -->
@@ -135,12 +357,11 @@
       <button type="submit" class="bg-gradient-to-r from-blue-500 to-green-500 hover:from-blue-600 hover:to-green-600 text-white font-bold py-3 px-10 rounded-xl shadow-lg transition text-lg">Add Insight</button>
     </div>
   </form>
-    <script>
+    <script type="module">
+      import BASE_URL from './base_url.js';
     // === CONFIGURABLE BACKEND BASE URL ===
     // Change this when deploying!
-    //const BASE_URL = 'http://localhost:3001';
-    const BASE_URL = 'https://haughton-ventures-production.up.railway.app';
-
+      
         // Auto-upload image on form submit (Add and Edit)
         async function uploadImageIfPresent(fileInputId) {
             const fileInput = document.getElementById(fileInputId);
@@ -229,6 +450,9 @@
               alert('Error deleting: ' + err.message);
           });
       }
+
+      window.deleteInsight = deleteInsight;
+      
     // Generate the 'Other posts' HTML for the insight template
 window.generateOtherPostsHtml = function(currentId) {
     let html = '';
@@ -497,5 +721,170 @@ function logoutDashboard() {
   localStorage.removeItem('dashboard_token');
   window.location.href = 'login.html';
 }
+</script>
+</div>
+</div>
+<script>
+  // Smooth scroll for anchor links (for browsers that don't support CSS scroll-behavior)
+  document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+</script>
+</div>
+</div>
+<script>
+  // Smooth scroll for anchor links (for browsers that don't support CSS scroll-behavior)
+  document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+</script>
+    </div>
+</div>
+<script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+<script>
+// Sidebar mobile toggle
+const sidebarToggle = document.getElementById('sidebarToggle');
+const sidebarLinks = document.getElementById('sidebarLinks');
+if (sidebarToggle) {
+  sidebarToggle.addEventListener('click', () => {
+    sidebarLinks.classList.toggle('hidden');
+  });
+}
+// Hide sidebar links by default on mobile
+function handleSidebarResize() {
+  if(window.innerWidth < 768) {
+    sidebarLinks.classList.add('hidden');
+  } else {
+    sidebarLinks.classList.remove('hidden');
+  }
+}
+window.addEventListener('resize', handleSidebarResize);
+document.addEventListener('DOMContentLoaded', handleSidebarResize);
+// Smooth scroll for anchor links
+  document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+      // On mobile, hide sidebar after click
+      if(window.innerWidth < 768) sidebarLinks.classList.add('hidden');
+    });
+  });
+// --- Home Section Editor Logic ---
+const homeEditorDiv = document.getElementById('homeEditor');
+const homePreviewDiv = document.getElementById('homePreview');
+const saveHomeContentBtn = document.getElementById('saveHomeContent');
+const cancelHomeEditBtn = document.getElementById('cancelHomeEdit');
+
+// Load homepage data from API
+fetch('/api/homepage')
+  .then(response => response.json())
+  .then(data => {
+    // Prefill form fields
+    document.getElementById('heroTitle').value = data.heroTitle;
+    const heroImagesContainer = document.getElementById('heroImages');
+    data.heroImages.forEach((image, index) => {
+      const imageInput = document.createElement('input');
+      imageInput.type = 'text';
+      imageInput.value = image;
+      heroImagesContainer.appendChild(imageInput);
+      const removeButton = document.createElement('button');
+      removeButton.textContent = 'Remove';
+      removeButton.onclick = () => {
+        heroImagesContainer.removeChild(imageInput);
+        heroImagesContainer.removeChild(removeButton);
+      };
+      heroImagesContainer.appendChild(removeButton);
+    });
+    const heroSliderContainer = document.getElementById('heroSlider');
+    data.heroSlider.forEach((slide, index) => {
+      const slideInput = document.createElement('input');
+      slideInput.type = 'text';
+      slideInput.value = slide;
+      heroSliderContainer.appendChild(slideInput);
+      const removeButton = document.createElement('button');
+      removeButton.textContent = 'Remove';
+      removeButton.onclick = () => {
+        heroSliderContainer.removeChild(slideInput);
+        heroSliderContainer.removeChild(removeButton);
+      };
+      heroSliderContainer.appendChild(removeButton);
+    });
+  });
+
+// Add event listeners for add image and add slide buttons
+document.getElementById('addHeroImage').addEventListener('click', () => {
+  const heroImagesContainer = document.getElementById('heroImages');
+  const imageInput = document.createElement('input');
+  imageInput.type = 'text';
+  heroImagesContainer.appendChild(imageInput);
+  const removeButton = document.createElement('button');
+  removeButton.textContent = 'Remove';
+  removeButton.onclick = () => {
+    heroImagesContainer.removeChild(imageInput);
+    heroImagesContainer.removeChild(removeButton);
+  };
+  heroImagesContainer.appendChild(removeButton);
+});
+
+document.getElementById('addHeroSlide').addEventListener('click', () => {
+  const heroSliderContainer = document.getElementById('heroSlider');
+  const slideInput = document.createElement('input');
+  slideInput.type = 'text';
+  heroSliderContainer.appendChild(slideInput);
+  const removeButton = document.createElement('button');
+  removeButton.textContent = 'Remove';
+  removeButton.onclick = () => {
+    heroSliderContainer.removeChild(slideInput);
+    heroSliderContainer.removeChild(removeButton);
+  };
+  heroSliderContainer.appendChild(removeButton);
+});
+
+// Save form data to API
+saveHomeContentBtn.addEventListener('click', () => {
+  const heroTitle = document.getElementById('heroTitle').value;
+  const heroImages = Array.from(document.getElementById('heroImages').children).filter(child => child.tagName === 'INPUT').map(child => child.value);
+  const heroSlider = Array.from(document.getElementById('heroSlider').children).filter(child => child.tagName === 'INPUT').map(child => child.value);
+  const data = { heroTitle, heroImages, heroSlider };
+  fetch('/api/homepage', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+  });
+});
+
+// Live preview
+document.getElementById('heroTitle').addEventListener('input', () => {
+  homePreviewDiv.querySelector('h1').textContent = document.getElementById('heroTitle').value;
+});
+
+document.getElementById('heroImages').addEventListener('input', () => {
+  const images = Array.from(document.getElementById('heroImages').children).filter(child => child.tagName === 'INPUT').map(child => child.value);
+  homePreviewDiv.querySelector('.hero-images').innerHTML = images.map(image => `<img src="${image}" />`).join('');
+});
+
+document.getElementById('heroSlider').addEventListener('input', () => {
+  const slides = Array.from(document.getElementById('heroSlider').children).filter(child => child.tagName === 'INPUT').map(child => child.value);
+  homePreviewDiv.querySelector('.hero-slider').innerHTML = slides.map(slide => `<div>${slide}</div>`).join('');
+});
 </script>
 </html>

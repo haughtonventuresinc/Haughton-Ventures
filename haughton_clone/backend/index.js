@@ -103,6 +103,37 @@ app.post('/api/save-insight-meta', (req, res) => {
     }
 });
 
+// --- HOMEPAGE CONTENT ENDPOINTS ---
+const HOMEPAGE_PATH = path.join(__dirname, 'homepage.json');
+
+// Get homepage content
+app.get('/api/homepage', (req, res) => {
+    if (!fs.existsSync(HOMEPAGE_PATH)) {
+        return res.json({ heroTitle: '', heroImages: [], heroSlider: [] });
+    }
+    try {
+        const data = JSON.parse(fs.readFileSync(HOMEPAGE_PATH, 'utf8'));
+        res.json({ heroTitle: data.heroTitle || '', heroImages: data.heroImages || [], heroSlider: data.heroSlider || [] });
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to read homepage content', details: err.message });
+    }
+});
+
+// Update homepage content
+app.put('/api/homepage', (req, res) => {
+    const { heroTitle } = req.body;
+    if (typeof heroTitle !== 'string') {
+        return res.status(400).json({ error: 'Missing or invalid heroTitle' });
+    }
+    try {
+        fs.writeFileSync(HOMEPAGE_PATH, JSON.stringify({ heroTitle }), 'utf8');
+        res.json({ success: true });
+        console.log('[HOMEPAGE] Updated heroTitle');
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to save homepage content', details: err.message });
+    }
+});
+
 // Delete an insight HTML file and remove its metadata
 app.post('/api/delete-insight', (req, res) => {
     const { id } = req.body;
