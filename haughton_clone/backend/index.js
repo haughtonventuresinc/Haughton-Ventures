@@ -121,14 +121,11 @@ app.get('/api/homepage', (req, res) => {
 
 // Update homepage content
 app.put('/api/homepage', (req, res) => {
-    const { heroTitle } = req.body;
-    if (typeof heroTitle !== 'string') {
-        return res.status(400).json({ error: 'Missing or invalid heroTitle' });
-    }
     try {
-        fs.writeFileSync(HOMEPAGE_PATH, JSON.stringify({ heroTitle }), 'utf8');
+        // Save the entire homepage data object
+        fs.writeFileSync(HOMEPAGE_PATH, JSON.stringify(req.body, null, 2), 'utf8');
         res.json({ success: true });
-        console.log('[HOMEPAGE] Updated heroTitle');
+        console.log('[HOMEPAGE] Updated homepage data');
     } catch (err) {
         res.status(500).json({ error: 'Failed to save homepage content', details: err.message });
     }

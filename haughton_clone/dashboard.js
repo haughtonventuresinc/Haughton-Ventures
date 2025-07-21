@@ -1,7 +1,9 @@
 import BASE_URL from './base_url.js';
-document.addEventListener('DOMContentLoaded', function() {
 
-    let homepageData = {};
+// Move homepageData to global scope
+let homepageData = {};
+
+document.addEventListener('DOMContentLoaded', function() {
     const addQuill = new Quill('#add-quill', { theme: 'snow' });
     const editQuill = new Quill('#edit-quill', { theme: 'snow' });
     const sidebarToggle = document.getElementById('sidebarToggle');
@@ -233,6 +235,137 @@ function renderHeroSliderEditor(slides) {
     });
   }, 0);
 }
+
+function renderServicesItemsEditor(items) {
+  const list = document.getElementById('servicesItemsList');
+  list.innerHTML = '';
+  items.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'border p-4 rounded mb-4 bg-white';
+    div.innerHTML = `
+      <div class="grid grid-cols-1 gap-3">
+        <input type="text" placeholder="Service Title" value="${item.title||''}" class="border rounded p-2" data-field="title" data-idx="${i}" />
+        <textarea placeholder="Service Description" class="border rounded p-2 min-h-[100px]" data-field="description" data-idx="${i}">${item.description||''}</textarea>
+        <input type="text" placeholder="Icon URL" value="${item.icon||''}" class="border rounded p-2" data-field="icon" data-idx="${i}" />
+        <input type="file" accept="image/*" class="uploadServiceIconInput" data-idx="${i}" />
+        <button type="button" class="bg-red-500 text-white px-3 py-1 rounded removeServiceItemBtn" data-idx="${i}">Remove</button>
+      </div>`;
+    list.appendChild(div);
+  });
+  
+  // Add event listeners
+  setTimeout(() => {
+    list.querySelectorAll('input, textarea').forEach(input => {
+      if (!input.classList.contains('uploadServiceIconInput')) {
+        input.addEventListener('input', function() {
+          const idx = +this.dataset.idx;
+          const field = this.dataset.field;
+          homepageData.services.items[idx][field] = this.value;
+        });
+      }
+    });
+    
+    list.querySelectorAll('.removeServiceItemBtn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const idx = +this.dataset.idx;
+        homepageData.services.items.splice(idx, 1);
+        renderServicesItemsEditor(homepageData.services.items);
+      });
+    });
+    
+    list.querySelectorAll('.uploadServiceIconInput').forEach(input => {
+      input.addEventListener('change', function() {
+        const idx = +this.dataset.idx;
+        const file = this.files[0];
+        if (!file) return;
+        const formData = new FormData();
+        formData.append('image', file);
+        fetch(BASE_URL + '/api/upload-image', {
+          method: 'POST',
+          body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success && data.url) {
+            homepageData.services.items[idx].icon = data.url;
+            renderServicesItemsEditor(homepageData.services.items);
+          }
+        });
+      });
+    });
+  }, 0);
+}
+
+function renderAboutSectionsEditor(sections) {
+  const list = document.getElementById('aboutSectionsList');
+  list.innerHTML = '';
+  sections.forEach((section, i) => {
+    const div = document.createElement('div');
+    div.className = 'border p-4 rounded mb-4 bg-white';
+    div.innerHTML = `
+      <div class="grid grid-cols-1 gap-3">
+        <input type="text" placeholder="Section Number (e.g., {01})" value="${section.number||''}" class="border rounded p-2" data-field="number" data-idx="${i}" />
+        <textarea placeholder="Section Description" class="border rounded p-2 min-h-[100px]" data-field="description" data-idx="${i}">${section.description||''}</textarea>
+        <button type="button" class="bg-red-500 text-white px-3 py-1 rounded removeAboutSectionBtn" data-idx="${i}">Remove</button>
+      </div>`;
+    list.appendChild(div);
+  });
+  
+  // Add event listeners
+  setTimeout(() => {
+    list.querySelectorAll('input, textarea').forEach(input => {
+      input.addEventListener('input', function() {
+        const idx = +this.dataset.idx;
+        const field = this.dataset.field;
+        homepageData.about.sections[idx][field] = this.value;
+      });
+    });
+    
+    list.querySelectorAll('.removeAboutSectionBtn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const idx = +this.dataset.idx;
+        homepageData.about.sections.splice(idx, 1);
+        renderAboutSectionsEditor(homepageData.about.sections);
+      });
+    });
+  }, 0);
+}
+
+function renderValuesItemsEditor(items) {
+  const list = document.getElementById('valuesItemsList');
+  list.innerHTML = '';
+  items.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'border p-4 rounded mb-4 bg-white';
+    div.innerHTML = `
+      <div class="grid grid-cols-1 gap-3">
+        <input type="text" placeholder="Value Number (e.g., {01})" value="${item.number||''}" class="border rounded p-2" data-field="number" data-idx="${i}" />
+        <input type="text" placeholder="Value Title" value="${item.title||''}" class="border rounded p-2" data-field="title" data-idx="${i}" />
+        <textarea placeholder="Value Description" class="border rounded p-2 min-h-[80px]" data-field="description" data-idx="${i}">${item.description||''}</textarea>
+        <button type="button" class="bg-red-500 text-white px-3 py-1 rounded removeValueItemBtn" data-idx="${i}">Remove</button>
+      </div>`;
+    list.appendChild(div);
+  });
+  
+  // Add event listeners
+  setTimeout(() => {
+    list.querySelectorAll('input, textarea').forEach(input => {
+      input.addEventListener('input', function() {
+        const idx = +this.dataset.idx;
+        const field = this.dataset.field;
+        homepageData.values.items[idx][field] = this.value;
+      });
+    });
+    
+    list.querySelectorAll('.removeValueItemBtn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const idx = +this.dataset.idx;
+        homepageData.values.items.splice(idx, 1);
+        renderValuesItemsEditor(homepageData.values.items);
+      });
+    });
+  }, 0);
+}
 function bindEditorEvents() {
   document.getElementById('heroTitleInput').addEventListener('input', e => {
     homepageData.heroTitle = e.target.value;
@@ -281,6 +414,104 @@ function bindEditorEvents() {
       
     }
   });
+  
+  // Services section events
+  document.getElementById('servicesTitle').addEventListener('input', e => {
+    homepageData.services.title = e.target.value;
+  });
+  document.getElementById('servicesHeading').addEventListener('input', e => {
+    homepageData.services.heading = e.target.value;
+  });
+  document.getElementById('servicesDescription').addEventListener('input', e => {
+    homepageData.services.description = e.target.value;
+  });
+  document.getElementById('addServiceItemBtn').addEventListener('click', () => {
+    homepageData.services.items.push({ title: '', description: '', icon: '' });
+    renderServicesItemsEditor(homepageData.services.items);
+  });
+  
+  // Philosophy section events
+  document.getElementById('philosophyTitle').addEventListener('input', e => {
+    homepageData.philosophy.title = e.target.value;
+  });
+  document.getElementById('philosophyHeading').addEventListener('input', e => {
+    homepageData.philosophy.heading = e.target.value;
+  });
+  document.getElementById('philosophyDescription').addEventListener('input', e => {
+    homepageData.philosophy.description = e.target.value;
+  });
+  document.getElementById('philosophyButtonText').addEventListener('input', e => {
+    homepageData.philosophy.buttonText = e.target.value;
+  });
+  document.getElementById('philosophyButtonLink').addEventListener('input', e => {
+    homepageData.philosophy.buttonLink = e.target.value;
+  });
+  document.getElementById('philosophyImageSrc').addEventListener('input', e => {
+    homepageData.philosophy.image.src = e.target.value;
+    const preview = document.getElementById('philosophyImagePreviewImg');
+    const container = document.getElementById('philosophyImagePreview');
+    if (e.target.value) {
+      preview.src = e.target.value;
+      container.classList.remove('hidden');
+    } else {
+      container.classList.add('hidden');
+    }
+  });
+  
+  // About section events
+  document.getElementById('aboutTitle').addEventListener('input', e => {
+    homepageData.about.title = e.target.value;
+  });
+  document.getElementById('aboutHeading').addEventListener('input', e => {
+    homepageData.about.heading = e.target.value;
+  });
+  document.getElementById('aboutCornerImageSrc').addEventListener('input', e => {
+    homepageData.about.cornerImage.src = e.target.value;
+  });
+  document.getElementById('aboutButtonText').addEventListener('input', e => {
+    homepageData.about.buttonText = e.target.value;
+  });
+  document.getElementById('aboutButtonLink').addEventListener('input', e => {
+    homepageData.about.buttonLink = e.target.value;
+  });
+  document.getElementById('aboutMainImageSrc').addEventListener('input', e => {
+    homepageData.about.image.src = e.target.value;
+    const preview = document.getElementById('aboutMainImagePreviewImg');
+    const container = document.getElementById('aboutMainImagePreview');
+    if (e.target.value) {
+      preview.src = e.target.value;
+      container.classList.remove('hidden');
+    } else {
+      container.classList.add('hidden');
+    }
+  });
+  document.getElementById('addAboutSectionBtn').addEventListener('click', () => {
+    const nextNum = homepageData.about.sections.length + 1;
+    homepageData.about.sections.push({ number: `{0${nextNum}}`, description: '' });
+    renderAboutSectionsEditor(homepageData.about.sections);
+  });
+  
+  // Values section events
+  document.getElementById('valuesTitle').addEventListener('input', e => {
+    homepageData.values.title = e.target.value;
+  });
+  document.getElementById('valuesHeading').addEventListener('input', e => {
+    homepageData.values.heading = e.target.value;
+  });
+  document.getElementById('valuesCornerImageSrc').addEventListener('input', e => {
+    homepageData.values.cornerImage.src = e.target.value;
+  });
+  document.getElementById('addValueItemBtn').addEventListener('click', () => {
+    const nextNum = homepageData.values.items.length + 1;
+    homepageData.values.items.push({ number: `{0${nextNum}}`, title: '', description: '' });
+    renderValuesItemsEditor(homepageData.values.items);
+  });
+  
+  // Preview button
+  document.getElementById('previewHomepageBtn').addEventListener('click', () => {
+    window.open('index.html', '_blank');
+  });
+  
   document.getElementById('cancelHomepageEditBtn').onclick = () => {
     fetch(BASE_URL+'/api/homepage').then(r=>r.json()).then(data=>{
       homepageData = Object.assign({}, data, {
@@ -294,20 +525,55 @@ function bindEditorEvents() {
     });
   };
 }
-document.addEventListener('DOMContentLoaded', () => {
-  fetch(BASE_URL+'/api/homepage').then(r=>r.json()).then(data=>{
-    homepageData = Object.assign({}, data, {
-      heroImages: Array.isArray(data.heroImages)?[...data.heroImages]:[],
-      heroSlider: Array.isArray(data.heroSlider)?[...data.heroSlider]:[]
-    });
-    document.getElementById('heroTitleInput').value = homepageData.heroTitle||'';
-    renderHeroImagesEditor(homepageData.heroImages);
-    renderHeroSliderEditor(homepageData.heroSlider);
-    
-    bindEditorEvents();
+// On page load, fetches data from /api/homepage
+fetch(BASE_URL+'/api/homepage').then(r=>r.json()).then(data=>{
+  homepageData = Object.assign({}, data, {
+    heroImages: Array.isArray(data.heroImages)?[...data.heroImages]:[],
+    heroSlider: Array.isArray(data.heroSlider)?[...data.heroSlider]:[],
+    services: data.services || { title: '', heading: '', description: '', items: [] },
+    philosophy: data.philosophy || { title: '', heading: '', description: '', buttonText: '', buttonLink: '', image: { src: '', alt: '' } },
+    about: data.about || { title: '', heading: '', cornerImage: { src: '' }, sections: [], buttonText: '', buttonLink: '', image: { src: '' } },
+    values: data.values || { title: '', heading: '', cornerImage: { src: '' }, items: [] }
   });
+  
+  // Populate hero section
+  document.getElementById('heroTitleInput').value = homepageData.heroTitle||'';
+  renderHeroImagesEditor(homepageData.heroImages);
+  renderHeroSliderEditor(homepageData.heroSlider);
+  
+  // Populate services section
+  document.getElementById('servicesTitle').value = homepageData.services.title||'';
+  document.getElementById('servicesHeading').value = homepageData.services.heading||'';
+  document.getElementById('servicesDescription').value = homepageData.services.description||'';
+  renderServicesItemsEditor(homepageData.services.items||[]);
+  
+  // Populate philosophy section
+  document.getElementById('philosophyTitle').value = homepageData.philosophy.title||'';
+  document.getElementById('philosophyHeading').value = homepageData.philosophy.heading||'';
+  document.getElementById('philosophyDescription').value = homepageData.philosophy.description||'';
+  document.getElementById('philosophyButtonText').value = homepageData.philosophy.buttonText||'';
+  document.getElementById('philosophyButtonLink').value = homepageData.philosophy.buttonLink||'';
+  document.getElementById('philosophyImageSrc').value = homepageData.philosophy.image?.src||'';
+  
+  // Populate about section
+  document.getElementById('aboutTitle').value = homepageData.about.title||'';
+  document.getElementById('aboutHeading').value = homepageData.about.heading||'';
+  document.getElementById('aboutCornerImageSrc').value = homepageData.about.cornerImage?.src||'';
+  document.getElementById('aboutButtonText').value = homepageData.about.buttonText||'';
+  document.getElementById('aboutButtonLink').value = homepageData.about.buttonLink||'';
+  document.getElementById('aboutMainImageSrc').value = homepageData.about.image?.src||'';
+  renderAboutSectionsEditor(homepageData.about.sections||[]);
+  
+  // Populate values section
+  document.getElementById('valuesTitle').value = homepageData.values.title||'';
+  document.getElementById('valuesHeading').value = homepageData.values.heading||'';
+  document.getElementById('valuesCornerImageSrc').value = homepageData.values.cornerImage?.src||'';
+  renderValuesItemsEditor(homepageData.values.items||[]);
+  
+  // Add the form submission handler here instead of in a separate listener
   document.getElementById('homepageEditor').onsubmit = function(e) {
     e.preventDefault();
+    console.log('Submitting homepageData:', homepageData); // Add this for debugging
     fetch(BASE_URL+'/api/homepage', {
       method: 'PUT',
       headers: {'Content-Type':'application/json'},
@@ -323,7 +589,13 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     .catch(err=>alert('Error: '+err.message));
   };
+  
+  bindEditorEvents();
 });
+
+});
+
+
 
 
 // === CONFIGURABLE BACKEND BASE URL ===
@@ -382,13 +654,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   // Initial table render
   updateInsightsTable();
-
-  // Show edit form and load content
- 
-  
-  function hideEditForm() {
-      document.getElementById('editInsightForm').style.display = 'none';
-  }
 
 
   // Dummy delete function
@@ -729,7 +994,7 @@ document.addEventListener('DOMContentLoaded', handleSidebarResize);
         hideEditForm();
       });
 
-});
+
 
 // Contact Page Editor Functionality
 let contactData = {
