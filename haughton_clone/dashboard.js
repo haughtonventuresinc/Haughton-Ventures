@@ -3,9 +3,15 @@ import BASE_URL from './base_url.js';
 // Move homepageData to global scope
 let homepageData = {};
 
+// Move Quill editors to global scope
+let addQuill;
+let editQuill;
+
 document.addEventListener('DOMContentLoaded', function() {
-    const addQuill = new Quill('#add-quill', { theme: 'snow' });
-    const editQuill = new Quill('#edit-quill', { theme: 'snow' });
+    // Initialize Quill editors
+    addQuill = new Quill('#add-quill', { theme: 'snow' });
+    editQuill = new Quill('#edit-quill', { theme: 'snow' });
+    
     const sidebarToggle = document.getElementById('sidebarToggle');
     const sidebarNav = document.getElementById('sidebarNav');
     const sidebarOverlay = document.getElementById('sidebarOverlay');
@@ -573,7 +579,7 @@ fetch(BASE_URL+'/api/homepage').then(r=>r.json()).then(data=>{
   // Add the form submission handler here instead of in a separate listener
   document.getElementById('homepageEditor').onsubmit = function(e) {
     e.preventDefault();
-    console.log('Submitting homepageData:', homepageData); // Add this for debugging
+    //////console.log('Submitting homepageData:', homepageData); // Add this for debugging
     fetch(BASE_URL+'/api/homepage', {
       method: 'PUT',
       headers: {'Content-Type':'application/json'},
@@ -715,8 +721,6 @@ return html;
 // Cache insights data for use in generateOtherPostsHtml
 fetch(`${BASE_URL}/api/insights-data`).then(r => r.json()).then(d => localStorage.setItem('insightsDataCache', JSON.stringify(d)));
 
-// Initialize Quill editors
-
 
 // --- Modify Add Insight Handler ---
 const newInsightForm = document.getElementById('newInsightForm');
@@ -800,7 +804,7 @@ newInsightForm.addEventListener('submit', async event => {
 });
 
 // --- Modify Edit Insight Handler ---
-function editInsight(id) {
+window.editInsight = function(id) {
     fetch(insightsData)
         .then(response => response.json())
         .then(data => {
@@ -814,11 +818,11 @@ function editInsight(id) {
             document.getElementById('edit-image').value = insight.image || '';
             var previewImg = document.getElementById('edit-image-preview');
             if (insight.image) {
-            previewImg.src = insight.image;
-            previewImg.style.display = '';
+                previewImg.src = insight.image;
+                previewImg.style.display = '';
             } else {
-            previewImg.src = '';
-            previewImg.style.display = 'none';
+                previewImg.src = '';
+                previewImg.style.display = 'none';
             }
             // Load HTML content from file
             fetch(`insights/${id}.html`)
@@ -835,6 +839,11 @@ function editInsight(id) {
                         htmlBody = bodyMatch ? bodyMatch[1] : html;
                     }
                     editQuill.root.innerHTML = htmlBody.trim();
+                    // Show the modal for editing
+                    document.getElementById('editInsightPanel').classList.remove('hidden');
+                    // Set modal header and button for Edit
+                    document.querySelector('#editInsightPanel h2').textContent = 'Edit Insight';
+                    document.querySelector('#editInsightForm button[type="submit"]').textContent = 'Save Changes';
                     document.getElementById('editInsightForm').style.display = '';
                 });
         });
@@ -843,7 +852,7 @@ function editInsight(id) {
 // --- Modify Edit Insight Submit Handler ---
 document.getElementById('editInsightForm').addEventListener('submit', async function(event) {
     event.preventDefault();
-    const id = document.getElementById('edit-id').value;
+    let id = document.getElementById('edit-id').value;
     const title = document.getElementById('edit-title').value;
     const category = document.getElementById('edit-category').value;
     const date = document.getElementById('edit-date').value;
@@ -856,6 +865,11 @@ document.getElementById('editInsightForm').addEventListener('submit', async func
     } catch (e) {
         alert('Image upload failed: ' + e.message);
         return;
+    }
+    // If id is empty, treat as add
+    const isAdd = !id;
+    if (isAdd) {
+        id = `${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${Date.now()}`;
     }
     Promise.all([
         fetch('insights/insight-template.html').then(r => r.text()),
@@ -901,7 +915,7 @@ document.getElementById('editInsightForm').addEventListener('submit', async func
                 .then(resp => resp.json())
                 .then(metaResp => {
                     if (metaResp.success) {
-                        alert('Insight updated successfully!');
+                        alert(isAdd ? 'Insight added successfully!' : 'Insight updated successfully!');
                         updateInsightsTable();
                         hideEditForm();
                     } else {
@@ -981,14 +995,11 @@ document.addEventListener('DOMContentLoaded', handleSidebarResize);
       }
       function hideEditForm() {
         document.getElementById('editInsightPanel').classList.add('hidden');
-        document.getElementById('addInsightPanel').style.display = '';
+        // If you have an addInsightPanel, you can show it here, otherwise ignore this line
+        var addPanel = document.getElementById('addInsightPanel');
+        if (addPanel) addPanel.style.display = '';
       }
-      // Patch global editInsight to show modal
-      const _originalEditInsight = window.editInsight;
-      window.editInsight = function(id) {
-        showEditForm();
-        if (_originalEditInsight) _originalEditInsight(id);
-      }
+      window.hideEditForm = hideEditForm;
       // Hide edit modal on load
       document.addEventListener('DOMContentLoaded',()=>{
         hideEditForm();
@@ -1200,7 +1211,7 @@ async function updateContactHtmlFile() {
         
         // Note: In a real deployment, you would need a server-side script to write the file
         // For now, this demonstrates the HTML transformation logic
-        console.log('[CONTACT] HTML content updated (local transformation complete)');
+        //////console.log('[CONTACT] HTML content updated (local transformation complete)');
         
     } catch (error) {
         console.warn('[CONTACT] Failed to update contact.html locally:', error.message);
@@ -1249,7 +1260,7 @@ function updatePortfolioTable() {
         .then(response => response.json())
         .then(result => {
             if (result.success && result.data && result.data.portfolioItems) {
-                console.log('[PORTFOLIO] Portfolio data loaded successfully');
+                //////console.log('[PORTFOLIO] Portfolio data loaded successfully');
                 
                 portfolioData = result.data;
                 const portfolioTable = document.getElementById('portfolioBody');
@@ -1405,7 +1416,7 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(response => response.json())
             .then(data => {
-                console.log('Portfolio saved successfully:', data);
+                //////console.log('Portfolio saved successfully:', data);
                 updatePortfolioTable();
                 hidePortfolioModal();
                 document.getElementById('portfolioForm').reset();
@@ -1493,7 +1504,7 @@ function loadAboutData() {
             if (data.success || data.hero) {
                 aboutData = { ...aboutData, ...data };
             }
-            console.log(data)
+            //////console.log(data)
             populateAboutForm();
         })
         .catch(() => {
@@ -1565,7 +1576,7 @@ function populateAboutForm() {
         showImagePreview('mottoImagePreview', 'mottoImagePreviewImg', aboutData.motto.image);
     }
     
-    console.log('About form populated with data:', aboutData);
+    //////console.log('About form populated with data:', aboutData);
 }
 
 // Render values editor
@@ -1880,5 +1891,55 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('a[href="#about"]')?.addEventListener('click', function() {
         setTimeout(loadAboutData, 100); // Small delay to ensure section is visible
     });
+    
+    // Add event listener for Add Insight button
+    document.getElementById('addInsightBtn').addEventListener('click', function() {
+        // Show the edit modal for adding
+        document.getElementById('edit-id').value = '';
+        document.getElementById('edit-title').value = '';
+        document.getElementById('edit-category').value = '';
+        document.getElementById('edit-date').value = '';
+        document.getElementById('edit-excerpt').value = '';
+        document.getElementById('edit-image').value = '';
+        document.getElementById('edit-image-preview').src = '';
+        document.getElementById('edit-image-preview').style.display = 'none';
+        if (typeof editQuill !== 'undefined') editQuill.root.innerHTML = '';
+        document.getElementById('editInsightPanel').classList.remove('hidden');
+        // Set modal header and button for Add
+        document.querySelector('#editInsightPanel h2').textContent = 'Add Insight';
+        document.querySelector('#editInsightForm button[type="submit"]').textContent = 'Add Insight';
+    });
+
+    
 });
+
+// Helper function to show sections
+function showSection(sectionName) {
+    // Hide all sections
+    ['home', 'about', 'portfolio', 'insight', 'contact'].forEach(section => {
+        const element = document.getElementById(section + 'Section');
+        if (element) {
+            element.classList.add('hidden');
+        }
+    });
+    
+    // Show target section
+    const targetElement = document.getElementById(sectionName + 'Section');
+    if (targetElement) {
+        targetElement.classList.remove('hidden');
+    }
+    
+    // Update active nav state
+    document.querySelectorAll('[data-section]').forEach(navLink => {
+        navLink.classList.remove('bg-blue-600', 'text-white');
+        navLink.classList.add('text-gray-700', 'hover:bg-gray-100');
+    });
+    
+    // Set active nav for current section
+    const activeNav = document.querySelector(`[data-section="${sectionName}"]`);
+    if (activeNav) {
+        activeNav.classList.remove('text-gray-700', 'hover:bg-gray-100');
+        activeNav.classList.add('bg-blue-600', 'text-white');
+    }
+}
 

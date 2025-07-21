@@ -113,10 +113,10 @@ document.addEventListener('DOMContentLoaded', function() {
       const data = await response.json();
       
       if (data.services) {
-        console.log('Services data loaded:', data.services);
+        //console.log('Services data loaded:', data.services);
         populateServicesSection(data.services);
       } else {
-        console.log('No services data found in response:', data);
+        //console.log('No services data found in response:', data);
       }
     } catch (error) {
       console.error('Error loading services data:', error);
@@ -171,10 +171,10 @@ document.addEventListener('DOMContentLoaded', function() {
       const data = await response.json();
       
       if (data.philosophy) {
-        console.log('Philosophy data loaded:', data.philosophy);
+        //console.log('Philosophy data loaded:', data.philosophy);
         populatePhilosophySection(data.philosophy);
       } else {
-        console.log('No philosophy data found in response:', data);
+        //console.log('No philosophy data found in response:', data);
       }
     } catch (error) {
       console.error('Error loading philosophy data:', error);
@@ -220,10 +220,10 @@ document.addEventListener('DOMContentLoaded', function() {
       const data = await response.json();
       
       if (data.values) {
-        console.log('Values data loaded:', data.values);
+        //console.log('Values data loaded:', data.values);
         populateValuesSection(data.values);
       } else {
-        console.log('No values data found in response:', data);
+        //console.log('No values data found in response:', data);
       }
     } catch (error) {
       console.error('Error loading values data:', error);
@@ -274,10 +274,10 @@ document.addEventListener('DOMContentLoaded', function() {
       const data = await response.json();
       
       if (data.about) {
-        console.log('About data loaded:', data.about);
+        //console.log('About data loaded:', data.about);
         populateAboutSection(data.about);
       } else {
-        console.log('No about data found in response:', data);
+        //console.log('No about data found in response:', data);
       }
     } catch (error) {
       console.error('Error loading about data:', error);
@@ -367,14 +367,14 @@ document.addEventListener('DOMContentLoaded', function() {
       const data = await response.json();
       
       if (data.heroTitle || data.heroImages || data.heroSlider) {
-        console.log('Hero data loaded:', { 
+        /*console.log('Hero data loaded:', { 
           title: data.heroTitle, 
           images: data.heroImages?.length, 
           slider: data.heroSlider?.length 
-        });
+        }); */
         populateHeroSection(data);
       } else {
-        console.log('No hero data found in response:', data);
+        //console.log('No hero data found in response:', data);
       }
     } catch (error) {
       console.error('Error loading hero data:', error);
