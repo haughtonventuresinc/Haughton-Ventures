@@ -67,6 +67,37 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
+    // Section navigation
+    document.querySelectorAll('[data-section]').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetSection = this.getAttribute('data-section');
+            
+            // Hide all sections
+            ['home', 'about', 'portfolio', 'insight', 'contact'].forEach(section => {
+                const element = document.getElementById(section + 'Section');
+                if (element) {
+                    element.classList.add('hidden');
+                }
+            });
+            
+            // Show target section
+            const targetElement = document.getElementById(targetSection + 'Section');
+            if (targetElement) {
+                targetElement.classList.remove('hidden');
+            }
+            
+            // Update active nav state
+            document.querySelectorAll('[data-section]').forEach(navLink => {
+                navLink.classList.remove('bg-blue-600', 'text-white');
+                navLink.classList.add('text-gray-700', 'hover:bg-gray-100');
+            });
+            
+            this.classList.remove('text-gray-700', 'hover:bg-gray-100');
+            this.classList.add('bg-blue-600', 'text-white');
+        });
+    });
+    
     // Handle window resize
     function handleSidebarResize() {
         if (window.innerWidth >= 768) {
@@ -650,100 +681,7 @@ document.addEventListener('DOMContentLoaded', handleSidebarResize);
       if(window.innerWidth < 768) sidebarLinks.classList.add('hidden');
     });
   });
-// --- Home Section Editor Logic ---
-const homeEditorDiv = document.getElementById('homeEditor');
-const homePreviewDiv = document.getElementById('homePreview');
-const saveHomeContentBtn = document.getElementById('saveHomeContent');
-const cancelHomeEditBtn = document.getElementById('cancelHomeEdit');
 
-// Load homepage data from API
-fetch(BASE_URL + '/api/homepage')
-  .then(response => response.json())
-  .then(data => {
-    // Prefill form fields
-    document.getElementById('heroTitleInput').value = data.heroTitle;
-    const heroImagesContainer = document.getElementById('heroImages');
-    data.heroImages.forEach((image, index) => {
-      const removeButton = document.createElement('button');
-      removeButton.textContent = 'Remove';
-      removeButton.onclick = () => {
-        heroImagesContainer.removeChild(imageInput);
-        heroImagesContainer.removeChild(removeButton);
-      };
-      heroImagesContainer.appendChild(removeButton);
-    });
-    const heroSliderContainer = document.getElementById('heroSlider');
-    data.heroSlider.forEach((slide, index) => {
-      const removeButton = document.createElement('button');
-      removeButton.textContent = 'Remove';
-      removeButton.onclick = () => {
-        heroSliderContainer.removeChild(slideInput);
-        heroSliderContainer.removeChild(removeButton);
-      };
-      heroSliderContainer.appendChild(removeButton);
-    });
-  });
-
-// Add event listeners for add image and add slide buttons
-document.getElementById('addHeroImage').addEventListener('click', () => {
-  const heroImagesContainer = document.getElementById('heroImages');
-  const imageInput = document.createElement('input');
-  imageInput.type = 'text';
-  heroImagesContainer.appendChild(imageInput);
-  const removeButton = document.createElement('button');
-  removeButton.textContent = 'Remove';
-  removeButton.onclick = () => {
-    heroImagesContainer.removeChild(imageInput);
-    heroImagesContainer.removeChild(removeButton);
-  };
-  heroImagesContainer.appendChild(removeButton);
-});
-
-document.getElementById('addHeroSlide').addEventListener('click', () => {
-  const heroSliderContainer = document.getElementById('heroSlider');
-  const slideInput = document.createElement('input');
-  slideInput.type = 'text';
-  heroSliderContainer.appendChild(slideInput);
-  const removeButton = document.createElement('button');
-  removeButton.textContent = 'Remove';
-  removeButton.onclick = () => {
-    heroSliderContainer.removeChild(slideInput);
-    heroSliderContainer.removeChild(removeButton);
-  };
-  heroSliderContainer.appendChild(removeButton);
-});
-
-// Save form data to API
-saveHomeContentBtn.addEventListener('click', () => {
-  const heroTitle = document.getElementById('heroTitle').value;
-  const heroImages = Array.from(document.getElementById('heroImages').children).filter(child => child.tagName === 'INPUT').map(child => child.value);
-  const heroSlider = Array.from(document.getElementById('heroSlider').children).filter(child => child.tagName === 'INPUT').map(child => child.value);
-  const data = { heroTitle, heroImages, heroSlider };
-  fetch('/api/homepage', {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log(data);
-  });
-});
-
-// Live preview
-document.getElementById('heroTitle').addEventListener('input', () => {
-  homePreviewDiv.querySelector('h1').textContent = document.getElementById('heroTitle').value;
-});
-
-document.getElementById('heroImages').addEventListener('input', () => {
-  const images = Array.from(document.getElementById('heroImages').children).filter(child => child.tagName === 'INPUT').map(child => child.value);
-  homePreviewDiv.querySelector('.hero-images').innerHTML = images.map(image => `<img src="${image}" />`).join('');
-});
-
-document.getElementById('heroSlider').addEventListener('input', () => {
-  const slides = Array.from(document.getElementById('heroSlider').children).filter(child => child.tagName === 'INPUT').map(child => child.value);
-  homePreviewDiv.querySelector('.hero-slider').innerHTML = slides.map(slide => `<div>${slide}</div>`).join('');
-});
 
   // Smooth scroll for anchor links (for browsers that don't support CSS scroll-behavior)
   document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
@@ -1035,5 +973,187 @@ document.getElementById('previewContactBtn').addEventListener('click', function(
 document.addEventListener('DOMContentLoaded', function() {
     // Load contact data
     loadContactData();
+});
+
+// === PORTFOLIO MANAGEMENT FUNCTIONALITY ===
+let portfolioData = { portfolioItems: [] };
+
+// Load and display portfolio items
+function updatePortfolioTable() {
+    fetch(`${BASE_URL}/api/portfolio-data?_=${new Date().getTime()}`)
+        .then(response => response.json())
+        .then(result => {
+            if (result.success && result.data && result.data.portfolioItems) {
+                console.log('[PORTFOLIO] Portfolio data loaded successfully');
+                
+                portfolioData = result.data;
+                const portfolioTable = document.getElementById('portfolioBody');
+                portfolioTable.innerHTML = '';
+                
+                result.data.portfolioItems.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td class="px-4 py-4 md:py-6 align-middle">${item.company}</td>
+                        <td class="px-4 py-4 md:py-6 align-middle">${item.industry}</td>
+                        <td class="px-4 py-4 md:py-6 align-middle">${item.stage}</td>
+                        <td class="px-4 py-4 md:py-6 align-middle">${item.founded}</td>
+                        <td class="px-4 py-4 md:py-6 align-middle">
+                            <button onclick="editPortfolioItem(${item.id})" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded shadow transition mr-2">Edit</button>
+                            <button onclick="deletePortfolioItem(${item.id})" class="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 rounded shadow transition">Delete</button>
+                        </td>
+                    `;
+                    portfolioTable.appendChild(row);
+                });
+            } else {
+                console.error('[PORTFOLIO] Failed to load portfolio data:', result.error);
+            }
+        })
+        .catch(error => {
+            console.error('[PORTFOLIO] Error fetching portfolio data:', error);
+        });
+}
+
+// Show portfolio modal for adding new item
+function showPortfolioModal() {
+    document.getElementById('portfolioModal').classList.remove('hidden');
+    document.getElementById('portfolioModalTitle').textContent = 'Add Portfolio Item';
+    document.getElementById('portfolioForm').reset();
+    document.getElementById('portfolio-id').value = ''; // Clear hidden ID for new item
+}
+
+// Hide portfolio modal
+function hidePortfolioModal() {
+    document.getElementById('portfolioModal').classList.add('hidden');
+}
+
+// Fixed edit portfolio item function
+function editPortfolioItem(id) {
+    const item = portfolioData.portfolioItems.find(p => p.id === id);
+    if (!item) return;
+    
+    // Populate the same form fields (not edit-specific ones)
+    document.getElementById('portfolio-id').value = item.id;
+    document.getElementById('portfolio-company').value = item.company;
+    document.getElementById('portfolio-intro').value = item.intro;
+    document.getElementById('portfolio-industry').value = item.industry;
+    document.getElementById('portfolio-stage').value = item.stage;
+    document.getElementById('portfolio-founded').value = item.founded;
+    document.getElementById('portfolio-description').value = item.description;
+    
+    // Change modal title and show modal
+    document.getElementById('portfolioModalTitle').textContent = 'Edit Portfolio Item';
+    document.getElementById('portfolioModal').classList.remove('hidden');
+}
+
+// Delete portfolio item
+function deletePortfolioItem(id) {
+    if (!confirm('Are you sure you want to delete this portfolio item?')) return;
+    
+    // Remove item from portfolioData
+    portfolioData.portfolioItems = portfolioData.portfolioItems.filter(item => item.id !== id);
+    
+    // Save updated data
+    fetch(BASE_URL + '/api/save-portfolio', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(portfolioData)
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.success) {
+            alert('Portfolio item deleted successfully!');
+            updatePortfolioTable();
+        } else {
+            alert('Failed to delete: ' + (result.error || 'Unknown error'));
+        }
+    })
+    .catch(error => {
+        alert('Error deleting: ' + error.message);
+    });
+}
+
+
+
+// Make functions globally available
+window.showPortfolioModal = showPortfolioModal;
+window.hidePortfolioModal = hidePortfolioModal;
+window.editPortfolioItem = editPortfolioItem;
+window.deletePortfolioItem = deletePortfolioItem;
+
+// Wait for DOM to be ready before adding event listeners
+document.addEventListener('DOMContentLoaded', function() {
+    // Add new portfolio item
+    const portfolioForm = document.getElementById('portfolioForm');
+    if (portfolioForm) {
+        portfolioForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const company = document.getElementById('portfolio-company').value;
+            const intro = document.getElementById('portfolio-intro').value;
+            const industry = document.getElementById('portfolio-industry').value;
+            const stage = document.getElementById('portfolio-stage').value;
+            const founded = document.getElementById('portfolio-founded').value;
+            const description = document.getElementById('portfolio-description').value;
+            const portfolioId = document.getElementById('portfolio-id').value;
+            
+            // Check if this is an edit (has ID) or new item
+            if (portfolioId) {
+                // Edit existing item
+                const itemIndex = portfolioData.portfolioItems.findIndex(item => item.id == portfolioId);
+                if (itemIndex !== -1) {
+                    portfolioData.portfolioItems[itemIndex] = {
+                        id: parseInt(portfolioId),
+                        company,
+                        intro,
+                        industry,
+                        stage,
+                        founded: parseInt(founded),
+                        description
+                    };
+                }
+            } else {
+                // Generate new ID for new item
+                const newId = portfolioData.portfolioItems.length > 0 
+                    ? Math.max(...portfolioData.portfolioItems.map(item => item.id)) + 1 
+                    : 1;
+                
+                const newItem = {
+                    id: newId,
+                    company,
+                    intro,
+                    industry,
+                    stage,
+                    founded: parseInt(founded),
+                    description
+                };
+                
+                portfolioData.portfolioItems.push(newItem);
+            }
+            
+            // Save to backend
+            fetch(BASE_URL + '/api/save-portfolio', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(portfolioData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Portfolio saved successfully:', data);
+                updatePortfolioTable();
+                hidePortfolioModal();
+                document.getElementById('portfolioForm').reset();
+                document.getElementById('portfolio-id').value = ''; // Clear the hidden ID field
+            })
+            .catch(error => {
+                console.error('Error saving portfolio:', error);
+                alert('Error saving portfolio item. Please try again.');
+            });
+        });
+    }
+    
+    // Initialize portfolio table
+    updatePortfolioTable();
 });
 

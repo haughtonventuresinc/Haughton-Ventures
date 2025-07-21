@@ -242,8 +242,36 @@ app.post('/api/save-contact', (req, res) => {
     }
 });
 
-// Remove the /api/update-contact-html endpoint since frontend will handle HTML updates
-// Remove the /api/contact-preview endpoint as it's not needed
+// --- PORTFOLIO ENDPOINTS ---
+const PORTFOLIO_DATA_PATH = path.join(__dirname, 'portfolio-data.json');
+
+// Get portfolio data
+app.get('/api/portfolio-data', (req, res) => {
+    try {
+        if (fs.existsSync(PORTFOLIO_DATA_PATH)) {
+            const data = JSON.parse(fs.readFileSync(PORTFOLIO_DATA_PATH, 'utf8'));
+            res.json({ success: true, data });
+        } else {
+            res.json({ success: false, error: 'Portfolio data not found' });
+        }
+    } catch (error) {
+        console.error('[PORTFOLIO] Error reading portfolio data:', error);
+        res.status(500).json({ success: false, error: 'Failed to load portfolio data' });
+    }
+});
+
+// Save portfolio data
+app.post('/api/save-portfolio', (req, res) => {
+    try {
+        const portfolioData = req.body;
+        fs.writeFileSync(PORTFOLIO_DATA_PATH, JSON.stringify(portfolioData, null, 2));
+        console.log('[PORTFOLIO] Portfolio data saved successfully');
+        res.json({ success: true, message: 'Portfolio data saved successfully' });
+    } catch (error) {
+        console.error('[PORTFOLIO] Error saving portfolio data:', error);
+        res.status(500).json({ success: false, error: 'Failed to save portfolio data' });
+    }
+});
 
 app.listen(PORT, () => {
     console.log(`Backend server running at http://localhost:${PORT}`);

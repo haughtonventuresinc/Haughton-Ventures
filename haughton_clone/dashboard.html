@@ -6,16 +6,35 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Quill CSS -->
   <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-
+  
+  <!-- IBM Plex Sans Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+  
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Insights Dashboard</title>
+  
+  <style>
+    * {
+      font-family: 'IBM Plex Sans', sans-serif;
+    }
+    
+    body {
+      background-color: #f4f3ef;
+    }
+    
+    .dashboard-bg {
+      background-color: #f4f3ef;
+    }
+  </style>
 
 </head>
 
-<body>
+<body style="background-color: #f4f3ef;">
 
-  <div class="flex min-h-screen h-screen w-full flex-col md:flex-row">
+  <div class="flex min-h-screen h-screen w-full flex-col md:flex-row" style="background-color: #f4f3ef;">
     <!-- Mobile Hamburger Button -->
     <button id="sidebarToggle" class="md:hidden fixed top-4 left-4 z-50 bg-white shadow-lg rounded-lg p-3 border border-gray-200 hover:bg-gray-50 transition-all duration-200">
       <div class="w-6 h-6 flex flex-col justify-center items-center">
@@ -27,21 +46,23 @@
 
     <!-- Sidebar (responsive) -->
     <nav id="sidebarNav"
-      class="fixed md:relative w-full md:w-64 h-full md:h-auto bg-white text-gray-800 flex flex-col items-center py-6 md:py-10 shadow-xl border-r border-gray-200 z-40 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out">
-        <h2 class="text-2xl font-bold mb-8 md:mb-10 tracking-wide text-center text-gray-900">Dashboard</h2>
+      class="fixed md:relative w-full md:w-64 h-full md:h-auto bg-black text-white flex flex-col items-center py-6 md:py-10 shadow-xl border-r border-gray-800 z-40 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out">
+        <h2 class="text-2xl font-bold mb-8 md:mb-10 tracking-wide text-center text-white">Dashboard</h2>
       <div id="sidebarLinks"
         class="flex flex-col w-full px-4 space-y-3 flex-1">
         <a href="#home"
-          class="w-full px-6 py-3 rounded-lg hover:bg-gray-100 hover:text-blue-600 transition-all duration-200 text-lg text-center font-medium border border-transparent hover:border-gray-200 hover:shadow-sm">Home</a>
+          class="w-full px-6 py-3 rounded-lg hover:bg-gray-800 hover:text-blue-400 transition-all duration-200 text-lg text-center font-medium border border-transparent hover:border-gray-600 hover:shadow-sm text-white">Home</a>
         <a href="#about"
-          class="w-full px-6 py-3 rounded-lg hover:bg-gray-100 hover:text-blue-600 transition-all duration-200 text-lg text-center font-medium border border-transparent hover:border-gray-200 hover:shadow-sm">About</a>
-        <a href="#insight"
-          class="w-full px-6 py-3 rounded-lg hover:bg-gray-100 hover:text-blue-600 transition-all duration-200 text-lg text-center font-medium border border-transparent hover:border-gray-200 hover:shadow-sm">Insight</a>
+          class="w-full px-6 py-3 rounded-lg hover:bg-gray-800 hover:text-blue-400 transition-all duration-200 text-lg text-center font-medium border border-transparent hover:border-gray-600 hover:shadow-sm text-white">About</a>
+        <a href="#portfolio"
+          class="w-full px-6 py-3 rounded-lg hover:bg-gray-800 hover:text-blue-400 transition-all duration-200 text-lg text-center font-medium border border-transparent hover:border-gray-600 hover:shadow-sm text-white">Portfolio</a>
+          <a href="#insight"
+          class="w-full px-6 py-3 rounded-lg hover:bg-gray-800 hover:text-blue-400 transition-all duration-200 text-lg text-center font-medium border border-transparent hover:border-gray-600 hover:shadow-sm text-white">Insight</a>
         <a href="#contact"
-          class="w-full px-6 py-3 rounded-lg hover:bg-gray-100 hover:text-blue-600 transition-all duration-200 text-lg text-center font-medium border border-transparent hover:border-gray-200 hover:shadow-sm">Contact</a>
+          class="w-full px-6 py-3 rounded-lg hover:bg-gray-800 hover:text-blue-400 transition-all duration-200 text-lg text-center font-medium border border-transparent hover:border-gray-600 hover:shadow-sm text-white">Contact</a>
       </div>
       <button onclick="logoutDashboard()"
-        class="w-full mx-4 mt-auto bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-bold px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 text-lg transform hover:scale-105 border border-red-600">
+        class="w-full mx-4 mt-auto bg-red hover:from-red-600 hover:to-red-700 text-white font-bold px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 text-lg transform hover:scale-105 border border-red-600">
         <span class="flex items-center justify-center">
           <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
@@ -179,6 +200,90 @@
           </div>
 
         </section>
+        <section id="portfolio" class="w-full">
+          <div class="bg-white shadow-xl rounded-2xl p-4 md:p-8 mb-8">
+            <div class="flex justify-between items-center mb-6">
+              <h2 class="text-xl font-semibold text-gray-700">Portfolio Management</h2>
+              <button onclick="showPortfolioModal()" class="bg-black hover:bg-black-600 text-white py-3 px-6 rounded-xl shadow-lg transition">
+                <span class="text-xl mr-2">+</span> Add New Portfolio Item
+              </button>
+            </div>
+            <div class="overflow-x-auto">
+              <table id="portfolioTable" class="min-w-full bg-white rounded-lg">
+                <thead class="bg-gray-100">
+                  <tr>
+                    <th class="px-4 py-4 md:py-6 text-left text-xs font-semibold text-gray-600 uppercase">Company</th>
+                    <th class="px-4 py-4 md:py-6 text-left text-xs font-semibold text-gray-600 uppercase">Industry</th>
+                    <th class="px-4 py-4 md:py-6 text-left text-xs font-semibold text-gray-600 uppercase">Stage</th>
+                    <th class="px-4 py-4 md:py-6 text-left text-xs font-semibold text-gray-600 uppercase">Founded</th>
+                    <th class="px-4 py-4 md:py-6 text-left text-xs font-semibold text-gray-600 uppercase">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="portfolioBody">
+                  <!-- Content will be populated by JavaScript -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Add/Edit Portfolio Modal -->
+          <div id="portfolioModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm transition-all duration-300 min-h-screen h-full hidden">
+            <div class="w-full max-w-4xl mx-auto bg-white/90 shadow-2xl rounded-3xl p-8 relative overflow-hidden border border-gray-200">
+              <!-- Header -->
+              <div class="flex justify-between items-center mb-6">
+                <h2 id="portfolioModalTitle" class="text-2xl font-bold text-gray-800">Add Portfolio Item</h2>
+                <button onclick="hidePortfolioModal()" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+              </div>
+              
+              <!-- Form -->
+              <form id="portfolioForm" class="space-y-6">
+                <input type="hidden" id="portfolio-id" value="">
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Company Name</label>
+                    <input type="text" id="portfolio-company" class="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-400 focus:outline-none" required>
+                  </div>
+                  
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Industry</label>
+                    <input type="text" id="portfolio-industry" class="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-400 focus:outline-none" required>
+                  </div>
+                  
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Stage</label>
+                    <input type="text" id="portfolio-stage" class="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-400 focus:outline-none" required>
+                  </div>
+                  
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Founded</label>
+                    <input type="text" id="portfolio-founded" class="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-400 focus:outline-none" required>
+                  </div>
+                </div>
+                
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Introduction</label>
+                  <textarea id="portfolio-intro" class="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-400 focus:outline-none" rows="3" required></textarea>
+                </div>
+                
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                  <textarea id="portfolio-description" class="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-400 focus:outline-none" rows="4" required></textarea>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="flex gap-4 pt-4">
+                  <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-8 py-3 rounded-xl shadow-lg transition">
+                    Save Portfolio Item
+                  </button>
+                  <button type="button" onclick="hidePortfolioModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-semibold px-8 py-3 rounded-xl shadow-lg transition">
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
         <section id="about" class="w-full">
           <div
             class="w-full max-w-6xl mx-auto bg-white/80 shadow-2xl rounded-3xl p-8 mb-8 overflow-hidden border border-gray-200">
@@ -229,7 +334,7 @@
               
               <!-- Contact Information Section -->
               <div class="bg-gray-50 p-6 rounded-lg">
-                <h3 class="text-xl font-semibold text-gray-800 mb-4">Contact Information</h3>
+                <h3 class="text-xl font-bold text-gray-800 mb-4">Contact Information</h3>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div class="space-y-4">
@@ -337,7 +442,7 @@
       <script type="module" src="./dashboard.js"></script>
 
 <script>
-const sectionIds = ['home', 'about', 'insight', 'contact'];
+const sectionIds = ['home', 'about', 'portfolio', 'insight', 'contact'];
 function showSection(id) {
   sectionIds.forEach(sid => {
     const sec = document.getElementById(sid);

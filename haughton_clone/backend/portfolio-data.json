@@ -1,0 +1,40 @@
+{
+  "portfolioItems": [
+    {
+      "id": 1,
+      "company": "Rentberry",
+      "intro": "Rentberry is a real estate platform streamlining long-term rental processes with transparent pricing and digital lease agreements.",
+      "industry": "Real Estate Technology",
+      "stage": "Growth Stage (Venture-Backed)",
+      "founded": "2015",
+      "description": "Rentberry is a real estate platform streamlining long-term rental processes with transparent pricing and digital lease agreements."
+    },
+    {
+      "id": 2,
+      "company": "Azure Printed Homes",
+      "intro": "Azure Printed Homes uses 3D printing and recycled materials to build sustainable backyard studios, ADUs, and homes at affordable prices.",
+      "industry": "3D Printing & Clean Tech",
+      "stage": "Growth Stage (Venture-Backed)",
+      "founded": "2019",
+      "description": "Azure Printed Homes uses 3D printing and recycled materials to build sustainable backyard studios, ADUs, and homes at affordable prices."
+    },
+    {
+      "id": 3,
+      "company": "SuperPhone®",
+      "intro": "SuperPhone® is a mobile messaging platform designed to help professionals, creators, and brands deepen relationships and drive revenue through personalized SMS and voice communication—powered by automation and analytics.",
+      "industry": "Business/Productivity Software (MarTech/SMS marketing)",
+      "stage": "Series A",
+      "founded": "2014",
+      "description": "SuperPhone® is a mobile messaging platform designed to help professionals, creators, and brands deepen relationships and drive revenue through personalized SMS and voice communication—powered by automation and analytics."
+    },
+    {
+      "id": 4,
+      "company": "ARTSKIES",
+      "intro": "ARTSKIES is a full-service media, entertainment, and content creation.",
+      "industry": "Media/Device",
+      "stage": "Seed",
+      "founded": 2016,
+      "description": "ARTSKIEs is a full-service media, entertainment, and content creation."
+    }
+  ]
+}
