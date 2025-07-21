@@ -190,6 +190,61 @@ app.post('/api/login', (req, res) => {
     }
 });
 
+// --- CONTACT PAGE ENDPOINTS ---
+const CONTACT_DATA_PATH = path.join(__dirname, 'contact-data.json');
+// Remove the CONTACT_HTML_PATH since backend won't access frontend files
+
+// Get contact page data
+app.get('/api/contact-data', (req, res) => {
+    if (!fs.existsSync(CONTACT_DATA_PATH)) {
+        // Return default contact data
+        const defaultData = {
+            heroTitle: "It's time to talk",
+            heroSubtitle: "Leave us a message and we will get back to you as soon as we can.",
+            heroImage: "../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50af2_Rectangle%20324.webp",
+            sectionTitle: "Inquire now",
+            contactDescription: "Fill out the form to the right and we will get back to you soon. Don't like forms? No worries, feel free to send us a direct email.",
+            emailLabel: "Email",
+            contactEmail: "contact@haughtonventures.com"
+        };
+        return res.json({ success: true, data: defaultData });
+    }
+    
+    try {
+        const data = JSON.parse(fs.readFileSync(CONTACT_DATA_PATH, 'utf8'));
+        res.json({ success: true, data });
+    } catch (err) {
+        console.error('[CONTACT] Failed to read contact data:', err);
+        res.status(500).json({ error: 'Failed to read contact data', details: err.message });
+    }
+});
+
+// Save contact page data
+app.post('/api/save-contact', (req, res) => {
+    const contactData = req.body;
+    
+    // Validate required fields
+    const requiredFields = ['heroTitle', 'heroSubtitle', 'sectionTitle', 'contactDescription', 'emailLabel', 'contactEmail'];
+    for (const field of requiredFields) {
+        if (!contactData[field]) {
+            return res.status(400).json({ error: `Missing required field: ${field}` });
+        }
+    }
+    
+    try {
+        // Save contact data to JSON file
+        fs.writeFileSync(CONTACT_DATA_PATH, JSON.stringify(contactData, null, 2), 'utf8');
+        console.log('[CONTACT] Contact data saved successfully');
+        res.json({ success: true, message: 'Contact data saved successfully' });
+    } catch (err) {
+        console.error('[CONTACT] Failed to save contact data:', err);
+        res.status(500).json({ error: 'Failed to save contact data', details: err.message });
+    }
+});
+
+// Remove the /api/update-contact-html endpoint since frontend will handle HTML updates
+// Remove the /api/contact-preview endpoint as it's not needed
+
 app.listen(PORT, () => {
     console.log(`Backend server running at http://localhost:${PORT}`);
 });
