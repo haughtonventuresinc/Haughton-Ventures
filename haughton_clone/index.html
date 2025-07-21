@@ -65,82 +65,6 @@
     <div id="dynamic-hero-section"></div>
   </div>
 </div>
-<script type="module">
-import BASE_URL from './base_url.js';
-// Fetch and render homepage hero section from backend
-document.addEventListener('DOMContentLoaded', () => {
-    fetch(`${BASE_URL}/api/homepage`)
-    
-        .then(res => res.json())
-        .then(data => {
-            console.log('Homepage data:', data);
-
-            const hero = document.getElementById('dynamic-hero-section');
-            if (!hero) return;
-
-            // Render hero title
-            let html = `<div class='home-title-box'><h1 class='heading h1' id='homeHeroTitle'>${data.heroTitle || ''}</h1></div><div class='spacer _48'></div>`;
-
-            // Render hero images and slider as a single block
-            if (Array.isArray(data.heroImages) && data.heroImages.length > 0) {
-                html += `<div class="home-hero-image-block">`;
-                // Render all hero images (backgrounds)
-                data.heroImages.forEach(img => {
-                    html += `<img src="${img.src}" alt="${img.alt||''}" class="${img.class||''}"` +
-                        (img.loading ? ` loading="${img.loading}"` : ' loading="lazy"') +
-                        (img.sizes ? ` sizes="${img.sizes}"` : '') +
-                        (img.srcset ? ` srcset="${img.srcset}"` : '') +
-                        ' />';
-                });
-                // Render hero slider INSIDE the image block, as overlay
-                if (Array.isArray(data.heroSlider) && data.heroSlider.length > 0) {
-                    html += `<div data-delay="4000" data-animation="cross" class="company-hero-slider w-slider" data-autoplay="false" data-easing="ease" data-hide-arrows="false" data-disable-swipe="false" data-autoplay-limit="0" data-nav-spacing="3" data-duration="500" data-infinite="true" role="region" aria-label="carousel"><div class="w-slider-mask" id="w-slider-mask-0">`;
-                    data.heroSlider.forEach((slide, idx) => {
-                        // For the first slide, show; others: hide and set aria-hidden
-                        let slideStyle = idx === 0 ? "transition: all; transform: translateX(0px); opacity: 1; z-index: 2;" : "transition: all; transform: translateX(0px); opacity: 1; z-index: 1; visibility: hidden;";
-                        let ariaHidden = idx === 0 ? '' : ' aria-hidden="true"';
-                        html += `<div class="company-hero-slide w-slide" aria-label="${idx+1} of ${data.heroSlider.length}" role="group" style="${slideStyle}"${ariaHidden}>`;
-                        html += `<div class="company-hero-slide-content"${ariaHidden}>`;
-                        html += `<div><img src="${slide.logo}" loading="lazy" width="${slide.logoWidth||150}" alt="" class="${slide.logoClass||''}"${ariaHidden}></div>`;
-                        html += `<div class="company-tag-row"${ariaHidden}>`;
-                        if (Array.isArray(slide.tags)) {
-                            slide.tags.forEach(tag => {
-                                html += `<div class="company-tag"${ariaHidden}>${tag}</div>`;
-                            });
-                        }
-                        html += `</div><div class="company-divider"${ariaHidden}></div><div class="text-box _250px"${ariaHidden}><p class="paragraph medium"${ariaHidden}>${slide.description||''}</p></div><a href="${slide.link||'#'}" class="underline-link white"${idx!==0?' tabindex="-1"':''}${ariaHidden}>View Profile</a>`;
-                        html += `</div></div>`;
-                    });
-                    html += `<div aria-live="off" aria-atomic="true" class="w-slider-aria-label" data-wf-ignore="">Slide 1 of ${data.heroSlider.length}.</div>`;
-                    html += `</div><div class="hero-slider-arrow let w-slider-arrow-left" role="button" tabindex="0" aria-controls="w-slider-mask-0" aria-label="previous slide"><div class="hero-slider-arrow-icon w-icon-slider-left"></div></div><div class="hero-slider-arrow w-slider-arrow-right" role="button" tabindex="0" aria-controls="w-slider-mask-0" aria-label="next slide"><div class="hero-slider-arrow-icon w-icon-slider-right"></div></div><div class="hidden w-slider-nav w-round w-num">`;
-                    for (let i = 0; i < data.heroSlider.length; i++) {
-                      html += `<div class="w-slider-dot${i===0?' w-active':''}" data-wf-ignore="" aria-label="Show slide ${i+1} of ${data.heroSlider.length}" aria-pressed="${i===0?'true':'false'}" role="button" tabindex="${i===0?'0':'-1'}" style="margin-left: 3px; margin-right: 3px;">${i+1}</div>`;
-                    }
-                    html += `</div></div>`;
-                }
-                html += `</div>`;
-            }
-
-            hero.innerHTML = html;
-            // Re-initialize Webflow slider after dynamic injection
-            if (window.Webflow && typeof window.Webflow.require === 'function') {
-                try {
-                    var slider = window.Webflow.require('slider');
-                    if (slider && typeof slider.ready === 'function') {
-                        slider.ready();
-                    }
-                } catch(e) {
-                    console.warn('Webflow slider re-init failed:', e);
-                }
-            }
-        })
-        .catch(err => {
-            const hero = document.getElementById('dynamic-hero-section');
-            if (hero) hero.innerHTML = `<div class='error'>Failed to load homepage content.</div>`;
-            console.error('Failed to load homepage content:', err);
-        });
-});
-</script>
     <div class="page-wrapper">
         <div class="section blue"><img
                 src="../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50b0a_Small%20Top%20Right%20Corner%20Block.svg"
@@ -194,56 +118,67 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="section-intro-block right-align grey"></div>
                     <div class="section-intro-title right-align">
                         <div class="text-box">
-                            <h2 class="heading h2">We&#x27;re not in it for a quick buck. Here’s what drives us.</h2>
+                            <h2 class="heading h2"></h2>
                         </div>
                         <div class="spacer _24"></div>
                     </div>
                     <div class="_4-grid">
                         <div class="text-box _450px">
                             <p class="paragraph">{01}</p>
-                            <h3 class="heading h4">Relentless growth</h3>
-                            <p class="paragraph medium">We believe in constantly evolving — learning, improving, and
-                                innovating with every move we make</p>
+                            <h3 class="heading h4"></h3>
+                            <p class="paragraph medium"></p>
                         </div>
                         <div class="text-box _450px">
                             <p class="paragraph">{02}</p>
-                            <h3 class="heading h4">Purpose over profit</h3>
-                            <p class="paragraph medium">We back businesses that stand for something — with values that
-                                go beyond the balance sheet.</p>
+                            <h3 class="heading h4"></h3>
+                            <p class="paragraph medium"></p>
                         </div>
                         <div class="text-box _450px">
                             <p class="paragraph">{03}</p>
-                            <h3 class="heading h4">Lead with integrity</h3>
-                            <p class="paragraph medium">We treat people right and do business the right way — no
-                                shortcuts, no compromises.</p>
+                            <h3 class="heading h4"></h3>
+                            <p class="paragraph medium"></p>
                         </div>
                         <div class="text-box _450px">
                             <p class="paragraph">{04}</p>
-                            <h3 class="heading h4">Design with intention</h3>
-                            <p class="paragraph medium">From ideas to execution, everything we create is built to
-                                inspire, connect, and endure.</p>
+                            <h3 class="heading h4"></h3>
+                            <p class="paragraph medium"></p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="section">
+        <div class="section"> 
+            <div class="container w-container" style="opacity: 1;"> 
+                <div class="section-intro-block grey full"> 
+                    <div id="w-node-dd2e2702-54cb-302f-801c-5bb3f36d0214-f4a50ad1" class="section-intro-text">Our 
+                        philosophy</div> 
+                </div> 
+                <div class="w-layout-grid _2-column-grid"> 
+                    <div id="w-node-dd2e2702-54cb-302f-801c-5bb3f36d0217-f4a50ad1" class="vertical-text-box"> 
+                        <div class="text-box _450px"> 
+                            <h2 class="heading h2" id="philosophy-heading"></h2> 
+                        </div> 
+                        <div class="text-box _450px"> 
+                            <p class="paragraph" id="philosophy-description"></p> 
+                            <div class="spacer _16"></div><a href="about.html" class="button outline w-button" id="philosophy-button"></a> 
+                        </div> 
+                    </div> 
+                    <div id="w-node-dd2e2702-54cb-302f-801c-5bb3f36d0221-f4a50ad1" class="tall-image-block"><img src="" loading="lazy" sizes="100vw" srcset="" alt="" class="image-cover" id="philosophy-image"></div> 
+                </div> 
+            </div> 
+        </div>
+        <div class="section blue">
             <div class="container w-container">
                 <div class="section-intro-block grey full">
-                    <div id="w-node-dd2e2702-54cb-302f-801c-5bb3f36d0214-f4a50ad1" class="section-intro-text">Our
-                        philosophy</div>
+                    <div id="w-node-dd2e2702-54cb-302f-801c-5bb3f36d0214-f4a50ad1" class="section-intro-text"></div>
                 </div>
                 <div class="w-layout-grid _2-column-grid">
                     <div id="w-node-dd2e2702-54cb-302f-801c-5bb3f36d0217-f4a50ad1" class="vertical-text-box">
                         <div class="text-box _450px">
-                            <h2 class="heading h2">We on invest in the best businesses.</h2>
+                            <h2 class="heading h2"></h2>
                         </div>
                         <div class="text-box _450px">
-                            <p class="paragraph">We back companies with real potential — ambitious teams, proven models,
-                                and the drive to lead their markets. Our focus is on sustainable growth, strategic
-                                execution, and long-term value. At <em>HV</em>, we don’t chase hype — we invest in
-                                what’s built to last. Let me know if you want it bolder, more investor-focused, or with
-                                a tech/startup spin.</p>
+                            <p class="paragraph"></p>
                             <div class="spacer _16"></div><a href="about.html" class="button outline w-button">Learn
                                 More</a>
                         </div>
@@ -251,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div id="w-node-dd2e2702-54cb-302f-801c-5bb3f36d0221-f4a50ad1" class="tall-image-block"><img
                             src="../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50aee_mailchimp-lAx4E6Gl06s-unsplash%201.webp"
                             loading="lazy" sizes="100vw"
-                            srcset="https://cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50aee_mailchimp-lAx4E6Gl06s-unsplash%25201-p-500.png 500w, https://cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50aee_mailchimp-lAx4E6Gl06s-unsplash%25201-p-800.png 800w, https://cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50aee_mailchimp-lAx4E6Gl06s-unsplash%25201-p-1080.png 1080w, https://cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50aee_mailchimp-lAx4E6Gl06s-unsplash%25201-p-1600.png 1600w, https://cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50aee_mailchimp-lAx4E6Gl06s-unsplash%25201-p-2000.png 2000w, https://cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50aee_mailchimp-lAx4E6Gl06s-unsplash%201.webp 2728w"
+                            srcset="https://cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50aee_mailchimp-lAx4E6Gl06s-unsplash%25201-p-500.png 500w, https://cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50aee_mailchimp-lAx4E6Gl06s-unsplash%25201-p-800.png 800w, https://cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50aee_mailchimp-lAx4E6Gl06s-unsplash%25201-p-1080.png 1080w, https://cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50aee_mailchimp-lAx4E6Gl06s-unsplash%25201-p-1600.png 1600w, https://cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50aee_mailchimp-lAx4E6Gl06s-unsplash%25201-p-2000.png 2000w, https://cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50aee_mailchimp-lAx4E6Gl06s-unsplash%201.webp 2728w
                             alt="Building Hero Image" class="image-cover" /></div>
                 </div>
             </div>
@@ -333,62 +268,48 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <div class="w-layout-grid _2-column-grid">
                     <div id="w-node-_5a10295f-3fd3-8da5-58de-68b4cc844c49-f4a50ad1" class="text-box _450px">
-                        <h2 class="heading h2">What we do</h2>
-                        <p class="paragraph">We specialize in acquiring, scaling, and transforming businesses into
-                            market leaders. Our team brings capital, expertise, and strategic insight to help ventures
-                            realize their full potential. From initial investment to operational excellence, we deliver
-                            results that last.</p>
+                        <h2 class="heading h2"></h2>
+                        <p class="paragraph"></p>
                     </div>
                     <div class="questions-wrapper">
                         <div href="#" data-ix="show-answer" class="question-container dark">
                             <div class="question-header">
-                                <h3 class="heading h5">Invest in the best</h3><img
-                                    src="../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50ae7_White%20Plus%20Icon.svg"
+                                <h3 class="heading h5"></h3><img
+
                                     width="22" alt="" class="question-plus-icon" />
                             </div>
                             <div data-ix="hide-on-load" class="question-answer">
-                                <p class="paragraph">We back ambitious founders and businesses with the vision to lead
-                                    and the drive to grow. Our approach combines disciplined investing with bold
-                                    decision-making to identify opportunities others overlook. Every partnership is
-                                    built on trust and a shared commitment to success.</p>
+                                <p class="paragraph"></p>
                             </div>
                         </div>
                         <div href="#" data-ix="show-answer" class="question-container dark">
                             <div class="question-header">
-                                <h3 class="heading h5">Provide financial advice</h3><img
+                                <h3 class="heading h5"></h3><img
                                     src="../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50ae7_White%20Plus%20Icon.svg"
                                     width="22" alt="" class="question-plus-icon" />
                             </div>
                             <div data-ix="hide-on-load" class="question-answer">
-                                <p class="paragraph">Our team offers deep financial expertise to help businesses
-                                    navigate complex challenges. From optimizing capital structures to strategic
-                                    planning, we guide our partners toward smarter, more profitable decisions. We align
-                                    our insights with your goals for sustainable growth.</p>
+                                <p class="paragraph"></p>
                             </div>
                         </div>
                         <div href="#" data-ix="show-answer" class="question-container dark">
                             <div class="question-header">
-                                <h3 class="heading h5">Partner for growth</h3><img
+                                <h3 class="heading h5"></h3><img
                                     src="../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50ae7_White%20Plus%20Icon.svg"
                                     width="22" alt="" class="question-plus-icon" />
                             </div>
                             <div data-ix="hide-on-load" class="question-answer">
-                                <p class="paragraph">Our team delivers strategic partnership expertise built around four
-                                    growth-driving pillars. We help businesses navigate evolving consumer trends and
-                                    value-chain challenges by identifying and forming high-impact alliances.</p>
+                                <p class="paragraph"></p>
                             </div>
                         </div>
                         <div href="#" data-ix="show-answer" class="question-container dark">
                             <div class="question-header">
-                                <h3 class="heading h5">Acquire and grow companies</h3><img
+                                <h3 class="heading h5"></h3><img
                                     src="../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50ae7_White%20Plus%20Icon.svg"
                                     width="22" alt="" class="question-plus-icon" />
                             </div>
                             <div data-ix="hide-on-load" class="question-answer">
-                                <p class="paragraph">We don’t just invest — we become true partners in scaling your
-                                    business. By providing operational support, strategic resources, and access to
-                                    global networks, we help companies grow faster and stronger. Together, we unlock new
-                                    levels of performance and market impact.</p>
+                                <p class="paragraph"></p>
                             </div>
                         </div>
                     </div>
@@ -540,100 +461,7 @@ document.addEventListener('DOMContentLoaded', () => {
         type="text/javascript"></script>
     <script src="../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/js/webflow.a2574a41.8cf4bda295ded529.js"
         type="text/javascript"></script>
-    <script>
-      // Key used in dashboard for home content
-      const HOME_CONTENT_KEY = 'dashboard_home_content';
-      const homeHeroTitle = document.getElementById('homeHeroTitle');
-      
-      // Base URL for API calls
-      const BASE_URL = 'http://localhost:3001';
-      
-      document.addEventListener('DOMContentLoaded', function() {
-        const savedContent = localStorage.getItem(HOME_CONTENT_KEY);
-        if (savedContent && homeHeroTitle) {
-          homeHeroTitle.innerHTML = savedContent;
-        }
-        
-        // Load random insights
-        loadRandomInsights();
-      });
-      
-      // Function to fetch and display 3 random insights
-      async function loadRandomInsights() {
-        try {
-          const response = await fetch(`${BASE_URL}/api/insights-data`);
-          const insights = await response.json();
-          
-          if (insights && insights.length > 0) {
-            // Get 3 random insights
-            const randomInsights = getRandomItems(insights, 3);
-            populateInsightsGrid(randomInsights);
-          }
-        } catch (error) {
-          console.error('Error loading insights:', error);
-        }
-      }
-      
-      // Function to get random items from array
-      function getRandomItems(array, count) {
-        const shuffled = [...array].sort(() => 0.5 - Math.random());
-        return shuffled.slice(0, count);
-      }
-      
-      // Function to populate the insights grid
-      function populateInsightsGrid(insights) {
-        const insightsGrid = document.querySelector('.insights-grid.w-dyn-items');
-        if (!insightsGrid) return;
-        
-        // Clear existing content
-        insightsGrid.innerHTML = '';
-        
-        insights.forEach(insight => {
-          const insightItem = createInsightItem(insight);
-          insightsGrid.appendChild(insightItem);
-        });
-      }
-      
-      // Function to create insight item HTML
-      function createInsightItem(insight) {
-        const item = document.createElement('div');
-        item.className = 'insights-item w-dyn-item';
-        item.setAttribute('role', 'listitem');
-        
-        // Handle image URL - add BASE_URL if it's a relative path
-        let imageUrl = insight.image;
-        if (imageUrl && imageUrl.startsWith('uploads/')) {
-          imageUrl = `${BASE_URL}/${imageUrl}`;
-        }
-        
-        // Format date
-        const formattedDate = new Date(insight.date).toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric'
-        });
-        
-        item.innerHTML = `
-          <a href="${insight.link}" class="insight-link-block w-inline-block">
-            <div class="insight-thumbnail">
-              <div class="insight-category-tag">${insight.category}</div>
-              <img alt="${insight.title}" loading="lazy" width="808"
-                   src="${imageUrl}"
-                   sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 808px"
-                   class="insight-cover-image" />
-            </div>
-            <div class="insights-text-box">
-              <div class="post-date">${formattedDate}</div>
-              <h3 class="paragraph x-large">${insight.title}</h3>
-              <p class="paragraph medium grey">${insight.excerpt}</p>
-              <div class="post-arrow-link">Read now</div>
-            </div>
-          </a>
-        `;
-        
-        return item;
-      }
-    </script>
+    <script src="index.js" type="module"></script>
 </body>
 <!-- Mirrored from haughton-ventures.webflow.io/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 17 Jul 2025 17:22:38 GMT -->
 

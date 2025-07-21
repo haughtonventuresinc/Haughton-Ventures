@@ -109,11 +109,11 @@ const HOMEPAGE_PATH = path.join(__dirname, 'homepage.json');
 // Get homepage content
 app.get('/api/homepage', (req, res) => {
     if (!fs.existsSync(HOMEPAGE_PATH)) {
-        return res.json({ heroTitle: '', heroImages: [], heroSlider: [] });
+        return res.json({ heroTitle: '', heroImages: [], heroSlider: [], services: null, philosophy: null });
     }
     try {
         const data = JSON.parse(fs.readFileSync(HOMEPAGE_PATH, 'utf8'));
-        res.json({ heroTitle: data.heroTitle || '', heroImages: data.heroImages || [], heroSlider: data.heroSlider || [] });
+        res.json(data);
     } catch (err) {
         res.status(500).json({ error: 'Failed to read homepage content', details: err.message });
     }

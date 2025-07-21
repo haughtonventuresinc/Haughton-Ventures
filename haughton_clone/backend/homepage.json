@@ -31,5 +31,78 @@
         "description": "Uses 3D printing and recycled materials to build sustainable backyard studios, ADUs, and homes at affordable prices.",
         "link": "portfolio.html"
       }
-    ]
+    ],
+    "services": {
+      "title": "Our Services",
+      "heading": "What we do",
+      "description": "We specialize in acquiring, scaling, and transforming businesses into market leaders. Our team brings capital, expertise, and strategic insight to help ventures realize their full potential. From initial investment to operational excellence, we deliver results that last.",
+      "items": [
+        {
+          "title": "Invest in the best",
+          "description": "We back ambitious founders and businesses with the vision to lead and the drive to grow. Our approach combines disciplined investing with bold decision-making to identify opportunities others overlook. Every partnership is built on trust and a shared commitment to success.",
+          "icon": "../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50ae7_White%20Plus%20Icon.svg"
+        },
+        {
+          "title": "Provide financial advice",
+          "description": "Our team offers deep financial expertise to help businesses navigate complex challenges. From optimizing capital structures to strategic planning, we guide our partners toward smarter, more profitable decisions. We align our insights with your goals for sustainable growth.",
+          "icon": "../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50ae7_White%20Plus%20Icon.svg"
+        },
+        {
+          "title": "Partner for growth",
+          "description": "Our team delivers strategic partnership expertise built around four growth-driving pillars. We help businesses navigate evolving consumer trends and value-chain challenges by identifying and forming high-impact alliances.",
+          "icon": "../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50ae7_White%20Plus%20Icon.svg"
+        },
+        {
+          "title": "Acquire and grow companies",
+          "description": "We don't just invest — we become true partners in scaling your business. By providing operational support, strategic resources, and access to global networks, we help companies grow faster and stronger. Together, we unlock new levels of performance and market impact.",
+          "icon": "../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50ae7_White%20Plus%20Icon.svg"
+        }
+      ]
+    },
+    "philosophy": {
+      "title": "Our philosophy",
+      "heading": "We on invest in the best businesses.",
+      "description": "We back companies with real potential — ambitious teams, proven models, and the drive to lead their markets. Our focus is on sustainable growth, strategic execution, and long-term value. At HV, we don't chase hype — we invest in what's built to last. Let me know if you want it bolder, more investor-focused, or with a tech/startup spin.",
+      "buttonText": "Learn More",
+      "buttonLink": "about.html",
+      "image": {
+        "src": "../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50aee_mailchimp-lAx4E6Gl06s-unsplash%201.webp",
+        "alt": "Building Hero Image",
+        "class": "image-cover",
+        "srcset": "https://cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50aee_mailchimp-lAx4E6Gl06s-unsplash%25201-p-500.png 500w, https://cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50aee_mailchimp-lAx4E6Gl06s-unsplash%25201-p-800.png 800w, https://cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50aee_mailchimp-lAx4E6Gl06s-unsplash%25201-p-1080.png 1080w, https://cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50aee_mailchimp-lAx4E6Gl06s-unsplash%25201-p-1600.png 1600w, https://cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50aee_mailchimp-lAx4E6Gl06s-unsplash%25201-p-2000.png 2000w, https://cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50aee_mailchimp-lAx4E6Gl06s-unsplash%201.webp 2728w",
+        "sizes": "100vw"
+      }
+    },
+    "values": {
+      "title": "Our Values",
+      "heading": "We're not in it for a quick buck. Here's what drives us.",
+      "cornerImage": {
+        "src": "../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50b08_Top%20LeFt%20Corner%20Block.svg",
+        "alt": "",
+        "width": "156",
+        "class": "top-left-corner-block"
+      },
+      "items": [
+        {
+          "number": "{01}",
+          "title": "Relentless growth",
+          "description": "We believe in constantly evolving — learning, improving, and innovating with every move we make"
+        },
+        {
+          "number": "{02}",
+          "title": "Purpose over profit",
+          "description": "We back businesses that stand for something — with values that go beyond the balance sheet."
+        },
+        {
+          "number": "{03}",
+          "title": "Lead with integrity",
+          "description": "We treat people right and do business the right way — no shortcuts, no compromises."
+        },
+        {
+          "number": "{04}",
+          "title": "Design with intention",
+          "description": "From ideas to execution, everything we create is built to inspire, connect, and endure."
+        }
+      ]
+    }
   }
