@@ -273,6 +273,36 @@ app.post('/api/save-portfolio', (req, res) => {
     }
 });
 
+// About data endpoints
+const ABOUT_DATA_PATH = path.join(__dirname, 'about-data.json');
+
+// Get about data
+app.get('/api/about-data', (req, res) => {
+    if (!fs.existsSync(ABOUT_DATA_PATH)) {
+        return res.status(404).json({ error: 'About data not found' });
+    }
+    try {
+        const data = JSON.parse(fs.readFileSync(ABOUT_DATA_PATH, 'utf8'));
+        res.json(data);
+    } catch (err) {
+        console.error('[ABOUT] Failed to read about data:', err);
+        res.status(500).json({ error: 'Failed to read about data', details: err.message });
+    }
+});
+
+// Save about data
+app.post('/api/save-about', (req, res) => {
+    try {
+        fs.writeFileSync(ABOUT_DATA_PATH, JSON.stringify(req.body, null, 2));
+        res.json({ success: true });
+        console.log('[ABOUT] About data saved successfully');
+    } catch (err) {
+        console.error('[ABOUT] Failed to save about data:', err);
+        res.status(500).json({ error: 'Failed to save about data', details: err.message });
+    }
+});
+
 app.listen(PORT, () => {
     console.log(`Backend server running at http://localhost:${PORT}`);
 });
+
