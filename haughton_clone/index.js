@@ -11,6 +11,9 @@ document.addEventListener('DOMContentLoaded', function() {
     homeHeroTitle.innerHTML = savedContent;
   }
   
+  // Load Hero data
+  loadHeroData();
+
   // Load random insights
   loadRandomInsights();
   
@@ -22,6 +25,10 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Load values data
   loadValuesData();
+  
+  // Load about data
+  loadAboutData();
+  
   
   // Function to fetch and display 3 random insights
   async function loadRandomInsights() {
@@ -257,6 +264,223 @@ document.addEventListener('DOMContentLoaded', function() {
           }
         }
       });
+    }
+  }
+
+  // Function to load and populate about data
+  async function loadAboutData() {
+    try {
+      const response = await fetch(`${BASE_URL}/api/homepage`);
+      const data = await response.json();
+      
+      if (data.about) {
+        console.log('About data loaded:', data.about);
+        populateAboutSection(data.about);
+      } else {
+        console.log('No about data found in response:', data);
+      }
+    } catch (error) {
+      console.error('Error loading about data:', error);
+    }
+  }
+
+  // Function to populate the about section
+  function populateAboutSection(about) {
+    // Update the section intro text
+    const sectionIntroText = document.querySelector('.section.blue .section-intro-text');
+    if (sectionIntroText) {
+      sectionIntroText.textContent = about.title;
+    }
+
+    // Update the main heading
+    const headingElement = document.querySelector('.section.blue .heading.h1');
+    if (headingElement) {
+      headingElement.innerHTML = about.heading.replace(/\\n/g, '<br>');
+    }
+
+    // Update the corner image
+    const cornerImage = document.querySelector('.section.blue .top-right-corner-block');
+    if (cornerImage && about.cornerImage) {
+      cornerImage.src = about.cornerImage.src;
+      cornerImage.alt = about.cornerImage.alt;
+    }
+
+    // Update the sections content
+    if (about.sections) {
+      // First section (in right column of first grid)
+      const firstSection = document.querySelector('.section.blue .large-2-column-grid.bottom-align .text-box._500px');
+      if (firstSection && about.sections[0]) {
+        const numberElement = firstSection.querySelector('.paragraph:first-child');
+        const descriptionElement = firstSection.querySelector('.paragraph:last-child');
+        
+        if (numberElement) numberElement.textContent = about.sections[0].number;
+        if (descriptionElement) descriptionElement.textContent = about.sections[0].description;
+      }
+
+      // Second and third sections (in left column of second grid)
+      const secondGrid = document.querySelector('.section.blue .large-2-column-grid:not(.bottom-align)');
+      if (secondGrid) {
+        const textBox = secondGrid.querySelector('.text-box._450px');
+        if (textBox) {
+          const paragraphs = textBox.querySelectorAll('.paragraph');
+          
+          // Second section
+          if (paragraphs[0] && about.sections[1]) {
+            paragraphs[0].textContent = about.sections[1].number;
+          }
+          if (paragraphs[1] && about.sections[1]) {
+            paragraphs[1].textContent = about.sections[1].description;
+          }
+          
+          // Third section
+          if (paragraphs[2] && about.sections[2]) {
+            paragraphs[2].textContent = about.sections[2].number;
+          }
+          if (paragraphs[3] && about.sections[2]) {
+            paragraphs[3].textContent = about.sections[2].description;
+          }
+        }
+      }
+    }
+
+    // Update the button
+    const buttonElement = document.querySelector('.section.blue .arrow-link');
+    if (buttonElement && about.buttonText && about.buttonLink) {
+      buttonElement.textContent = about.buttonText;
+      buttonElement.href = about.buttonLink;
+    }
+
+    // Update the main image
+    const mainImage = document.querySelector('.section.blue .large-2-column-grid:not(.bottom-align) img');
+    if (mainImage && about.image) {
+      mainImage.src = about.image.src;
+      mainImage.alt = about.image.alt;
+      mainImage.sizes = about.image.sizes;
+      mainImage.srcset = about.image.srcset;
+    }
+  }
+  
+  // Function to load and populate hero section
+  async function loadHeroData() {
+    try {
+      const response = await fetch(`${BASE_URL}/api/homepage`);
+      const data = await response.json();
+      
+      if (data.heroTitle || data.heroImages || data.heroSlider) {
+        console.log('Hero data loaded:', { 
+          title: data.heroTitle, 
+          images: data.heroImages?.length, 
+          slider: data.heroSlider?.length 
+        });
+        populateHeroSection(data);
+      } else {
+        console.log('No hero data found in response:', data);
+      }
+    } catch (error) {
+      console.error('Error loading hero data:', error);
+    }
+  }
+
+  // Function to populate the hero section with exact styling
+  function populateHeroSection(data) {
+    const heroContainer = document.getElementById('dynamic-hero-section');
+    if (!heroContainer) {
+      console.error('Hero container not found');
+      return;
+    }
+  
+    // Create hero section HTML with exact structure and classes
+    let heroHTML = `
+      <div class="home-title-box">
+        <h1 id="homeHeroTitle" class="heading h1">${data.heroTitle || ''}</h1>
+      </div>
+      <div class="spacer _48"></div>
+      <div class="home-hero-image-block">
+        ${data.heroImages && data.heroImages[0] ? `
+          <img src="${data.heroImages[0].src}" 
+               alt="${data.heroImages[0].alt || ''}" 
+               class="${data.heroImages[0].class || ''}">
+        ` : ''}
+        ${data.heroImages && data.heroImages[1] ? `
+          <img src="${data.heroImages[1].src}" 
+               loading="lazy" 
+               sizes="${data.heroImages[1].sizes || '100vw'}" 
+               srcset="${data.heroImages[1].srcset || ''}" 
+               alt="${data.heroImages[1].alt || ''}" 
+               class="${data.heroImages[1].class || ''}">
+        ` : ''}
+        
+        ${data.heroSlider && data.heroSlider.length > 0 ? `
+          <div data-delay="4000" data-animation="cross" class="company-hero-slider w-slider" 
+               data-autoplay="false" data-easing="ease" data-hide-arrows="false" 
+               data-disable-swipe="false" data-autoplay-limit="0" data-nav-spacing="3" 
+               data-duration="500" data-infinite="true" role="region" aria-label="carousel">
+            <div class="w-slider-mask" id="w-slider-mask-0">
+              ${data.heroSlider.map((slide, index) => `
+                <div class="company-hero-slide w-slide" aria-label="${index + 1} of ${data.heroSlider.length}" 
+                     role="group" style="${index === 0 ? 'transition: all, opacity 500ms; transform: translateX(0px); opacity: 1; z-index: 2;' : 'transition: all; transform: translateX(0px); opacity: 1; z-index: 1; visibility: hidden;'}" 
+                     ${index > 0 ? 'aria-hidden="true"' : ''}>
+                  <div class="company-hero-slide-content" ${index > 0 ? 'aria-hidden="true"' : ''}>
+                    <div ${index > 0 ? 'aria-hidden="true"' : ''}>
+                      <img src="${slide.logo}" 
+                           loading="lazy" 
+                           width="${slide.logoWidth || 150}" 
+                           alt="" 
+                           class="${slide.logoClass || 'image-2'}" 
+                           ${index > 0 ? 'aria-hidden="true"' : ''}>
+                    </div>
+                    <div class="company-tag-row" ${index > 0 ? 'aria-hidden="true"' : ''}>
+                      ${slide.tags && slide.tags.length > 0 ? slide.tags.map(tag => `
+                        <div class="company-tag" ${index > 0 ? 'aria-hidden="true"' : ''}>${tag}</div>
+                      `).join('') : ''}
+                    </div>
+                    <div class="company-divider" ${index > 0 ? 'aria-hidden="true"' : ''}></div>
+                    <div class="text-box _250px" ${index > 0 ? 'aria-hidden="true"' : ''}>
+                      <p class="paragraph medium" ${index > 0 ? 'aria-hidden="true"' : ''}>${slide.description || ''}</p>
+                    </div>
+                    <a href="${slide.link || 'portfolio.html'}" 
+                       class="underline-link white" 
+                       ${index > 0 ? 'tabindex="-1" aria-hidden="true"' : ''}>View Profile</a>
+                  </div>
+                </div>
+              `).join('')}
+              <div aria-live="off" aria-atomic="true" class="w-slider-aria-label" data-wf-ignore="">Slide 1 of ${data.heroSlider.length}.</div>
+            </div>
+            <div class="hero-slider-arrow let w-slider-arrow-left" role="button" tabindex="0" 
+                 aria-controls="w-slider-mask-0" aria-label="previous slide">
+              <div class="hero-slider-arrow-icon w-icon-slider-left"></div>
+            </div>
+            <div class="hero-slider-arrow w-slider-arrow-right" role="button" tabindex="0" 
+                 aria-controls="w-slider-mask-0" aria-label="next slide">
+              <div class="hero-slider-arrow-icon w-icon-slider-right"></div>
+            </div>
+            <div class="hidden w-slider-nav w-round w-num">
+              ${data.heroSlider.map((_, index) => `
+                <div class="w-slider-dot ${index === 0 ? 'w-active' : ''}" data-wf-ignore="" 
+                     aria-label="Show slide ${index + 1} of ${data.heroSlider.length}" 
+                     aria-pressed="${index === 0 ? 'true' : 'false'}" 
+                     role="button" 
+                     tabindex="${index === 0 ? '0' : '-1'}" 
+                     style="margin-left: 3px; margin-right: 3px;">${index + 1}</div>
+              `).join('')}
+            </div>
+          </div>
+        ` : ''}
+      </div>
+    `;
+  
+    // Insert the HTML into the container
+    heroContainer.innerHTML = heroHTML;
+    
+    // Update localStorage for dashboard compatibility
+    const homeHeroTitle = document.getElementById('homeHeroTitle');
+    if (homeHeroTitle && data.heroTitle) {
+      localStorage.setItem('dashboard_home_content', data.heroTitle);
+    }
+    
+    // Initialize Webflow slider if it exists
+    if (window.Webflow && data.heroSlider && data.heroSlider.length > 0) {
+      window.Webflow.ready();
     }
   }
 });
