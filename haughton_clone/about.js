@@ -77,21 +77,27 @@ function populateAboutPage(data) {
     const mottoDescription2 = document.getElementById('motto-description2');
     
     if (mottoImage && data.motto) {
-        mottoImage.src = data.motto.image;
-        if (data.motto.imageSrcset) {
-            mottoImage.srcset = data.motto.imageSrcset;
-        } else {
+        // Check if the image path is relative (starts with 'uploads/') and prefix with BASE_URL
+        const imageSrc = data.motto.image.startsWith('uploads/') 
+            ? `${BASE_URL}/${data.motto.image}` 
+            : data.motto.image;
+        mottoImage.src = imageSrc;
+        
+        // Clear srcset for uploaded images to avoid showing old CDN images
+        if (data.motto.image.startsWith('uploads/')) {
             mottoImage.removeAttribute('srcset');
+        } else if (data.motto.imageSrcset) {
+            mottoImage.srcset = data.motto.imageSrcset;
         }
     }
     if (mottoTitle && data.motto) {
         mottoTitle.textContent = data.motto.title;
     }
     if (mottoDescription && data.motto) {
-        mottoDescription.textContent = data.motto.description1;
+        mottoDescription.innerHTML = data.motto.description1;
     }
     if (mottoDescription2 && data.motto) {
-        mottoDescription2.textContent = data.motto.description2;
+        mottoDescription2.innerHTML = data.motto.description2;
     }
 
     // Testimonials with slider functionality
@@ -227,7 +233,7 @@ function populateAboutPage(data) {
             const faqDiv = document.createElement('div');
             faqDiv.className = 'question-container';
             faqDiv.innerHTML = `
-                <div class="question-header" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid #e0e0e0;">
+                <div class="question-header" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
                     <h3 class="heading h5" style="margin: 0;">${faq.question}</h3>
                     <img src="../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50aeb_Plus%20Icon.svg" width="22" alt="" class="question-plus-icon" style="transition: transform 0.3s ease;"/>
                 </div>

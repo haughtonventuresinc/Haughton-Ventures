@@ -544,12 +544,95 @@ document.addEventListener('DOMContentLoaded', () => {
       // Key used in dashboard for home content
       const HOME_CONTENT_KEY = 'dashboard_home_content';
       const homeHeroTitle = document.getElementById('homeHeroTitle');
+      
+      // Base URL for API calls
+      const BASE_URL = 'http://localhost:3001';
+      
       document.addEventListener('DOMContentLoaded', function() {
         const savedContent = localStorage.getItem(HOME_CONTENT_KEY);
         if (savedContent && homeHeroTitle) {
           homeHeroTitle.innerHTML = savedContent;
         }
+        
+        // Load random insights
+        loadRandomInsights();
       });
+      
+      // Function to fetch and display 3 random insights
+      async function loadRandomInsights() {
+        try {
+          const response = await fetch(`${BASE_URL}/api/insights-data`);
+          const insights = await response.json();
+          
+          if (insights && insights.length > 0) {
+            // Get 3 random insights
+            const randomInsights = getRandomItems(insights, 3);
+            populateInsightsGrid(randomInsights);
+          }
+        } catch (error) {
+          console.error('Error loading insights:', error);
+        }
+      }
+      
+      // Function to get random items from array
+      function getRandomItems(array, count) {
+        const shuffled = [...array].sort(() => 0.5 - Math.random());
+        return shuffled.slice(0, count);
+      }
+      
+      // Function to populate the insights grid
+      function populateInsightsGrid(insights) {
+        const insightsGrid = document.querySelector('.insights-grid.w-dyn-items');
+        if (!insightsGrid) return;
+        
+        // Clear existing content
+        insightsGrid.innerHTML = '';
+        
+        insights.forEach(insight => {
+          const insightItem = createInsightItem(insight);
+          insightsGrid.appendChild(insightItem);
+        });
+      }
+      
+      // Function to create insight item HTML
+      function createInsightItem(insight) {
+        const item = document.createElement('div');
+        item.className = 'insights-item w-dyn-item';
+        item.setAttribute('role', 'listitem');
+        
+        // Handle image URL - add BASE_URL if it's a relative path
+        let imageUrl = insight.image;
+        if (imageUrl && imageUrl.startsWith('uploads/')) {
+          imageUrl = `${BASE_URL}/${imageUrl}`;
+        }
+        
+        // Format date
+        const formattedDate = new Date(insight.date).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        });
+        
+        item.innerHTML = `
+          <a href="${insight.link}" class="insight-link-block w-inline-block">
+            <div class="insight-thumbnail">
+              <div class="insight-category-tag">${insight.category}</div>
+              <img alt="${insight.title}" loading="lazy" width="808"
+                   src="${imageUrl}"
+                   sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 808px"
+                   class="insight-cover-image" />
+            </div>
+            <div class="insights-text-box">
+              <div class="post-date">${formattedDate}</div>
+              <h3 class="paragraph x-large">${insight.title}</h3>
+              <p class="paragraph medium grey">${insight.excerpt}</p>
+              <div class="post-arrow-link">Read now</div>
+            </div>
+          </a>
+        `;
+        
+        return item;
+      }
     </script>
 </body>
 <!-- Mirrored from haughton-ventures.webflow.io/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 17 Jul 2025 17:22:38 GMT -->

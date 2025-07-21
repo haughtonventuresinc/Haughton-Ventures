@@ -285,11 +285,129 @@
           </div>
         </section>
         <section id="about" class="w-full">
-          <div
-            class="w-full max-w-6xl mx-auto bg-white/80 shadow-2xl rounded-3xl p-8 mb-8 overflow-hidden border border-gray-200">
-            <h2 class="text-3xl font-bold text-blue-700 mb-4">About</h2>
-            <p class="text-lg text-gray-700">This is the About section. Add your company or dashboard description here.
-            </p>
+          <div class="w-full max-w-6xl mx-auto bg-white/80 shadow-2xl rounded-3xl p-8 mb-8 overflow-hidden border border-gray-200">
+            <h2 class="text-3xl font-bold text-blue-700 mb-6">Edit About Page</h2>
+            
+            <form id="aboutEditor" class="space-y-6">
+              <!-- Hero Section -->
+              <div class="bg-gray-50 p-6 rounded-lg">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">Hero Section</h3>
+                
+                <div class="space-y-4">
+                  <label class="block">
+                    <span class="font-semibold text-gray-700">Hero Title</span>
+                    <textarea id="aboutHeroTitle" class="w-full border rounded-lg p-3 mt-1 focus:ring-2 focus:ring-blue-400 focus:outline-none" rows="2" placeholder="Haughton Ventures is building the infrastructure that powers the best startups"></textarea>
+                  </label>
+                  
+                  <label class="block">
+                    <span class="font-semibold text-gray-700">Hero Description</span>
+                    <textarea id="aboutHeroDescription" class="w-full border rounded-lg p-3 mt-1 focus:ring-2 focus:ring-blue-400 focus:outline-none" rows="3" placeholder="We acquire, scale, and transform companies..."></textarea>
+                  </label>
+                </div>
+              </div>
+              
+              <!-- About Us Section -->
+              <div class="bg-gray-50 p-6 rounded-lg">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">About Us Section</h3>
+                
+                <div class="space-y-4">
+                  <label class="block">
+                    <span class="font-semibold text-gray-700">About Us Title</span>
+                    <textarea id="aboutUsTitle" class="w-full border rounded-lg p-3 mt-1 focus:ring-2 focus:ring-blue-400 focus:outline-none" rows="2" placeholder="We work with finance organisations..."></textarea>
+                  </label>
+                  
+                  <label class="block">
+                    <span class="font-semibold text-gray-700">About Us Description</span>
+                    <textarea id="aboutUsDescription" class="w-full border rounded-lg p-3 mt-1 focus:ring-2 focus:ring-blue-400 focus:outline-none" rows="3" placeholder="We believe in practical solutions..."></textarea>
+                  </label>
+                </div>
+              </div>
+              
+              <!-- Values Section -->
+              <div class="bg-gray-50 p-6 rounded-lg">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">Values Section</h3>
+                
+                <div class="space-y-4">
+                  <label class="block">
+                    <span class="font-semibold text-gray-700">Values Title</span>
+                    <input type="text" id="valuesTitle" class="w-full border rounded-lg p-3 mt-1 focus:ring-2 focus:ring-blue-400 focus:outline-none" placeholder="The rules we invest by" />
+                  </label>
+                  
+                  <div id="valuesEditor">
+                    <span class="font-semibold text-gray-700">Values Items</span>
+                    <div id="valuesList" class="space-y-4 mt-2"></div>
+                    <button type="button" id="addValueBtn" class="mt-2 bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">Add Value</button>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Motto Section -->
+              <div class="bg-gray-50 p-6 rounded-lg">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">Motto Section</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div class="space-y-4">
+                    <label class="block">
+                      <span class="font-semibold text-gray-700">Motto Title</span>
+                      <input type="text" id="mottoTitle" class="w-full border rounded-lg p-3 mt-1 focus:ring-2 focus:ring-blue-400 focus:outline-none" placeholder="We help brands find their customers" />
+                    </label>
+                    
+                    <label class="block">
+                      <span class="font-semibold text-gray-700">Motto Description 1</span>
+                      <textarea id="mottoDescription1" class="w-full border rounded-lg p-3 mt-1 focus:ring-2 focus:ring-blue-400 focus:outline-none" rows="3" placeholder="At HV, we don't just connect brands..."></textarea>
+                    </label>
+                    
+                    <label class="block">
+                      <span class="font-semibold text-gray-700">Motto Description 2</span>
+                      <textarea id="mottoDescription2" class="w-full border rounded-lg p-3 mt-1 focus:ring-2 focus:ring-blue-400 focus:outline-none" rows="3" placeholder="Whether you're launching, scaling..."></textarea>
+                    </label>
+                  </div>
+                  
+                  <div class="space-y-4">
+                    <label class="block">
+                      <span class="font-semibold text-gray-700">Motto Image URL</span>
+                      <input type="text" id="mottoImage" class="w-full border rounded-lg p-3 mt-1 focus:ring-2 focus:ring-blue-400 focus:outline-none" placeholder="Image URL" />
+                    </label>
+                    
+                    <label class="block">
+                      <span class="font-semibold text-gray-700">Upload New Image</span>
+                      <input type="file" id="mottoImageFile" accept="image/*" class="w-full border rounded-lg p-2 mt-1 bg-white" />
+                    </label>
+                    
+                    <div id="mottoImagePreview" class="hidden">
+                      <img id="mottoImagePreviewImg" src="" alt="Preview" class="w-full h-32 object-cover border rounded-lg" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Testimonials Section -->
+              <div class="bg-gray-50 p-6 rounded-lg">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">Testimonials</h3>
+                
+                <div id="testimonialsEditor">
+                  <div id="testimonialsList" class="space-y-4"></div>
+                  <button type="button" id="addTestimonialBtn" class="mt-2 bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">Add Testimonial</button>
+                </div>
+              </div>
+              
+              <!-- FAQs Section -->
+              <div class="bg-gray-50 p-6 rounded-lg">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">FAQs</h3>
+                
+                <div id="faqsEditor">
+                  <div id="faqsList" class="space-y-4"></div>
+                  <button type="button" id="addFaqBtn" class="mt-2 bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">Add FAQ</button>
+                </div>
+              </div>
+              
+              <!-- Save Button -->
+              <div class="flex justify-end pt-6">
+                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-200">
+                  Save About Page
+                </button>
+              </div>
+            </form>
           </div>
         </section>
         <section id="contact" class="w-full">

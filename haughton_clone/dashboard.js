@@ -1157,3 +1157,463 @@ document.addEventListener('DOMContentLoaded', function() {
     updatePortfolioTable();
 });
 
+// === ABOUT SECTION DATA MANAGEMENT ===
+let aboutData = {
+    hero: {
+        title: "About Us",
+        subtitle: "Learn more about our company",
+        image: ""
+    },
+    aboutUs: {
+        title: "About Us",
+        description: "We are a leading company in our industry."
+    },
+    values: {
+        title: "Our Values",
+        items: [
+            {
+                number: "01",
+                title: "Innovation",
+                description: "We strive for innovation in everything we do."
+            },
+            {
+                number: "02",
+                title: "Quality",
+                description: "Quality is at the heart of our work."
+            },
+            {
+                number: "03",
+                title: "Integrity",
+                description: "We maintain the highest standards of integrity."
+            },
+            {
+                number: "04",
+                title: "Excellence",
+                description: "We pursue excellence in all our endeavors."
+            }
+        ]
+    },
+    motto: {
+        image: "",
+        title: "Our Motto",
+        description1: "First part of our motto description.",
+        description2: "Second part of our motto description."
+    },
+    testimonials: {
+        title: "What Our Clients Say",
+        items: [
+            {
+                quote: "This company exceeded our expectations.",
+                author: "John Doe",
+                position: "CEO, Example Corp"
+            }
+        ]
+    },
+    faqs: {
+        title: "Frequently Asked Questions",
+        items: [
+            {
+                question: "What services do you offer?",
+                answer: "We offer a wide range of services to meet your needs."
+            }
+        ]
+    }
+};
+
+// Load about data from backend
+function loadAboutData() {
+    fetch(BASE_URL + '/api/about-data')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success || data.hero) {
+                aboutData = { ...aboutData, ...data };
+            }
+            console.log(data)
+            populateAboutForm();
+        })
+        .catch(() => {
+            // Fallback to localStorage or default values
+            const saved = localStorage.getItem('aboutData');
+            if (saved) {
+                aboutData = { ...aboutData, ...JSON.parse(saved) };
+            }
+            populateAboutForm();
+        });
+}
+
+// Populate about form with current data
+function populateAboutForm() {
+    // Hero section - fix field names to match HTML
+    const aboutHeroTitle = document.getElementById('aboutHeroTitle');
+    const aboutHeroDescription = document.getElementById('aboutHeroDescription'); // Changed from aboutHeroSubtitle
+    
+    if (aboutHeroTitle) aboutHeroTitle.value = aboutData.hero?.title || '';
+    if (aboutHeroDescription) aboutHeroDescription.value = aboutData.hero?.description || ''; // Changed from subtitle
+    
+    // About Us section
+    const aboutUsTitle = document.getElementById('aboutUsTitle');
+    const aboutUsDescription = document.getElementById('aboutUsDescription');
+    
+    if (aboutUsTitle) aboutUsTitle.value = aboutData.aboutUs?.title || '';
+    if (aboutUsDescription) aboutUsDescription.value = aboutData.aboutUs?.description || '';
+    
+    // Values section
+    const valuesTitle = document.getElementById('valuesTitle');
+    if (valuesTitle) valuesTitle.value = aboutData.values?.title || '';
+    
+    // Check if values items exist and render them
+    if (aboutData.values?.items) {
+        renderValuesEditor(aboutData.values.items);
+    }
+    
+    // Motto section
+    const mottoTitle = document.getElementById('mottoTitle');
+    const mottoDescription1 = document.getElementById('mottoDescription1');
+    const mottoDescription2 = document.getElementById('mottoDescription2');
+    const mottoImage = document.getElementById('mottoImage');
+    
+    if (mottoTitle) mottoTitle.value = aboutData.motto?.title || '';
+    if (mottoDescription1) mottoDescription1.value = aboutData.motto?.description1 || '';
+    if (mottoDescription2) mottoDescription2.value = aboutData.motto?.description2 || '';
+    if (mottoImage) mottoImage.value = aboutData.motto?.image || '';
+    
+    // Testimonials section - fix data structure
+    const testimonialsTitle = document.getElementById('testimonialsTitle');
+    if (testimonialsTitle) testimonialsTitle.value = 'What Our Clients Say'; // Default title
+    
+    // The backend has testimonials as array, not nested in object
+    if (aboutData.testimonials && Array.isArray(aboutData.testimonials)) {
+        renderTestimonialsEditor(aboutData.testimonials);
+    }
+    
+    // FAQs section - fix data structure  
+    const faqsTitle = document.getElementById('faqsTitle');
+    if (faqsTitle) faqsTitle.value = 'Frequently Asked Questions'; // Default title
+    
+    // The backend has faqs as array, not nested in object
+    if (aboutData.faqs && Array.isArray(aboutData.faqs)) {
+        renderFaqsEditor(aboutData.faqs);
+    }
+    
+    // Show image previews if URLs exist
+    if (aboutData.motto?.image) {
+        showImagePreview('mottoImagePreview', 'mottoImagePreviewImg', aboutData.motto.image);
+    }
+    
+    console.log('About form populated with data:', aboutData);
+}
+
+// Render values editor
+function renderValuesEditor(values) {
+    const list = document.getElementById('valuesList');
+    list.innerHTML = '';
+    values.forEach((value, i) => {
+        const div = document.createElement('div');
+        div.className = 'border p-4 rounded-lg space-y-3';
+        div.innerHTML = `
+            <div class="flex gap-3">
+                <input type="text" placeholder="Number (e.g., 01)" value="${value.number || ''}" class="border rounded p-2 w-20" data-field="number" data-idx="${i}" />
+                <input type="text" placeholder="Title" value="${value.title || ''}" class="border rounded p-2 flex-1" data-field="title" data-idx="${i}" />
+                <button type="button" class="bg-red-500 text-white px-3 py-1 rounded removeValueBtn" data-idx="${i}">Remove</button>
+            </div>
+            <textarea placeholder="Description" class="border rounded p-2 w-full min-h-[80px]" data-field="description" data-idx="${i}">${value.description || ''}</textarea>
+        `;
+        list.appendChild(div);
+    });
+}
+
+// Render testimonials editor
+function renderTestimonialsEditor(testimonials) {
+    const list = document.getElementById('testimonialsList');
+    list.innerHTML = '';
+    testimonials.forEach((testimonial, i) => {
+        const div = document.createElement('div');
+        div.className = 'border p-4 rounded-lg space-y-3';
+        div.innerHTML = `
+            <textarea placeholder="Quote" class="border rounded p-2 w-full min-h-[80px]" data-field="quote" data-idx="${i}">${testimonial.quote || ''}</textarea>
+            <div class="flex gap-3">
+                <input type="text" placeholder="Author" value="${testimonial.author || ''}" class="border rounded p-2 flex-1" data-field="author" data-idx="${i}" />
+                <input type="text" placeholder="Position" value="${testimonial.position || ''}" class="border rounded p-2 flex-1" data-field="position" data-idx="${i}" />
+                <button type="button" class="bg-red-500 text-white px-3 py-1 rounded removeTestimonialBtn" data-idx="${i}">Remove</button>
+            </div>
+        `;
+        list.appendChild(div);
+    });
+}
+
+// Render FAQs editor
+function renderFaqsEditor(faqs) {
+    const list = document.getElementById('faqsList');
+    list.innerHTML = '';
+    faqs.forEach((faq, i) => {
+        const div = document.createElement('div');
+        div.className = 'border p-4 rounded-lg space-y-3';
+        div.innerHTML = `
+            <input type="text" placeholder="Question" value="${faq.question || ''}" class="border rounded p-2 w-full" data-field="question" data-idx="${i}" />
+            <textarea placeholder="Answer" class="border rounded p-2 w-full min-h-[80px]" data-field="answer" data-idx="${i}">${faq.answer || ''}</textarea>
+            <button type="button" class="bg-red-500 text-white px-3 py-1 rounded removeFaqBtn" data-idx="${i}">Remove</button>
+        `;
+        list.appendChild(div);
+    });
+}
+
+// Show image preview helper
+function showImagePreview(previewId, imgId, url) {
+    const preview = document.getElementById(previewId);
+    const img = document.getElementById(imgId);
+    if (preview && img) {
+        img.src = url;
+        preview.classList.remove('hidden');
+    }
+}
+
+// Handle about hero image upload
+document.getElementById('aboutHeroImageFile')?.addEventListener('change', async function(e) {
+    const file = this.files[0];
+    if (!file) return;
+    
+    const formData = new FormData();
+    formData.append('image', file);
+    
+    try {
+        const response = await fetch(BASE_URL + '/api/upload-image', {
+            method: 'POST',
+            body: formData
+        });
+        const data = await response.json();
+        
+        if (data.success && data.url) {
+            if (!aboutData.hero) aboutData.hero = {};
+            aboutData.hero.image = data.url;
+            const aboutHeroImageInput = document.getElementById('aboutHeroImage');
+            if (aboutHeroImageInput) aboutHeroImageInput.value = data.url;
+            showImagePreview('aboutHeroImagePreview', 'aboutHeroImagePreviewImg', data.url);
+        } else {
+            alert('Upload failed: ' + (data.error || 'Unknown error'));
+        }
+    } catch (error) {
+        alert('Upload failed: ' + error.message);
+    }
+});
+
+// Handle motto image upload
+document.getElementById('mottoImageFile')?.addEventListener('change', async function(e) {
+    const file = this.files[0];
+    if (!file) return;
+    
+    const formData = new FormData();
+    formData.append('image', file);
+    
+    try {
+        const response = await fetch(BASE_URL + '/api/upload-image', {
+            method: 'POST',
+            body: formData
+        });
+        const data = await response.json();
+        
+        if (data.success && data.url) {
+            aboutData.motto.image = data.url;
+            document.getElementById('mottoImage').value = data.url;
+            showImagePreview('mottoImagePreview', 'mottoImagePreviewImg', data.url);
+        } else {
+            alert('Upload failed: ' + (data.error || 'Unknown error'));
+        }
+    } catch (error) {
+        alert('Upload failed: ' + error.message);
+    }
+});
+
+// Handle image URL input changes
+document.getElementById('aboutHeroImage')?.addEventListener('input', function(e) {
+    const url = this.value;
+    if (!aboutData.hero) aboutData.hero = {};
+    aboutData.hero.image = url;
+    if (url) {
+        showImagePreview('aboutHeroImagePreview', 'aboutHeroImagePreviewImg', url);
+    } else {
+        document.getElementById('aboutHeroImagePreview')?.classList.add('hidden');
+    }
+});
+
+document.getElementById('mottoImage')?.addEventListener('input', function(e) {
+    const url = this.value;
+    aboutData.motto.image = url;
+    if (url) {
+        showImagePreview('mottoImagePreview', 'mottoImagePreviewImg', url);
+    } else {
+        document.getElementById('mottoImagePreview')?.classList.add('hidden');
+    }
+});
+
+// Add event listeners for dynamic content
+document.addEventListener('click', function(e) {
+    // Add value button
+    if (e.target.id === 'addValueBtn') {
+        if (!aboutData.values) aboutData.values = { items: [] };
+        if (!aboutData.values.items) aboutData.values.items = [];
+        aboutData.values.items.push({ number: '', title: '', description: '' });
+        renderValuesEditor(aboutData.values.items);
+    }
+    
+    // Remove value button
+    if (e.target.classList.contains('removeValueBtn')) {
+        const idx = parseInt(e.target.dataset.idx);
+        if (aboutData.values?.items) {
+            aboutData.values.items.splice(idx, 1);
+            renderValuesEditor(aboutData.values.items);
+        }
+    }
+    
+    // Add testimonial button
+    if (e.target.id === 'addTestimonialBtn') {
+        if (!Array.isArray(aboutData.testimonials)) aboutData.testimonials = [];
+        aboutData.testimonials.push({ quote: '', author: '', position: '' });
+        renderTestimonialsEditor(aboutData.testimonials);
+    }
+    
+    // Remove testimonial button
+    if (e.target.classList.contains('removeTestimonialBtn')) {
+        const idx = parseInt(e.target.dataset.idx);
+        if (Array.isArray(aboutData.testimonials)) {
+            aboutData.testimonials.splice(idx, 1);
+            renderTestimonialsEditor(aboutData.testimonials);
+        }
+    }
+    
+    // Add FAQ button
+    if (e.target.id === 'addFaqBtn') {
+        if (!Array.isArray(aboutData.faqs)) aboutData.faqs = [];
+        aboutData.faqs.push({ question: '', answer: '' });
+        renderFaqsEditor(aboutData.faqs);
+    }
+    
+    // Remove FAQ button
+    if (e.target.classList.contains('removeFaqBtn')) {
+        const idx = parseInt(e.target.dataset.idx);
+        if (Array.isArray(aboutData.faqs)) {
+            aboutData.faqs.splice(idx, 1);
+            renderFaqsEditor(aboutData.faqs);
+        }
+    }
+});
+
+// Handle input changes for dynamic content
+document.addEventListener('input', function(e) {
+    const target = e.target;
+    const field = target.dataset.field;
+    const idx = parseInt(target.dataset.idx);
+    
+    if (field && !isNaN(idx)) {
+        // Values section
+        if (target.closest('#valuesList')) {
+            if (!aboutData.values) aboutData.values = { items: [] };
+            if (!aboutData.values.items[idx]) aboutData.values.items[idx] = {};
+            aboutData.values.items[idx][field] = target.value;
+        }
+        // Testimonials section
+        else if (target.closest('#testimonialsList')) {
+            if (!Array.isArray(aboutData.testimonials)) aboutData.testimonials = [];
+            if (!aboutData.testimonials[idx]) aboutData.testimonials[idx] = {};
+            aboutData.testimonials[idx][field] = target.value;
+        }
+        // FAQs section
+        else if (target.closest('#faqsList')) {
+            if (!Array.isArray(aboutData.faqs)) aboutData.faqs = [];
+            if (!aboutData.faqs[idx]) aboutData.faqs[idx] = {};
+            aboutData.faqs[idx][field] = target.value;
+        }
+    }
+    
+    // Handle other form inputs - fix field names
+    if (target.id === 'aboutHeroTitle') {
+        if (!aboutData.hero) aboutData.hero = {};
+        aboutData.hero.title = target.value;
+    }
+    if (target.id === 'aboutHeroDescription') { // Changed from aboutHeroSubtitle
+        if (!aboutData.hero) aboutData.hero = {};
+        aboutData.hero.description = target.value; // Changed from subtitle
+    }
+    if (target.id === 'aboutUsTitle') {
+        if (!aboutData.aboutUs) aboutData.aboutUs = {};
+        aboutData.aboutUs.title = target.value;
+    }
+    if (target.id === 'aboutUsDescription') {
+        if (!aboutData.aboutUs) aboutData.aboutUs = {};
+        aboutData.aboutUs.description = target.value;
+    }
+    if (target.id === 'valuesTitle') {
+        if (!aboutData.values) aboutData.values = {};
+        aboutData.values.title = target.value;
+    }
+    if (target.id === 'mottoTitle') {
+        if (!aboutData.motto) aboutData.motto = {};
+        aboutData.motto.title = target.value;
+    }
+    if (target.id === 'mottoDescription1') {
+        if (!aboutData.motto) aboutData.motto = {};
+        aboutData.motto.description1 = target.value;
+    }
+    if (target.id === 'mottoDescription2') {
+        if (!aboutData.motto) aboutData.motto = {};
+        aboutData.motto.description2 = target.value;
+    }
+    if (target.id === 'mottoImage') {
+        if (!aboutData.motto) aboutData.motto = {};
+        aboutData.motto.image = target.value;
+    }
+});
+
+// Handle about form submission
+document.getElementById('aboutEditor')?.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    try {
+        // Save to backend
+        const response = await fetch(BASE_URL + '/api/save-about', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(aboutData)
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            alert('About page content saved successfully!');
+            // Also save to localStorage as backup
+            localStorage.setItem('aboutData', JSON.stringify(aboutData));
+        } else {
+            alert('Failed to save: ' + (result.error || 'Unknown error'));
+        }
+    } catch (error) {
+        alert('Error saving: ' + error.message);
+        // Save to localStorage as fallback
+        localStorage.setItem('aboutData', JSON.stringify(aboutData));
+    }
+});
+
+// Handle cancel button
+document.getElementById('cancelAboutEditBtn')?.addEventListener('click', function() {
+    loadAboutData(); // Reload original data
+});
+
+// Handle preview button
+document.getElementById('previewAboutBtn')?.addEventListener('click', function() {
+    // Save current data to localStorage for preview
+    localStorage.setItem('aboutData', JSON.stringify(aboutData));
+    window.open('about.html', '_blank');
+});
+
+// Initialize about data when about section is accessed
+document.addEventListener('DOMContentLoaded', function() {
+    // Load about data when the about section becomes visible
+    const aboutSection = document.getElementById('about');
+    if (aboutSection && !aboutSection.classList.contains('hidden')) {
+        loadAboutData();
+    }
+    
+    // Also load when about nav is clicked - fix the selector
+    document.querySelector('a[href="#about"]')?.addEventListener('click', function() {
+        setTimeout(loadAboutData, 100); // Small delay to ensure section is visible
+    });
+});
+
