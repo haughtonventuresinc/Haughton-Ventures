@@ -35,6 +35,98 @@
     rel="shortcut icon" type="image/x-icon" />
   <link href="../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/6879252edea93bae1b629dda_jjjaaa.jpg"
     rel="apple-touch-icon" />
+  
+  <!-- Skeleton Loading Styles -->
+  <style>
+    .skeleton {
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: skeleton-loading 1.5s infinite;
+    }
+    
+    @keyframes skeleton-loading {
+      0% {
+        background-position: 200% 0;
+      }
+      100% {
+        background-position: -200% 0;
+      }
+    }
+    
+    .skeleton-item {
+      background-color: var(--silver);
+      flex-direction: column;
+      height: 100%;
+      display: flex;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    
+    .skeleton-thumbnail {
+      aspect-ratio: 1.2;
+      width: 100%;
+      position: relative;
+    }
+    
+    .skeleton-category {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      width: 80px;
+      height: 24px;
+      border-radius: 12px;
+    }
+    
+    .skeleton-text-box {
+      padding: 24px;
+      flex: 1;
+    }
+    
+    .skeleton-date {
+      width: 120px;
+      height: 16px;
+      margin-bottom: 12px;
+      border-radius: 4px;
+    }
+    
+    .skeleton-title {
+      width: 100%;
+      height: 24px;
+      margin-bottom: 12px;
+      border-radius: 4px;
+    }
+    
+    .skeleton-excerpt {
+      width: 90%;
+      height: 16px;
+      margin-bottom: 8px;
+      border-radius: 4px;
+    }
+    
+    .skeleton-excerpt:last-of-type {
+      width: 70%;
+      margin-bottom: 16px;
+    }
+    
+    .skeleton-link {
+      width: 80px;
+      height: 16px;
+      border-radius: 4px;
+    }
+    
+    .fade-in {
+      animation: fadeIn 0.5s ease-in;
+    }
+    
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -72,7 +164,81 @@
           <div class="section-intro-text">All insights</div>
         </div>
         <div class="insights-grid-wrapper">
-          <div id="insightsGrid" class="insights-grid"></div>
+          <div id="insightsGrid" class="insights-grid">
+            <!-- Skeleton Loading Placeholders -->
+            <div class="skeleton-item">
+              <div class="skeleton-thumbnail skeleton">
+                <div class="skeleton-category skeleton"></div>
+              </div>
+              <div class="skeleton-text-box">
+                <div class="skeleton-date skeleton"></div>
+                <div class="skeleton-title skeleton"></div>
+                <div class="skeleton-excerpt skeleton"></div>
+                <div class="skeleton-excerpt skeleton"></div>
+                <div class="skeleton-link skeleton"></div>
+              </div>
+            </div>
+            <div class="skeleton-item">
+              <div class="skeleton-thumbnail skeleton">
+                <div class="skeleton-category skeleton"></div>
+              </div>
+              <div class="skeleton-text-box">
+                <div class="skeleton-date skeleton"></div>
+                <div class="skeleton-title skeleton"></div>
+                <div class="skeleton-excerpt skeleton"></div>
+                <div class="skeleton-excerpt skeleton"></div>
+                <div class="skeleton-link skeleton"></div>
+              </div>
+            </div>
+            <div class="skeleton-item">
+              <div class="skeleton-thumbnail skeleton">
+                <div class="skeleton-category skeleton"></div>
+              </div>
+              <div class="skeleton-text-box">
+                <div class="skeleton-date skeleton"></div>
+                <div class="skeleton-title skeleton"></div>
+                <div class="skeleton-excerpt skeleton"></div>
+                <div class="skeleton-excerpt skeleton"></div>
+                <div class="skeleton-link skeleton"></div>
+              </div>
+            </div>
+            <div class="skeleton-item">
+              <div class="skeleton-thumbnail skeleton">
+                <div class="skeleton-category skeleton"></div>
+              </div>
+              <div class="skeleton-text-box">
+                <div class="skeleton-date skeleton"></div>
+                <div class="skeleton-title skeleton"></div>
+                <div class="skeleton-excerpt skeleton"></div>
+                <div class="skeleton-excerpt skeleton"></div>
+                <div class="skeleton-link skeleton"></div>
+              </div>
+            </div>
+            <div class="skeleton-item">
+              <div class="skeleton-thumbnail skeleton">
+                <div class="skeleton-category skeleton"></div>
+              </div>
+              <div class="skeleton-text-box">
+                <div class="skeleton-date skeleton"></div>
+                <div class="skeleton-title skeleton"></div>
+                <div class="skeleton-excerpt skeleton"></div>
+                <div class="skeleton-excerpt skeleton"></div>
+                <div class="skeleton-link skeleton"></div>
+              </div>
+            </div>
+            <div class="skeleton-item">
+              <div class="skeleton-thumbnail skeleton">
+                <div class="skeleton-category skeleton"></div>
+              </div>
+              <div class="skeleton-text-box">
+                <div class="skeleton-date skeleton"></div>
+                <div class="skeleton-title skeleton"></div>
+                <div class="skeleton-excerpt skeleton"></div>
+                <div class="skeleton-excerpt skeleton"></div>
+                <div class="skeleton-link skeleton"></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -143,11 +309,18 @@
 
     import BASE_URL from './base_url.js';
 
+    // Show skeleton loading initially
+    const grid = document.getElementById('insightsGrid');
+    
     fetch(`${BASE_URL}/api/insights-data`)
       .then(resp => resp.json())
       .then(data => {
-        const grid = document.getElementById('insightsGrid');
+        // Clear skeleton loading
         grid.innerHTML = '';
+        
+        // Add fade-in animation to the grid
+        grid.classList.add('fade-in');
+        
         data.forEach(insight => {
           const item = document.createElement('div');
           item.className = 'insights-item';
@@ -167,6 +340,11 @@
       `;
           grid.appendChild(item);
         });
+      })
+      .catch(error => {
+        console.error('Error loading insights:', error);
+        // Show error message instead of skeleton
+        grid.innerHTML = '<div style="text-align: center; padding: 40px; color: #666;">Unable to load insights. Please try again later.</div>';
       });
   </script>
   <!-- Mirrored from haughton-ventures.webflow.io/insights by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 17 Jul 2025 17:22:44 GMT -->

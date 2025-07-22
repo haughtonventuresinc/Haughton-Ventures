@@ -11,7 +11,7 @@ async function loadAboutData() {
             throw new Error('Failed to fetch about data');
         }
         const data = await response.json();
-        console.log(data);
+        //console.log(data);
         populateAboutPage(data);
     } catch (error) {
         console.error('Error loading about data:', error);
@@ -85,9 +85,18 @@ function populateAboutPage(data) {
         
         // Clear srcset for uploaded images to avoid showing old CDN images
         if (data.motto.image.startsWith('uploads/')) {
+            mottoImage.src = `${BASE_URL}/${data.motto.image}`;
             mottoImage.removeAttribute('srcset');
-        } else if (data.motto.imageSrcset) {
-            mottoImage.srcset = data.motto.imageSrcset;
+            mottoImage.setAttribute('sizes', '100vw');
+        } else {
+            mottoImage.src = data.motto.image;
+            if (data.motto.imageSrcset) {
+                mottoImage.srcset = data.motto.imageSrcset;
+                mottoImage.setAttribute('sizes', '(max-width: 767px) 100vw, (max-width: 991px) 95vw, 940px');
+            } else {
+                mottoImage.removeAttribute('srcset');
+                mottoImage.setAttribute('sizes', '(max-width: 767px) 100vw, (max-width: 991px) 95vw, 940px');
+            }
         }
     }
     if (mottoTitle && data.motto) {
