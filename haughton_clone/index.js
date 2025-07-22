@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Load Hero data
   loadHeroData();
 
-  // Load random insights
+  // Load random insights with skeleton loading
   loadRandomInsights();
   
   // Load services data
@@ -30,19 +30,47 @@ document.addEventListener('DOMContentLoaded', function() {
   loadAboutData();
   
   
-  // Function to fetch and display 3 random insights
+  // Function to fetch and display 3 random insights with skeleton loading
   async function loadRandomInsights() {
+    const insightsGrid = document.querySelector('.insights-grid.w-dyn-items');
+    const skeletonElement = document.getElementById('insights-skeleton');
+    const errorElement = document.getElementById('insights-error');
+    
     try {
+      // Show skeleton, hide content and error
+      if (skeletonElement) skeletonElement.style.display = 'grid';
+      if (insightsGrid) insightsGrid.style.display = 'none';
+      if (errorElement) errorElement.style.display = 'none';
+      
       const response = await fetch(`${BASE_URL}/api/insights-data`);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const insights = await response.json();
       
       if (insights && insights.length > 0) {
         // Get 3 random insights
         const randomInsights = getRandomItems(insights, 3);
         populateInsightsGrid(randomInsights);
+        
+        // Hide skeleton, show content with fade-in effect
+        if (skeletonElement) skeletonElement.style.display = 'none';
+        if (insightsGrid) {
+          insightsGrid.style.display = 'grid';
+          insightsGrid.classList.add('loaded');
+        }
+      } else {
+        throw new Error('No insights data available');
       }
     } catch (error) {
       console.error('Error loading insights:', error);
+      
+      // Hide skeleton, show error message
+      if (skeletonElement) skeletonElement.style.display = 'none';
+      if (insightsGrid) insightsGrid.style.display = 'none';
+      if (errorElement) errorElement.style.display = 'block';
     }
   }
   
@@ -362,22 +390,39 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Function to load and populate hero section
   async function loadHeroData() {
+    const heroContainer = document.getElementById('dynamic-hero-section');
+    const skeletonElement = document.getElementById('hero-skeleton');
+    
     try {
+      // Show skeleton, hide content
+      if (skeletonElement) skeletonElement.style.display = 'block';
+      if (heroContainer) heroContainer.style.display = 'none';
+      
       const response = await fetch(`${BASE_URL}/api/homepage`);
       const data = await response.json();
       
       if (data.heroTitle || data.heroImages || data.heroSlider) {
-        /*console.log('Hero data loaded:', { 
-          title: data.heroTitle, 
-          images: data.heroImages?.length, 
-          slider: data.heroSlider?.length 
-        }); */
         populateHeroSection(data);
+        
+        // Hide skeleton, show content with fade-in effect
+        if (skeletonElement) skeletonElement.style.display = 'none';
+        if (heroContainer) {
+          heroContainer.style.display = 'block';
+          heroContainer.style.opacity = '0';
+          heroContainer.style.transition = 'opacity 0.3s ease-in-out';
+          setTimeout(() => {
+            heroContainer.style.opacity = '1';
+          }, 50);
+        }
       } else {
-        //console.log('No hero data found in response:', data);
+        throw new Error('No hero data found');
       }
     } catch (error) {
       console.error('Error loading hero data:', error);
+      
+      // Hide skeleton on error
+      if (skeletonElement) skeletonElement.style.display = 'none';
+      if (heroContainer) heroContainer.style.display = 'block';
     }
   }
 

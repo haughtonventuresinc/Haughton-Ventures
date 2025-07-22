@@ -36,6 +36,47 @@
         rel="shortcut icon" type="image/x-icon" />
     <link href="../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/6879252edea93bae1b629dda_jjjaaa.jpg"
         rel="apple-touch-icon" />
+    
+    <!-- Hero Skeleton Loading Styles -->
+    <style>
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 4px;
+        }
+        
+        @keyframes loading {
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
+        }
+        
+        .skeleton-hero-title {
+            height: 60px;
+            width: 80%;
+            margin-bottom: 48px;
+        }
+        
+        .skeleton-hero-image {
+            height: 400px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        
+        .skeleton-slider {
+            height: 300px;
+            width: 100%;
+            border-radius: 8px;
+        }
+        
+        #hero-skeleton {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -61,9 +102,22 @@
         </div>
     </div>
     <div class="section">
-  <div class="container w-container" style="opacity: 1;">
-    <div id="dynamic-hero-section"></div>
-  </div>
+        <div class="container w-container" style="opacity: 1;">
+            <div id="dynamic-hero-section"></div>
+            
+            <!-- Hero Skeleton Loading -->
+            <div id="hero-skeleton">
+                <div class="home-title-box">
+                    <div class="skeleton skeleton-hero-title"></div>
+                </div>
+                <div class="spacer _48"></div>
+                <div class="home-hero-image-block">
+                    <div class="skeleton skeleton-hero-image"></div>
+                    <div class="skeleton skeleton-slider"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
     <div class="page-wrapper">
         <div class="section blue"><img
@@ -80,17 +134,17 @@
                     </div>
                     <div class="text-box _500px right-align-box">
                         <p class="paragraph">{01}</p>
-                        <p class="paragraph"></p>
+                        <p class="paragraph">We identify untapped opportunities in Real Estate, Media, IP, and Technology.By moving early, we secure undervalued assets with massive growth potential.Our approach blends data-driven insights with creative capital deployment.This is where foresight meets action to create generational value.</p>
                     </div>
                 </div>
                 <div class="spacer _80"></div>
                 <div class="w-layout-grid large-2-column-grid">
                     <div class="text-box _450px right-align-box">
                         <p class="paragraph">{02}</p>
-                        <p class="paragraph"></p>
+                        <p class="paragraph">We partner with ambitious founders and operators ready to disrupt industries. Our capital, expertise, and global network amplify bold visions into reality. From scaling businesses to repositioning assets, we fuel transformative growth. Bold thinking isn't risky — it's our operating system.</p>
                         <div class="spacer _32"></div>
                         <p class="paragraph">{03}</p>
-                        <p class="paragraph"></p>
+                        <p class="paragraph">We don't just grow companies — we make them sustainable and profitable. Our teams optimize operations, unlock new revenue streams, and expand markets. Every asset we touch is positioned to outperform and attract premium exits. Scaling isn't just about speed. It's about building for the long game.</p>
                         <div class="spacer _16"></div><a href="about.html" class="arrow-link white">More about us</a>
                     </div><img
                         src="../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50b0e_Group%20663.avif"
@@ -115,23 +169,23 @@
                     <div class="_4-grid">
                         <div class="text-box _450px">
                             <p class="paragraph">{01}</p>
-                            <h3 class="heading h4"></h3>
-                            <p class="paragraph medium"></p>
+                            <h3 class="heading h4">Relentless growth</h3>
+                            <p class="paragraph medium">We believe in constantly evolving — learning, improving, and innovating with every move we make</p>
                         </div>
                         <div class="text-box _450px">
                             <p class="paragraph">{02}</p>
-                            <h3 class="heading h4"></h3>
-                            <p class="paragraph medium"></p>
+                            <h3 class="heading h4">Purpose over profit</h3>
+                            <p class="paragraph medium">We back businesses that stand for something — with values that go beyond the balance sheet.</p>
                         </div>
                         <div class="text-box _450px">
                             <p class="paragraph">{03}</p>
-                            <h3 class="heading h4"></h3>
-                            <p class="paragraph medium"></p>
+                            <h3 class="heading h4">Lead with integrity</h3>
+                            <p class="paragraph medium">We treat people right and do business the right way — no shortcuts, no compromises.</p>
                         </div>
                         <div class="text-box _450px">
                             <p class="paragraph">{04}</p>
-                            <h3 class="heading h4"></h3>
-                            <p class="paragraph medium"></p>
+                            <h3 class="heading h4">Design with intention</h3>
+                            <p class="paragraph medium">From ideas to execution, everything we create is built to inspire, connect, and endure.</p>
                         </div>
                     </div>
                 </div>
@@ -146,10 +200,10 @@
                 <div class="w-layout-grid _2-column-grid"> 
                     <div id="w-node-dd2e2702-54cb-302f-801c-5bb3f36d0217-f4a50ad1" class="vertical-text-box"> 
                         <div class="text-box _450px"> 
-                            <h2 class="heading h2" id="philosophy-heading"></h2> 
+                            <h2 class="heading h2" id="philosophy-heading">We on invest in the best businesses.</h2> 
                         </div> 
                         <div class="text-box _450px"> 
-                            <p class="paragraph" id="philosophy-description"></p> 
+                            <p class="paragraph" id="philosophy-description">We back companies with real potential — ambitious teams, proven models, and the drive to lead their markets. Our focus is on sustainable growth, strategic execution, and long-term value. At HV, we don't chase hype — we invest in what's built to last. Let me know if you want it bolder, more investor-focused, or with a tech/startup spin.</p> 
                             <div class="spacer _16"></div><a href="about.html" class="button outline w-button" id="philosophy-button"></a> 
                         </div> 
                     </div> 
@@ -234,8 +288,8 @@
                 </div>
                 <div class="w-layout-grid _2-column-grid">
                     <div id="w-node-_5a10295f-3fd3-8da5-58de-68b4cc844c49-f4a50ad1" class="text-box _450px">
-                        <h2 class="heading h2"></h2>
-                        <p class="paragraph"></p>
+                        <h2 class="heading h2">What we do</h2>
+                        <p class="paragraph">We specialize in acquiring, scaling, and transforming businesses into market leaders. Our team brings capital, expertise, and strategic insight to help ventures realize their full potential. From initial investment to operational excellence, we deliver results that last.</p>
                     </div>
                     <div class="questions-wrapper">
                         <div href="#" data-ix="show-answer" class="question-container dark">
@@ -289,7 +343,7 @@
                         &amp; Insights</div>
                 </div>
                 <div class="text-box _550px">
-                    <h2 class="heading h2">How we&#x27;re investing for the future.</h2>
+                    <h2 class="heading h2"></h2>
                     <div class="spacer _32"></div>
                 </div>
                 <div class="insights-grid-wrapper w-dyn-list">
@@ -297,7 +351,7 @@
                         <div role="listitem" class="insights-item w-dyn-item"><a
                                 href="insights/hv-invests-in-rentberry.html" class="insight-link-block w-inline-block">
                                 <div class="insight-thumbnail">
-                                    <div class="insight-category-tag">Team Update</div><img
+                                    <div class="insight-category-tag"></div><img
                                         alt="HV Invests in Rentberry to Redefine the Rental Experience" loading="lazy"
                                         width="808"
                                         src="../cdn.prod.website-files.com/687563dc787e44a7f4a50afc/6876879d53ca79538f2f0caf_Rentberry-Blockchain-Rental-Platform.jpg"
@@ -306,20 +360,17 @@
                                         class="insight-cover-image" />
                                 </div>
                                 <div class="insights-text-box">
-                                    <div class="post-date">February 15, 2023</div>
-                                    <h3 class="paragraph x-large">HV Invests in Rentberry to Redefine the Rental
-                                        Experience</h3>
-                                    <p class="paragraph medium grey">Hic aut et eligendi fugit dolores omnis.
-                                        Soluta consectetur quo velit dicta quos.
-                                        Laudantium perspiciatis architecto sed et.</p>
-                                    <div class="post-arrow-link">Read now</div>
+                                    <div class="post-date"></div>
+                                    <h3 class="paragraph x-large"></h3>
+                                    <p class="paragraph medium grey"></p>
+                                    <div class="post-arrow-link"></div>
                                 </div>
                             </a></div>
                         <div role="listitem" class="insights-item w-dyn-item"><a
                                 href="insights/haughton-ventures-backs-superphone.html"
                                 class="insight-link-block w-inline-block">
                                 <div class="insight-thumbnail">
-                                    <div class="insight-category-tag">Case Study</div><img
+                                    <div class="insight-category-tag"></div><img
                                         alt="Haughton Ventures Backs SuperPhone® to Power the Future of Direct-to-Consumer Messaging"
                                         loading="lazy" width="808"
                                         src="../cdn.prod.website-files.com/687563dc787e44a7f4a50afc/68768583a3cde4944d9925a1_61532be71b39c948d8dd6068_Website_OpenGraph_FINAL.png"
@@ -328,22 +379,17 @@
                                         class="insight-cover-image" />
                                 </div>
                                 <div class="insights-text-box">
-                                    <div class="post-date">February 15, 2023</div>
-                                    <h3 class="paragraph x-large">Haughton Ventures Backs SuperPhone® to Power the
-                                        Future of Direct-to-Consumer Messaging</h3>
-                                    <p class="paragraph medium grey">SuperPhone® is a revolutionary messaging platform
-                                        created by Grammy-nominated artist and entrepreneur Ryan Leslie. Originally
-                                        developed as a tool to engage his fanbase directly, it evolved into a powerful
-                                        SaaS solution helping creators, brands, and enterprises monetize relationships
-                                        through personalized SMS and voice communication.</p>
-                                    <div class="post-arrow-link">Read now</div>
+                                    <div class="post-date"></div>
+                                    <h3 class="paragraph x-large"></h3>
+                                    <p class="paragraph medium grey"></p>
+                                    <div class="post-arrow-link"></div>
                                 </div>
                             </a></div>
                         <div role="listitem" class="insights-item w-dyn-item"><a
                                 href="insights/powering-next-gen-content.html"
                                 class="insight-link-block w-inline-block">
                                 <div class="insight-thumbnail">
-                                    <div class="insight-category-tag">Team Update</div><img
+                                    <div class="insight-category-tag"></div><img
                                         alt="Powering Next-Gen Content: Haughton Ventures Invests in ArtSky"
                                         loading="lazy" width="808"
                                         src="../cdn.prod.website-files.com/687563dc787e44a7f4a50afc/68768d1ad1d644b9fad94871_artsky-LOGO.png"
@@ -353,19 +399,16 @@
                                 </div>
                                 <div class="insights-text-box">
                                     <div class="post-date">February 15, 2023</div>
-                                    <h3 class="paragraph x-large">Powering Next-Gen Content: Haughton Ventures Invests
-                                        in ArtSky</h3>
-                                    <p class="paragraph medium grey">ArtSky is a full-service media and entertainment
-                                        company specializing in content creation that captivates audiences and defines
-                                        culture. With a focus on storytelling and innovation, ArtSky bridges the gap
-                                        between traditional media and the digital landscape.</p>
-                                    <div class="post-arrow-link">Read now</div>
+                                    <h3 class="paragraph x-large"></h3>
+                                    <p class="paragraph medium grey"></p>
+                                    <div class="post-arrow-link"></div>
                                 </div>
                             </a></div>
                     </div>
                 </div>
             </div>
         </div>
+        
         <div class="section blue"><img
                 src="../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50b0a_Small%20Top%20Right%20Corner%20Block.svg"
                 loading="lazy" alt="" class="top-right-corner-block" />
@@ -381,6 +424,7 @@
             </div>
         </div>
     </div>
+    <!-- Footer -->
     <div class="footer">
         <div class="footer-container w-container">
             <div class="w-layout-grid footer-links-grid">
