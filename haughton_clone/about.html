@@ -25,6 +25,125 @@
         rel="shortcut icon" type="image/x-icon" />
     <link href="../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/6879252edea93bae1b629dda_jjjaaa.jpg"
         rel="apple-touch-icon" />
+    
+    <!-- Skeleton Loading Styles -->
+    <style>
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 4px;
+        }
+        
+        @keyframes loading {
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
+        }
+        
+        .skeleton-hero-title {
+            height: 60px;
+            width: 80%;
+            margin-bottom: 20px;
+        }
+        
+        .skeleton-hero-description {
+            height: 20px;
+            width: 90%;
+            margin-bottom: 10px;
+        }
+        
+        .skeleton-section-title {
+            height: 40px;
+            width: 70%;
+            margin-bottom: 20px;
+        }
+        
+        .skeleton-paragraph {
+            height: 16px;
+            width: 100%;
+            margin-bottom: 8px;
+        }
+        
+        .skeleton-paragraph:last-child {
+            width: 75%;
+        }
+        
+        .skeleton-value-item {
+            padding: 20px 0;
+        }
+        
+        .skeleton-value-number {
+            height: 16px;
+            width: 40px;
+            margin-bottom: 10px;
+        }
+        
+        .skeleton-value-title {
+            height: 24px;
+            width: 60%;
+            margin-bottom: 15px;
+        }
+        
+        .skeleton-value-desc {
+            height: 16px;
+            width: 100%;
+            margin-bottom: 8px;
+        }
+        
+        .skeleton-image {
+            height: 400px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        
+        .skeleton-testimonial {
+            height: 120px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        
+        .skeleton-faq-item {
+            height: 60px;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        
+        .content-loaded {
+            opacity: 0;
+            animation: fadeIn 0.5s ease-in-out forwards;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        .skeleton-hidden {
+            display: none;
+        }
+        
+        @media (max-width: 767px) {
+            .skeleton-hero-title {
+                height: 40px;
+            }
+            
+            .skeleton-section-title {
+                height: 32px;
+            }
+            
+            .skeleton-image {
+                height: 250px;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -55,10 +174,18 @@
             </div>
             <div class="_2-1-column-grid bottom-align">
                 <div class="text-box _600px">
-                    <h1 class="heading h1" id="hero-title"></h1>
+                    <!-- Skeleton for hero title -->
+                    <div id="hero-title-skeleton" class="skeleton skeleton-hero-title"></div>
+                    <h1 class="heading h1" id="hero-title" style="display: none;"></h1>
                 </div>
                 <div class="text-box _600px">
-                    <p class="paragraph" id="hero-description"></p>
+                    <!-- Skeleton for hero description -->
+                    <div id="hero-description-skeleton">
+                        <div class="skeleton skeleton-hero-description"></div>
+                        <div class="skeleton skeleton-hero-description"></div>
+                        <div class="skeleton skeleton-hero-description" style="width: 60%;"></div>
+                    </div>
+                    <p class="paragraph" id="hero-description" style="display: none;"></p>
                 </div>
             </div>
             <div class="spacer _80"></div>
@@ -74,11 +201,20 @@
                     </div>
                 </div>
                 <div class="text-box _850px">
-                    <h2 class="heading h2" id="about-title"></h2>
+                    <!-- Skeleton for about title -->
+                    <div id="about-title-skeleton" class="skeleton skeleton-section-title"></div>
+                    <h2 class="heading h2" id="about-title" style="display: none;"></h2>
                 </div>
                 <div class="text-box right-align-box">
                     <div class="spacer _16 mobile-hidden"></div>
-                    <p class="paragraph" id="about-description"></p>
+                    <!-- Skeleton for about description -->
+                    <div id="about-description-skeleton">
+                        <div class="skeleton skeleton-paragraph"></div>
+                        <div class="skeleton skeleton-paragraph"></div>
+                        <div class="skeleton skeleton-paragraph"></div>
+                        <div class="skeleton skeleton-paragraph"></div>
+                    </div>
+                    <p class="paragraph" id="about-description" style="display: none;"></p>
                 </div>
             </div>
         </div>
@@ -89,33 +225,46 @@
                         values</div>
                 </div>
                 <div class="text-box _720px">
-                    <h2 class="heading h2" id="values-title"></h2>
+                    <!-- Skeleton for values title -->
+                    <div id="values-title-skeleton" class="skeleton skeleton-section-title"></div>
+                    <h2 class="heading h2" id="values-title" style="display: none;"></h2>
                     <div class="spacer _96"></div>
                 </div>
                 <div class="w-layout-grid _4-grid">
-                    <div class="text-box _720px">
-                        <div class="paragraph grey-text">{01}</div>
-                        <h3 class="heading h4" id="values-01"></h3>
-                        <div class="spacer _24"></div>
-                        <p class="paragraph" id="values-desc-01"></p>
-                    </div>
-                    <div class="text-box _720px">
-                        <div class="paragraph grey-text">{02}</div>
-                        <h3 class="heading h4" id="values-02"></h3>
-                        <div class="spacer _24"></div>
-                        <p class="paragraph" id="values-desc-02"></p>
-                    </div>
-                    <div class="text-box _720px">
-                        <div class="paragraph grey-text">{03}</div>
-                        <h3 class="heading h4" id="values-03"></h3>
-                        <div class="spacer _24"></div>
-                        <p class="paragraph" id="values-desc-03"></p>
-                    </div>
-                    <div class="text-box _720px">
-                        <div class="paragraph grey-text">{04}</div>
-                        <h3 class="heading h4" id="values-04"></h3>
-                        <div class="spacer _24"></div>
-                        <p class="paragraph" id="values-desc-04"></p>
+                    <!-- Skeleton for values grid -->
+                    <div id="values-skeleton" class="w-layout-grid _4-grid">
+                        <div class="text-box _720px skeleton-value-item">
+                            <div class="skeleton skeleton-value-number"></div>
+                            <div class="skeleton skeleton-value-title"></div>
+                            <div class="spacer _24"></div>
+                            <div class="skeleton skeleton-value-desc"></div>
+                            <div class="skeleton skeleton-value-desc"></div>
+                            <div class="skeleton skeleton-value-desc" style="width: 70%;"></div>
+                        </div>
+                        <div class="text-box _720px skeleton-value-item">
+                            <div class="skeleton skeleton-value-number"></div>
+                            <div class="skeleton skeleton-value-title"></div>
+                            <div class="spacer _24"></div>
+                            <div class="skeleton skeleton-value-desc"></div>
+                            <div class="skeleton skeleton-value-desc"></div>
+                            <div class="skeleton skeleton-value-desc" style="width: 80%;"></div>
+                        </div>
+                        <div class="text-box _720px skeleton-value-item">
+                            <div class="skeleton skeleton-value-number"></div>
+                            <div class="skeleton skeleton-value-title"></div>
+                            <div class="spacer _24"></div>
+                            <div class="skeleton skeleton-value-desc"></div>
+                            <div class="skeleton skeleton-value-desc"></div>
+                            <div class="skeleton skeleton-value-desc" style="width: 65%;"></div>
+                        </div>
+                        <div class="text-box _720px skeleton-value-item">
+                            <div class="skeleton skeleton-value-number"></div>
+                            <div class="skeleton skeleton-value-title"></div>
+                            <div class="spacer _24"></div>
+                            <div class="skeleton skeleton-value-desc"></div>
+                            <div class="skeleton skeleton-value-desc"></div>
+                            <div class="skeleton skeleton-value-desc" style="width: 75%;"></div>
+                        </div>
                     </div>
                 </div>
             </div><img
@@ -129,20 +278,31 @@
                     </div>
                 </div>
                 <div class="w-layout-grid _2-column-grid">
-                    <div id="w-node-_8ed8832d-6c72-9f4b-a89b-6ba935830e7b-f4a50b33" class="blog-image-block"><img
-                        id="motto-image"
-                        loading="lazy"
-                        sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 940px"
-                        alt=""
-                        class="image-cover" /></div>
+                    <div id="w-node-_8ed8832d-6c72-9f4b-a89b-6ba935830e7b-f4a50b33" class="blog-image-block">
+                        <!-- Skeleton for motto image -->
+                        <div id="motto-image-skeleton" class="skeleton skeleton-image"></div>
+                        <img id="motto-image" loading="lazy" sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 940px" alt="" class="image-cover" style="display: none;" />
+                    </div>
                     <div id="w-node-_8ed8832d-6c72-9f4b-a89b-6ba935830e6e-f4a50b33" class="vertical-text-box">
                         <div class="text-box _500px">
-                            <h2 id="motto-title" class="heading h2"></h2>
+                            <!-- Skeleton for motto title -->
+                            <div id="motto-title-skeleton" class="skeleton skeleton-section-title"></div>
+                            <h2 id="motto-title" class="heading h2" style="display: none;"></h2>
                             <div class="spacer _48"></div>
                         </div>
                         <div class="text-box _600px">
-                            <p id="motto-description1" class="paragraph medium"></p>
-                            <p id="motto-description2" class="paragraph medium"></p>
+                            <!-- Skeleton for motto descriptions -->
+                            <div id="motto-description-skeleton">
+                                <div class="skeleton skeleton-paragraph"></div>
+                                <div class="skeleton skeleton-paragraph"></div>
+                                <div class="skeleton skeleton-paragraph" style="width: 80%;"></div>
+                                <div style="margin: 20px 0;"></div>
+                                <div class="skeleton skeleton-paragraph"></div>
+                                <div class="skeleton skeleton-paragraph"></div>
+                                <div class="skeleton skeleton-paragraph" style="width: 70%;"></div>
+                            </div>
+                            <p id="motto-description1" class="paragraph medium" style="display: none;"></p>
+                            <p id="motto-description2" class="paragraph medium" style="display: none;"></p>
                         </div>
                     </div>
                 </div>
@@ -157,7 +317,11 @@
                 <div data-delay="4000" data-animation="cross" class="quote-slider w-slider" data-autoplay="false"
                     data-easing="ease" data-hide-arrows="false" data-disable-swipe="false" data-autoplay-limit="0"
                     data-nav-spacing="3" data-duration="500" data-infinite="true">
-                    <div id="testimonials-slider" class="quote-slider-mask w-slider-mask">
+                    <!-- Skeleton for testimonials -->
+                    <div id="testimonials-skeleton" class="quote-slider-mask w-slider-mask">
+                        <div class="skeleton skeleton-testimonial"></div>
+                    </div>
+                    <div id="testimonials-slider" class="quote-slider-mask w-slider-mask" style="display: none;">
                         <!-- Testimonials will be populated dynamically -->
                     </div>
                     <div class="quote-left-arrow w-slider-arrow-left"><img
@@ -179,8 +343,18 @@
                     <div class="text-box">
                         <h2 class="heading h2">Frequently asked</h2>
                     </div>
-                    <div id="faqs-wrapper" class="questions-wrapper">
-                        <!-- FAQs will be populated dynamically -->
+                    <div class="questions-wrapper">
+                        <!-- Skeleton for FAQs -->
+                        <div id="faqs-skeleton">
+                            <div class="skeleton skeleton-faq-item"></div>
+                            <div class="skeleton skeleton-faq-item"></div>
+                            <div class="skeleton skeleton-faq-item"></div>
+                            <div class="skeleton skeleton-faq-item"></div>
+                            <div class="skeleton skeleton-faq-item"></div>
+                        </div>
+                        <div id="faqs-wrapper" style="display: none;">
+                            <!-- FAQs will be populated dynamically -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -247,7 +421,360 @@
         type="text/javascript"></script>
     <script src="../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/js/webflow.a2574a41.8cf4bda295ded529.js"
         type="text/javascript"></script>
-    <script src="about.js" type="module"></script>
+    
+    <!-- Enhanced About.js with Skeleton Loading -->
+    <script type="module">
+        import BASE_URL from "./base_url.js";
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadAboutData();
+        });
+
+        async function loadAboutData() {
+            try {
+                const response = await fetch(`${BASE_URL}/api/about-data`);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch about data');
+                }
+                const data = await response.json();
+                populateAboutPage(data);
+                hideSkeletonAndShowContent();
+            } catch (error) {
+                console.error('Error loading about data:', error);
+                showErrorMessage();
+            }
+        }
+
+        function hideSkeletonAndShowContent() {
+            // Hide all skeleton elements
+            const skeletonElements = [
+                'hero-title-skeleton',
+                'hero-description-skeleton',
+                'about-title-skeleton', 
+                'about-description-skeleton',
+                'values-title-skeleton',
+                'values-skeleton',
+                'motto-image-skeleton',
+                'motto-title-skeleton',
+                'motto-description-skeleton',
+                'testimonials-skeleton',
+                'faqs-skeleton'
+            ];
+            
+            skeletonElements.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.style.display = 'none';
+                }
+            });
+            
+            // Show all content elements with fade-in effect
+            const contentElements = [
+                'hero-title',
+                'hero-description', 
+                'about-title',
+                'about-description',
+                'values-title',
+                'motto-image',
+                'motto-title',
+                'motto-description1',
+                'motto-description2',
+                'testimonials-slider',
+                'faqs-wrapper'
+            ];
+            
+            contentElements.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.style.display = 'block';
+                    element.classList.add('content-loaded');
+                }
+            });
+        }
+
+        function showErrorMessage() {
+            // Hide skeleton elements
+            const skeletonElements = document.querySelectorAll('[id$="-skeleton"]');
+            skeletonElements.forEach(element => {
+                element.style.display = 'none';
+            });
+            
+            // Show error message
+            const heroTitle = document.getElementById('hero-title');
+            if (heroTitle) {
+                heroTitle.textContent = 'Unable to load content';
+                heroTitle.style.display = 'block';
+                heroTitle.classList.add('content-loaded');
+            }
+            
+            const heroDescription = document.getElementById('hero-description');
+            if (heroDescription) {
+                heroDescription.textContent = 'Please check your internet connection and try again.';
+                heroDescription.style.display = 'block';
+                heroDescription.classList.add('content-loaded');
+            }
+        }
+
+        function populateAboutPage(data) {
+            // Hero section
+            const heroTitle = document.getElementById('hero-title');
+            const heroDescription = document.getElementById('hero-description');
+            
+            if (heroTitle && data.hero) {
+                heroTitle.textContent = data.hero.title;
+            }
+            if (heroDescription && data.hero) {
+                heroDescription.textContent = data.hero.description;
+            }
+
+            // About Us section
+            const aboutTitle = document.getElementById('about-title');
+            const aboutDescription = document.getElementById('about-description');
+            
+            if (aboutTitle && data.aboutUs) {
+                aboutTitle.textContent = data.aboutUs.title;
+            }
+            if (aboutDescription && data.aboutUs) {
+                aboutDescription.textContent = data.aboutUs.description;
+            }
+
+            // Values section
+            const valuesGrid = document.querySelector('._4-grid');
+            const valuesTitle = document.getElementById('values-title');
+            
+            if (valuesTitle && data.values) {
+                valuesTitle.textContent = data.values.title;
+            }
+            
+            if (valuesGrid && data.values && data.values.items) {
+                // Clear existing content
+                valuesGrid.innerHTML = '';
+                
+                // Create new value items
+                data.values.items.forEach((value, index) => {
+                    const valueDiv = document.createElement('div');
+                    valueDiv.className = 'text-box _720px';
+                    
+                    valueDiv.innerHTML = `
+                        <div class="paragraph grey-text">{${value.number}}</div>
+                        <h3 class="heading h4">${value.title}</h3>
+                        <div class="spacer _24"></div>
+                        <p class="paragraph">${value.description}</p>
+                    `;
+                    
+                    valuesGrid.appendChild(valueDiv);
+                });
+            }
+            
+            // Motto section
+            const mottoImage = document.getElementById('motto-image');
+            const mottoTitle = document.getElementById('motto-title');
+            const mottoDescription = document.getElementById('motto-description1');
+            const mottoDescription2 = document.getElementById('motto-description2');
+            
+            if (mottoImage && data.motto) {
+                // Check if the image path is relative (starts with 'uploads/') and prefix with BASE_URL
+                const imageSrc = data.motto.image.startsWith('uploads/') 
+                    ? `${BASE_URL}/${data.motto.image}` 
+                    : data.motto.image;
+                mottoImage.src = imageSrc;
+                
+                // Clear srcset for uploaded images to avoid showing old CDN images
+                if (data.motto.image.startsWith('uploads/')) {
+                    mottoImage.src = `${BASE_URL}/${data.motto.image}`;
+                    mottoImage.removeAttribute('srcset');
+                    mottoImage.setAttribute('sizes', '100vw');
+                } else {
+                    mottoImage.src = data.motto.image;
+                    if (data.motto.imageSrcset) {
+                        mottoImage.srcset = data.motto.imageSrcset;
+                        mottoImage.setAttribute('sizes', '(max-width: 767px) 100vw, (max-width: 991px) 95vw, 940px');
+                    } else {
+                        mottoImage.removeAttribute('srcset');
+                        mottoImage.setAttribute('sizes', '(max-width: 767px) 100vw, (max-width: 991px) 95vw, 940px');
+                    }
+                }
+            }
+            if (mottoTitle && data.motto) {
+                mottoTitle.textContent = data.motto.title;
+            }
+            if (mottoDescription && data.motto) {
+                mottoDescription.innerHTML = data.motto.description1;
+            }
+            if (mottoDescription2 && data.motto) {
+                mottoDescription2.innerHTML = data.motto.description2;
+            }
+
+            // Testimonials with slider functionality
+            const testimonialsSlider = document.getElementById('testimonials-slider');
+            if (testimonialsSlider && data.testimonials) {
+                let currentSlide = 0;
+                const totalSlides = data.testimonials.length;
+                
+                // Clear existing content
+                testimonialsSlider.innerHTML = '';
+                
+                // Create slides
+                data.testimonials.forEach((testimonial, index) => {
+                    const slideDiv = document.createElement('div');
+                    slideDiv.className = 'w-slide';
+                    slideDiv.setAttribute('aria-label', `${index + 1} of ${totalSlides}`);
+                    slideDiv.setAttribute('role', 'group');
+                    slideDiv.style.cssText = `
+                        transition: all 500ms ease;
+                        transform: translateX(0px);
+                        opacity: ${index === 0 ? '1' : '0'};
+                        z-index: ${index === 0 ? '12' : '10'};
+                        visibility: ${index === 0 ? 'visible' : 'hidden'};
+                        position: ${index === 0 ? 'relative' : 'absolute'};
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                    `;
+                    if (index !== 0) {
+                        slideDiv.setAttribute('aria-hidden', 'true');
+                    }
+                    
+                    slideDiv.innerHTML = `
+                        <div class="quote-slider-text-box">
+                            <h2 class="heading h2">"${testimonial.quote}"</h2>
+                            <p class="paragraph">— ${testimonial.author}</p>
+                        </div>
+                    `;
+                    testimonialsSlider.appendChild(slideDiv);
+                });
+                
+                // Create navigation dots
+                const navContainer = document.querySelector('.quote-slide-nav');
+                if (navContainer) {
+                    navContainer.innerHTML = '';
+                    data.testimonials.forEach((_, index) => {
+                        const dot = document.createElement('div');
+                        dot.className = `w-slider-dot ${index === 0 ? 'w-active' : ''}`;
+                        dot.setAttribute('data-wf-ignore', '');
+                        dot.setAttribute('aria-label', `Show slide ${index + 1} of ${totalSlides}`);
+                        dot.setAttribute('aria-pressed', index === 0 ? 'true' : 'false');
+                        dot.setAttribute('role', 'button');
+                        dot.setAttribute('tabindex', index === 0 ? '0' : '-1');
+                        dot.style.cssText = 'margin-left: 3px; margin-right: 3px; cursor: pointer;';
+                        
+                        dot.addEventListener('click', () => goToSlide(index));
+                        navContainer.appendChild(dot);
+                    });
+                }
+                
+                // Function to go to specific slide
+                function goToSlide(slideIndex) {
+                    const slides = testimonialsSlider.querySelectorAll('.w-slide');
+                    const dots = navContainer.querySelectorAll('.w-slider-dot');
+                    
+                    // Hide current slide
+                    slides[currentSlide].style.opacity = '0';
+                    slides[currentSlide].style.visibility = 'hidden';
+                    slides[currentSlide].style.position = 'absolute';
+                    slides[currentSlide].style.zIndex = '10';
+                    slides[currentSlide].setAttribute('aria-hidden', 'true');
+                    
+                    // Update current slide
+                    currentSlide = slideIndex;
+                    
+                    // Show new slide
+                    slides[currentSlide].style.opacity = '1';
+                    slides[currentSlide].style.visibility = 'visible';
+                    slides[currentSlide].style.position = 'relative';
+                    slides[currentSlide].style.zIndex = '12';
+                    slides[currentSlide].removeAttribute('aria-hidden');
+                    
+                    // Update dots
+                    dots.forEach((dot, index) => {
+                        if (index === currentSlide) {
+                            dot.classList.add('w-active');
+                            dot.setAttribute('aria-pressed', 'true');
+                            dot.setAttribute('tabindex', '0');
+                        } else {
+                            dot.classList.remove('w-active');
+                            dot.setAttribute('aria-pressed', 'false');
+                            dot.setAttribute('tabindex', '-1');
+                        }
+                    });
+                }
+                
+                // Function to go to next slide
+                function nextSlide() {
+                    const nextIndex = (currentSlide + 1) % totalSlides;
+                    goToSlide(nextIndex);
+                }
+                
+                // Function to go to previous slide
+                function prevSlide() {
+                    const prevIndex = (currentSlide - 1 + totalSlides) % totalSlides;
+                    goToSlide(prevIndex);
+                }
+                
+                // Add event listeners to arrow buttons
+                const leftArrow = document.querySelector('.quote-left-arrow');
+                const rightArrow = document.querySelector('.quote-right-arrow');
+                
+                if (leftArrow) {
+                    leftArrow.addEventListener('click', prevSlide);
+                    leftArrow.setAttribute('role', 'button');
+                    leftArrow.setAttribute('tabindex', '0');
+                    leftArrow.setAttribute('aria-label', 'previous slide');
+                }
+                
+                if (rightArrow) {
+                    rightArrow.addEventListener('click', nextSlide);
+                    rightArrow.setAttribute('role', 'button');
+                    rightArrow.setAttribute('tabindex', '0');
+                    rightArrow.setAttribute('aria-label', 'next slide');
+                }
+            }
+
+            // FAQs with toggle functionality
+            const faqsWrapper = document.getElementById('faqs-wrapper');
+            if (faqsWrapper && data.faqs) {
+                faqsWrapper.innerHTML = '';
+                data.faqs.forEach((faq, index) => {
+                    const faqDiv = document.createElement('div');
+                    faqDiv.className = 'question-container';
+                    faqDiv.innerHTML = `
+                        <div class="question-header" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                            <h3 class="heading h5" style="margin: 0;">${faq.question}</h3>
+                            <img src="../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50aeb_Plus%20Icon.svg" width="22" alt="" class="question-plus-icon" style="transition: transform 0.3s ease;"/>
+                        </div>
+                        <div class="question-answer" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; padding: 0;">
+                            <p class="paragraph" style="margin: 0; padding: 20px 0;">${faq.answer}</p>
+                        </div>
+                    `;
+                    
+                    // Add click event listener for toggle functionality
+                    const header = faqDiv.querySelector('.question-header');
+                    const answer = faqDiv.querySelector('.question-answer');
+                    const icon = faqDiv.querySelector('.question-plus-icon');
+                    
+                    header.addEventListener('click', function() {
+                        const isOpen = answer.style.maxHeight && answer.style.maxHeight !== '0px';
+                        
+                        if (isOpen) {
+                            // Close the answer
+                            answer.style.maxHeight = '0px';
+                            answer.style.padding = '0';
+                            icon.style.transform = 'rotate(0deg)';
+                            icon.src = '../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50aeb_Plus%20Icon.svg';
+                        } else {
+                            // Open the answer
+                            answer.style.maxHeight = answer.scrollHeight + 'px';
+                            answer.style.padding = '0';
+                            icon.style.transform = 'rotate(45deg)';
+                            icon.src = '../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50aeb_Plus%20Icon.svg';
+                        }
+                    });
+                    
+                    faqsWrapper.appendChild(faqDiv);
+                });
+            }
+        }
+    </script>
 </body>
 <!-- Mirrored from haughton-ventures.webflow.io/about by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 17 Jul 2025 17:22:42 GMT -->
 

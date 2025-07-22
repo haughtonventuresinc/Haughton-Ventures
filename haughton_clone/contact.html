@@ -25,7 +25,103 @@
         rel="shortcut icon" type="image/x-icon" />
     <link href="../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/6879252edea93bae1b629dda_jjjaaa.jpg"
         rel="apple-touch-icon" />
-    <!-- Add base_url.js for backend URL -->
+    
+    <!-- Skeleton Loading Styles -->
+    <style>
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 4px;
+        }
+        
+        @keyframes loading {
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
+        }
+        
+        .skeleton-hero-title {
+            height: 60px;
+            width: 70%;
+            margin-bottom: 20px;
+        }
+        
+        .skeleton-hero-subtitle {
+            height: 20px;
+            width: 90%;
+            margin-bottom: 10px;
+        }
+        
+        .skeleton-hero-subtitle:last-child {
+            width: 60%;
+        }
+        
+        .skeleton-hero-image {
+            height: 400px;
+            width: 100%;
+            border-radius: 8px;
+        }
+        
+        .skeleton-section-title {
+            height: 24px;
+            width: 150px;
+            margin-bottom: 20px;
+        }
+        
+        .skeleton-contact-description {
+            height: 16px;
+            width: 100%;
+            margin-bottom: 8px;
+        }
+        
+        .skeleton-contact-description:last-child {
+            width: 75%;
+        }
+        
+        .skeleton-email-label {
+            height: 16px;
+            width: 60px;
+            margin-bottom: 8px;
+        }
+        
+        .skeleton-email-link {
+            height: 20px;
+            width: 250px;
+        }
+        
+        .content-loaded {
+            opacity: 0;
+            animation: fadeIn 0.5s ease-in-out forwards;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        .skeleton-hidden {
+            display: none;
+        }
+        
+        @media (max-width: 767px) {
+            .skeleton-hero-title {
+                height: 40px;
+                width: 90%;
+            }
+            
+            .skeleton-hero-image {
+                height: 250px;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -54,33 +150,58 @@
             <div class="container w-container">
                 <div class="hero-image-grid">
                     <div class="text-box _850px">
-                        <h1 id="heroTitle" class="heading l-h1">It's time to talk</h1>
+                        <!-- Skeleton for hero title -->
+                        <div id="heroTitle-skeleton" class="skeleton skeleton-hero-title"></div>
+                        <h1 id="heroTitle" class="heading l-h1" style="display: none;">It's time to talk</h1>
                         <div class="text-box _350px">
-                            <p id="heroSubtitle" class="paragraph">Leave us a message and we will get back to you as soon as we can.</p>
+                            <!-- Skeleton for hero subtitle -->
+                            <div id="heroSubtitle-skeleton">
+                                <div class="skeleton skeleton-hero-subtitle"></div>
+                                <div class="skeleton skeleton-hero-subtitle"></div>
+                            </div>
+                            <p id="heroSubtitle" class="paragraph" style="display: none;">Leave us a message and we will get back to you as soon as we can.</p>
                         </div>
-                    </div><img
-                        id="heroImage"
+                    </div>
+                    <!-- Skeleton for hero image -->
+                    <div id="heroImage-skeleton" class="skeleton skeleton-hero-image" id="w-node-a0e92f9a-4ea7-a8d0-655c-a2a2656745cc-f4a50b36"></div>
+                    <img id="heroImage"
                         src="../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50af2_Rectangle%20324.webp"
                         loading="lazy" id="w-node-a0e92f9a-4ea7-a8d0-655c-a2a2656745cc-f4a50b36"
                         sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 940px" alt=""
-                        srcset="https://cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50af2_Rectangle%2520324-p-500.png 500w, https://cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50af2_Rectangle%2520324-p-800.png 800w, https://cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50af2_Rectangle%20324.webp 1094w" />
+                        srcset="https://cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50af2_Rectangle%2520324-p-500.png 500w, https://cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50af2_Rectangle%2520324-p-800.png 800w, https://cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50af2_Rectangle%20324.webp 1094w"
+                        style="display: none;" />
                 </div>
             </div>
         </div>
         <div class="section grey">
             <div class="container w-container">
                 <div class="section-intro-block grey full">
-                    <div id="sectionTitle" class="section-intro-text">Inquire now</div>
+                    <!-- Skeleton for section title -->
+                    <div id="sectionTitle-skeleton" class="skeleton skeleton-section-title"></div>
+                    <div id="sectionTitle" class="section-intro-text" style="display: none;">Inquire now</div>
                 </div>
                 <div class="w-layout-grid contact-grid">
                     <div id="w-node-_52ddbf7d-cd50-6ba1-1b40-e5660032752f-f4a50b36" class="text-box">
                         <div class="text-box _350px">
-                            <p id="contactDescription" class="paragraph">Fill out the form to the right and we will get back to you soon.
+                            <!-- Skeleton for contact description -->
+                            <div id="contactDescription-skeleton">
+                                <div class="skeleton skeleton-contact-description"></div>
+                                <div class="skeleton skeleton-contact-description"></div>
+                                <div class="skeleton skeleton-contact-description"></div>
+                            </div>
+                            <p id="contactDescription" class="paragraph" style="display: none;">Fill out the form to the right and we will get back to you soon.
                                 Don't like forms? No worries, feel free to send us a direct email.</p>
                             <div class="spacer _16"></div>
                         </div>
-                        <div id="emailLabel" class="paragraph">Email</div><a id="contactEmail" href="mailto:hello@email.com"
-                            class="contact-text-link">contact@haughtonventures.com</a>
+                        <!-- Skeleton for email section -->
+                        <div id="email-section-skeleton">
+                            <div class="skeleton skeleton-email-label"></div>
+                            <div class="skeleton skeleton-email-link"></div>
+                        </div>
+                        <div id="email-section" style="display: none;">
+                            <div id="emailLabel" class="paragraph">Email</div>
+                            <a id="contactEmail" href="mailto:hello@email.com" class="contact-text-link">contact@haughtonventures.com</a>
+                        </div>
                     </div>
                     <div class="contact-form-wrapper w-form">
                         <form id="wf-form-Contact-Form" name="wf-form-Contact-Form" data-name="Contact Form"
@@ -133,7 +254,8 @@
                     </a>
                     <p class="paragraph x-large">An early stage venture capital firm leading profitable technology
                         companies.<br /></p>
-                    <p class="paragraph small grey mobile-hidden">© Haughton Ventures Inc. All Rights Reserve<br /></p>
+                    <p class="paragraph small grey mobile-hidden">© Haughton Ventures Inc. All Rights Reserve<br />
+                    </p>
                 </div>
                 <div id="w-node-_82fe1f22-2395-6855-36b7-8265f58eb471-cf3fcb86" class="footer-links-block">
                     <div class="footer-block-title">Website</div><a href="index.html" class="footer-link">Home</a><a
@@ -157,8 +279,122 @@
         </div>
     </div>
     
-    <!-- Dynamic Content Loading Script -->
+    <!-- Enhanced Contact.js with Skeleton Loading -->
+    <script type="module">
+        import BASE_URL from './base_url.js';
 
+        // Load contact data from backend
+        async function loadContactData() {
+            try {
+                const response = await fetch(BASE_URL + '/api/contact-data');
+                const result = await response.json();
+                
+                if (result.success && result.data) {
+                    const data = result.data;
+                    
+                    // Update hero section
+                    document.getElementById('heroTitle').textContent = data.heroTitle;
+                    document.getElementById('heroSubtitle').textContent = data.heroSubtitle;
+                    
+                    // Update hero image
+                    if (data.heroImage) {
+                        const heroImg = document.getElementById('heroImage');
+                        heroImg.src = data.heroImage;
+                        heroImg.srcset = data.heroImage;
+                    }
+                    
+                    // Update contact section
+                    document.getElementById('sectionTitle').textContent = data.sectionTitle;
+                    document.getElementById('contactDescription').textContent = data.contactDescription;
+                    document.getElementById('emailLabel').textContent = data.emailLabel;
+                    
+                    // Update contact email
+                    const emailLink = document.getElementById('contactEmail');
+                    emailLink.href = 'mailto:' + data.contactEmail;
+                    emailLink.textContent = data.contactEmail;
+                    
+                    console.log('[CONTACT] Contact data loaded successfully');
+                    hideSkeletonAndShowContent();
+                } else {
+                    console.warn('[CONTACT] Failed to load contact data:', result.error);
+                    showErrorMessage();
+                }
+            } catch (error) {
+                console.error('[CONTACT] Error loading contact data:', error);
+                showErrorMessage();
+            }
+        }
+
+        function hideSkeletonAndShowContent() {
+            // Hide all skeleton elements
+            const skeletonElements = [
+                'heroTitle-skeleton',
+                'heroSubtitle-skeleton',
+                'heroImage-skeleton',
+                'sectionTitle-skeleton',
+                'contactDescription-skeleton',
+                'email-section-skeleton'
+            ];
+            
+            skeletonElements.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.style.display = 'none';
+                }
+            });
+            
+            // Show all content elements with fade-in effect
+            const contentElements = [
+                'heroTitle',
+                'heroSubtitle',
+                'heroImage',
+                'sectionTitle',
+                'contactDescription',
+                'email-section'
+            ];
+            
+            contentElements.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.style.display = 'block';
+                    element.classList.add('content-loaded');
+                }
+            });
+        }
+
+        function showErrorMessage() {
+            // Hide skeleton elements
+            const skeletonElements = document.querySelectorAll('[id$="-skeleton"]');
+            skeletonElements.forEach(element => {
+                element.style.display = 'none';
+            });
+            
+            // Show error message
+            const heroTitle = document.getElementById('heroTitle');
+            if (heroTitle) {
+                heroTitle.textContent = 'Unable to load content';
+                heroTitle.style.display = 'block';
+                heroTitle.classList.add('content-loaded');
+            }
+            
+            const heroSubtitle = document.getElementById('heroSubtitle');
+            if (heroSubtitle) {
+                heroSubtitle.textContent = 'Please check your internet connection and try again.';
+                heroSubtitle.style.display = 'block';
+                heroSubtitle.classList.add('content-loaded');
+            }
+            
+            // Show default contact info
+            const emailSection = document.getElementById('email-section');
+            if (emailSection) {
+                emailSection.style.display = 'block';
+                emailSection.classList.add('content-loaded');
+            }
+        }
+
+        // Load data when page loads
+        document.addEventListener('DOMContentLoaded', loadContactData);
+    </script>
     
     <script src="../d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c89303.js?site=687563dc787e44a7f4a50a72"
         type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
@@ -169,7 +405,6 @@
         type="text/javascript"></script>
     <script src="../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/js/webflow.fb8b4fdc.7d9b22fc45205345.js"
         type="text/javascript"></script>
-    <script src="contact.js" type="module"></script>
 </body>
 <!-- Mirrored from haughton-ventures.webflow.io/contact by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 17 Jul 2025 17:22:45 GMT -->
 
