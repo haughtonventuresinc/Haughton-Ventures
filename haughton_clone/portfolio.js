@@ -13,11 +13,24 @@ async function loadPortfolioData() {
             initializePortfolioInteractions();
         } else {
             console.warn('[PORTFOLIO] Failed to load portfolio data:', result.error || 'Unknown error');
+            showErrorMessage();
         }
     } catch (error) {
         console.error('[PORTFOLIO] Error loading portfolio data:', error);
-        // Fallback to existing hardcoded content
+        showErrorMessage();
     }
+}
+
+// Show error message when data fails to load
+function showErrorMessage() {
+    const container = document.querySelector('.w-dyn-items');
+    if (!container) return;
+    
+    container.innerHTML = `
+        <div style="text-align: center; padding: 40px; color: #666; grid-column: 1 / -1;">
+            <p>Unable to load portfolio data. Please try again later.</p>
+        </div>
+    `;
 }
 
 // Render portfolio items dynamically
@@ -25,8 +38,11 @@ function renderPortfolioItems(portfolioData) {
     const container = document.querySelector('.w-dyn-items');
     if (!container) return;
     
-    // Clear existing content
+    // Clear skeleton loading
     container.innerHTML = '';
+    
+    // Add fade-in animation to the container
+    container.classList.add('fade-in');
     
     portfolioData.forEach(item => {
         const portfolioItem = createPortfolioItem(item);

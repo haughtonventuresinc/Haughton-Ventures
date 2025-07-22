@@ -25,6 +25,103 @@
         rel="shortcut icon" type="image/x-icon" />
     <link href="../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/6879252edea93bae1b629dda_jjjaaa.jpg"
         rel="apple-touch-icon" />
+    
+    <!-- Portfolio Skeleton Loading Styles -->
+    <style>
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+            border-radius: 4px;
+        }
+        
+        @keyframes skeleton-loading {
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
+        }
+        
+        .skeleton-portfolio-item {
+            border-bottom: 1px solid var(--silver);
+            margin-top: 16px;
+        }
+        
+        .skeleton-portfolio-grid {
+            grid-column-gap: 16px;
+            grid-row-gap: 16px;
+            grid-template-rows: auto;
+            grid-template-columns: 1.5fr 2fr 1fr 1fr 1fr;
+            grid-auto-columns: 1fr;
+            place-items: start;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            display: grid;
+        }
+        
+        .skeleton-company {
+            height: 24px;
+            width: 80%;
+        }
+        
+        .skeleton-intro {
+            height: 20px;
+            width: 90%;
+        }
+        
+        .skeleton-industry {
+            height: 18px;
+            width: 70%;
+        }
+        
+        .skeleton-stage {
+            height: 18px;
+            width: 60%;
+        }
+        
+        .skeleton-founded {
+            height: 18px;
+            width: 50%;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        /* Responsive skeleton adjustments */
+        @media screen and (max-width: 767px) {
+            .skeleton-portfolio-grid {
+                grid-template-columns: 1fr;
+                grid-row-gap: 8px;
+            }
+            
+            .skeleton-company,
+            .skeleton-intro,
+            .skeleton-industry,
+            .skeleton-stage,
+            .skeleton-founded {
+                width: 100%;
+                margin-bottom: 8px;
+            }
+        }
+        
+        @media screen and (max-width: 991px) {
+            .skeleton-portfolio-grid {
+                grid-template-columns: 2fr 3fr 1fr;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -67,6 +164,61 @@
                 </div>
                 <div class="w-dyn-list">
                     <div role="list" class="w-dyn-items">
+                        <!-- Skeleton Loading Placeholders -->
+                        <div class="skeleton-portfolio-item">
+                            <div class="skeleton-portfolio-grid">
+                                <div class="skeleton-company skeleton"></div>
+                                <div class="skeleton-intro skeleton"></div>
+                                <div class="skeleton-industry skeleton"></div>
+                                <div class="skeleton-stage skeleton"></div>
+                                <div class="skeleton-founded skeleton"></div>
+                            </div>
+                        </div>
+                        <div class="skeleton-portfolio-item">
+                            <div class="skeleton-portfolio-grid">
+                                <div class="skeleton-company skeleton"></div>
+                                <div class="skeleton-intro skeleton"></div>
+                                <div class="skeleton-industry skeleton"></div>
+                                <div class="skeleton-stage skeleton"></div>
+                                <div class="skeleton-founded skeleton"></div>
+                            </div>
+                        </div>
+                        <div class="skeleton-portfolio-item">
+                            <div class="skeleton-portfolio-grid">
+                                <div class="skeleton-company skeleton"></div>
+                                <div class="skeleton-intro skeleton"></div>
+                                <div class="skeleton-industry skeleton"></div>
+                                <div class="skeleton-stage skeleton"></div>
+                                <div class="skeleton-founded skeleton"></div>
+                            </div>
+                        </div>
+                        <div class="skeleton-portfolio-item">
+                            <div class="skeleton-portfolio-grid">
+                                <div class="skeleton-company skeleton"></div>
+                                <div class="skeleton-intro skeleton"></div>
+                                <div class="skeleton-industry skeleton"></div>
+                                <div class="skeleton-stage skeleton"></div>
+                                <div class="skeleton-founded skeleton"></div>
+                            </div>
+                        </div>
+                        <div class="skeleton-portfolio-item">
+                            <div class="skeleton-portfolio-grid">
+                                <div class="skeleton-company skeleton"></div>
+                                <div class="skeleton-intro skeleton"></div>
+                                <div class="skeleton-industry skeleton"></div>
+                                <div class="skeleton-stage skeleton"></div>
+                                <div class="skeleton-founded skeleton"></div>
+                            </div>
+                        </div>
+                        <div class="skeleton-portfolio-item">
+                            <div class="skeleton-portfolio-grid">
+                                <div class="skeleton-company skeleton"></div>
+                                <div class="skeleton-intro skeleton"></div>
+                                <div class="skeleton-industry skeleton"></div>
+                                <div class="skeleton-stage skeleton"></div>
+                                <div class="skeleton-founded skeleton"></div>
+                            </div>
+                        </div>
                         <!-- Portfolio items will be dynamically loaded here by portfolio.js -->
                     </div>
                 </div>
