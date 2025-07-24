@@ -148,7 +148,7 @@ function renderHeroImagesEditor(images) {
     const div = document.createElement('div');
     div.className = 'flex gap-2 mb-2 items-center';
     div.innerHTML = `
-      <img src="${img.src||''}" alt="Preview" class="w-12 h-12 object-cover border rounded" style="min-width:48px;min-height:48px;" onerror="this.src='https://via.placeholder.com/48x48?text=No+Img'" />
+      <img src="${img.src||''}" alt="Preview" class="w-12 h-12 object-cover border rounded" style="min-width:48px;min-height:48px;" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjZjNmNGY2Ii8+Cjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjOWNhM2FmIiBmb250LXNpemU9IjEwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiI+Tm8gSW1nPC90ZXh0Pgo8L3N2Zz4K'" />
       <input type="text" placeholder="Image URL (src)" value="${img.src||''}" class="border rounded p-1 w-1/2 heroImageUrlInput" data-field="src" data-idx="${i}" />
       <input type="file" accept="image/*" class="uploadHeroImageInput" data-idx="${i}" style="display:inline-block;width:auto;" />`
     list.appendChild(div);
@@ -184,7 +184,7 @@ function renderHeroImagesEditor(images) {
         const idx = +this.dataset.idx;
         homepageData.heroImages[idx].src = this.value;
         const img = this.parentElement.querySelector('img');
-        img.src = this.value || 'https://via.placeholder.com/48x48?text=No+Img';
+        img.src = this.value || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjZjNmNGY2Ii8+Cjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjOWNhM2FmIiBmb250LXNpemU9IjEwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiI+Tm8gSW1nPC90ZXh0Pgo8L3N2Zz4K';
       });
     });
   }, 0);
@@ -196,9 +196,13 @@ function renderHeroSliderEditor(slides) {
     const div = document.createElement('div');
     div.className = 'flex flex-wrap gap-2 mb-2 border p-2 rounded';
     div.innerHTML = `
-      <img src="${slide.logo||''}" alt="Logo Preview" class="w-12 h-12 object-contain border rounded" style="min-width:48px;min-height:48px;" onerror="this.src='https://via.placeholder.com/48x48?text=No+Img'" />
+      <img src="${slide.logo||''}" alt="Logo Preview" class="w-12 h-12 object-contain border rounded" style="min-width:48px;min-height:48px;" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjZjNmNGY2Ii8+Cjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjOWNhM2FmIiBmb250LXNpemU9IjEwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiI+Tm8gSW1nPC90ZXh0Pgo8L3N2Zz4K'" />
       <input type="text" placeholder="Logo URL" value="${slide.logo||''}" class="border rounded p-1 w-1/4 heroSliderLogoUrlInput" data-field="logo" data-idx="${i}" />
       <input type="file" accept="image/*" class="uploadHeroSliderLogoInput" data-idx="${i}" style="display:inline-block;width:auto;" />
+      <label class="flex items-center gap-1">
+        <input type="checkbox" ${slide.invertLogo ? 'checked' : ''} class="invertLogoCheckbox" data-idx="${i}" />
+        <span class="text-sm">Invert Colors</span>
+      </label>
       <input type="text" placeholder="Tags (comma)" value="${(slide.tags||[]).join(', ')}" class="border rounded p-1 w-1/4" data-field="tags" data-idx="${i}" />
       <textarea placeholder="Description" class="border rounded p-1 w-full min-h-[120px]" data-field="description" data-idx="${i}">${slide.description||''}</textarea>
       <input type="text" placeholder="Link" value="${slide.link||''}" class="border rounded p-1 w-1/4" data-field="link" data-idx="${i}" />
@@ -236,7 +240,14 @@ function renderHeroSliderEditor(slides) {
         const idx = +this.dataset.idx;
         homepageData.heroSlider[idx].logo = this.value;
         const img = this.parentElement.querySelector('img');
-        img.src = this.value || 'https://via.placeholder.com/48x48?text=No+Img';
+        img.src = this.value || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjZjNmNGY2Ii8+Cjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjOWNhM2FmIiBmb250LXNpemU9IjEwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiI+Tm8gSW1nPC90ZXh0Pgo8L3N2Zz4K';
+      });
+    });
+    // Add invert checkbox logic
+    document.querySelectorAll('.invertLogoCheckbox').forEach(checkbox => {
+      checkbox.addEventListener('change', function(e) {
+        const idx = +this.dataset.idx;
+        homepageData.heroSlider[idx].invertLogo = this.checked;
       });
     });
   }, 0);

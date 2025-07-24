@@ -465,27 +465,32 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="company-hero-slide w-slide" aria-label="${index + 1} of ${data.heroSlider.length}" 
                      role="group" style="${index === 0 ? 'transition: all, opacity 500ms; transform: translateX(0px); opacity: 1; z-index: 2;' : 'transition: all; transform: translateX(0px); opacity: 1; z-index: 1; visibility: hidden;'}" 
                      ${index > 0 ? 'aria-hidden="true"' : ''}>
-                  <div class="company-hero-slide-content" ${index > 0 ? 'aria-hidden="true"' : ''}>
-                    <div ${index > 0 ? 'aria-hidden="true"' : ''}>
-                      <img src="${slide.logo}" 
-                           loading="lazy" 
-                           width="${slide.logoWidth || 150}" 
-                           alt="" 
-                           class="${slide.logoClass || 'image-2'}" 
-                           ${index > 0 ? 'aria-hidden="true"' : ''}>
+                  <div class="company-hero-slide-content" ${index > 0 ? 'aria-hidden="true"' : ''} style="display: flex; flex-direction: column; height: 100%; justify-content: space-between;">
+                    <div style="flex-grow: 1;">
+                      <div ${index > 0 ? 'aria-hidden="true"' : ''}>
+                        <img src="${slide.logo}" 
+                             loading="lazy" 
+                             width="${slide.logoWidth || 150}" 
+                             alt="" 
+                             class="${slide.logoClass || 'image-2'}" 
+                             style="${slide.invertLogo ? 'filter: invert(1);' : ''}" 
+                             ${index > 0 ? 'aria-hidden="true"' : ''}>
+                      </div>
+                      <div class="company-tag-row" ${index > 0 ? 'aria-hidden="true"' : ''}>
+                        ${slide.tags && slide.tags.length > 0 ? slide.tags.map(tag => `
+                          <div class="company-tag" ${index > 0 ? 'aria-hidden="true"' : ''}>${tag}</div>
+                        `).join('') : ''}
+                      </div>
+                      <div class="company-divider" ${index > 0 ? 'aria-hidden="true"' : ''}></div>
+                      <div class="text-box _250px" ${index > 0 ? 'aria-hidden="true"' : ''}>
+                        <p class="paragraph medium" ${index > 0 ? 'aria-hidden="true"' : ''}>${slide.description || ''}</p>
+                      </div>
                     </div>
-                    <div class="company-tag-row" ${index > 0 ? 'aria-hidden="true"' : ''}>
-                      ${slide.tags && slide.tags.length > 0 ? slide.tags.map(tag => `
-                        <div class="company-tag" ${index > 0 ? 'aria-hidden="true"' : ''}>${tag}</div>
-                      `).join('') : ''}
+                    <div style="margin-top: auto;">
+                      <a href="${slide.link || 'portfolio.html'}" 
+                         class="underline-link white" 
+                         ${index > 0 ? 'tabindex="-1" aria-hidden="true"' : ''}>View Profile</a>
                     </div>
-                    <div class="company-divider" ${index > 0 ? 'aria-hidden="true"' : ''}></div>
-                    <div class="text-box _250px" ${index > 0 ? 'aria-hidden="true"' : ''}>
-                      <p class="paragraph medium" ${index > 0 ? 'aria-hidden="true"' : ''}>${slide.description || ''}</p>
-                    </div>
-                    <a href="${slide.link || 'portfolio.html'}" 
-                       class="underline-link white" 
-                       ${index > 0 ? 'tabindex="-1" aria-hidden="true"' : ''}>View Profile</a>
                   </div>
                 </div>
               `).join('')}

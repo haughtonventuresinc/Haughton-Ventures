@@ -35,6 +35,30 @@
       ],
       "description": "Uses 3D printing and recycled materials to build sustainable backyard studios, ADUs, and homes at affordable prices.",
       "link": "portfolio.html"
+    },
+    {
+      "logo": "uploads/0x0-1753374597705.png",
+      "logoWidth": 150,
+      "logoClass": "",
+      "tags": [
+        "Business",
+        "Productivity Software"
+      ],
+      "description": "SuperPhone® is a mobile messaging platform designed to help professionals, creators, and brands deepen relationships and drive revenue.",
+      "link": "",
+      "undefined": "on",
+      "invertLogo": true
+    },
+    {
+      "logo": "uploads/artsky-LOGO (1)-1753378090745.png",
+      "logoWidth": 150,
+      "logoClass": "",
+      "tags": [
+        "Media/Entertainment"
+      ],
+      "description": "ARTSKY is a full-service media, entertainment, and content creation.",
+      "link": "",
+      "undefined": "C:\\fakepath\\artsky-LOGO (1).png"
     }
   ],
   "services": {
