@@ -105,15 +105,61 @@
         <div class="container w-container" style="opacity: 1;">
             <div id="dynamic-hero-section"></div>
             
-            <!-- Hero Skeleton Loading -->
+            <!-- Hero Default Content (displays while fetching from backend) -->
             <div id="hero-skeleton">
                 <div class="home-title-box">
-                    <div class="skeleton skeleton-hero-title"></div>
+                    <h1 id="homeHeroTitle" class="heading h1">A next-generation venture firm leading profitable consumer, media, and technology companies</h1>
                 </div>
                 <div class="spacer _48"></div>
                 <div class="home-hero-image-block">
-                    <div class="skeleton skeleton-hero-image"></div>
-                    <div class="skeleton skeleton-slider"></div>
+                    <img src="../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50b08_Top%20LeFt%20Corner%20Block.svg" alt="" class="top-left-corner-block">
+                    <img src="../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50b07_mailchimp-lAx4E6Gl06s-unsplash%201.avif" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50b07_mailchimp-lAx4E6Gl06s-unsplash%201.avif 500w, https://cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50b07_mailchimp-lAx4E6Gl06s-unsplash%201.avif 800w, https://cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50b07_mailchimp-lAx4E6Gl06s-unsplash%201.avif 1080w, https://cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50b07_mailchimp-lAx4E6Gl06s-unsplash%201.avif 2724w" alt="" class="home-hero-image">
+                    <div data-delay="4000" data-animation="cross" class="company-hero-slider w-slider" data-autoplay="false" data-easing="ease" data-hide-arrows="false" data-disable-swipe="false" data-autoplay-limit="0" data-nav-spacing="3" data-duration="500" data-infinite="true" role="region" aria-label="carousel">
+                        <div class="w-slider-mask" id="w-slider-mask-0">
+                            <div class="company-hero-slide w-slide" aria-label="1 of 2" role="group" style="transition: all, opacity 0.5s; transform: translateX(0px); opacity: 1; z-index: 2;">
+                                <div class="company-hero-slide-content">
+                                    <div>
+                                        <img src="../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687648b4af16be1a0198dc58_rentberry-logo-white.svg" loading="lazy" width="150" alt="" class="image-2">
+                                    </div>
+                                    <div class="company-tag-row">
+                                        <div class="company-tag">real estate</div>
+                                    </div>
+                                    <div class="company-divider"></div>
+                                    <div class="text-box _250px">
+                                        <p class="paragraph medium">Real estate platform streamlining long-term rental processes with transparent pricing and digital lease agreements.</p>
+                                    </div>
+                                    <a href="portfolio.html" class="underline-link white">View Profile</a>
+                                </div>
+                            </div>
+                            <div class="company-hero-slide w-slide" aria-label="2 of 2" role="group" style="transition: all; transform: translateX(0px); opacity: 1; z-index: 1; visibility: hidden;" aria-hidden="true">
+                                <div class="company-hero-slide-content" aria-hidden="true">
+                                    <div aria-hidden="true">
+                                        <img src="../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/68764a559e36daaa264b2272_azure-printed-homes.webp" loading="lazy" width="178" alt="" class="company-hero-logo" aria-hidden="true">
+                                    </div>
+                                    <div class="company-tag-row" aria-hidden="true">
+                                        <div class="company-tag" aria-hidden="true">Clean Tech</div>
+                                        <div class="company-tag" aria-hidden="true">3D Printing</div>
+                                    </div>
+                                    <div class="company-divider" aria-hidden="true"></div>
+                                    <div class="text-box _250px" aria-hidden="true">
+                                        <p class="paragraph medium" aria-hidden="true">Uses 3D printing and recycled materials to build sustainable backyard studios, ADUs, and homes at affordable prices.</p>
+                                    </div>
+                                    <a href="portfolio.html" class="underline-link white" tabindex="-1" aria-hidden="true">View Profile</a>
+                                </div>
+                            </div>
+                            <div aria-live="off" aria-atomic="true" class="w-slider-aria-label" data-wf-ignore="">Slide 1 of 2.</div>
+                        </div>
+                        <div class="hero-slider-arrow let w-slider-arrow-left" role="button" tabindex="0" aria-controls="w-slider-mask-0" aria-label="previous slide">
+                            <div class="hero-slider-arrow-icon w-icon-slider-left"></div>
+                        </div>
+                        <div class="hero-slider-arrow w-slider-arrow-right" role="button" tabindex="0" aria-controls="w-slider-mask-0" aria-label="next slide">
+                            <div class="hero-slider-arrow-icon w-icon-slider-right"></div>
+                        </div>
+                        <div class="hidden w-slider-nav w-round w-num">
+                            <div class="w-slider-dot w-active" data-wf-ignore="" aria-label="Show slide 1 of 2" aria-pressed="true" role="button" tabindex="0" style="margin-left: 3px; margin-right: 3px;">1</div>
+                            <div class="w-slider-dot" data-wf-ignore="" aria-label="Show slide 2 of 2" aria-pressed="false" role="button" tabindex="-1" style="margin-left: 3px; margin-right: 3px;">2</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -204,10 +250,10 @@
                         </div> 
                         <div class="text-box _450px"> 
                             <p class="paragraph" id="philosophy-description">We back companies with real potential — ambitious teams, proven models, and the drive to lead their markets. Our focus is on sustainable growth, strategic execution, and long-term value. At HV, we don't chase hype — we invest in what's built to last. Let me know if you want it bolder, more investor-focused, or with a tech/startup spin.</p> 
-                            <div class="spacer _16"></div><a href="about.html" class="button outline w-button" id="philosophy-button"></a> 
+                            <div class="spacer _16"></div><a href="about.html" class="button outline w-button" id="philosophy-button">Learn More</a> 
                         </div> 
                     </div> 
-                    <div id="w-node-dd2e2702-54cb-302f-801c-5bb3f36d0221-f4a50ad1" class="tall-image-block"><img src="" loading="lazy" sizes="100vw" srcset="" alt="" class="image-cover" id="philosophy-image"></div> 
+                    <div id="w-node-dd2e2702-54cb-302f-801c-5bb3f36d0221-f4a50ad1" class="tall-image-block"><img src="../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50aee_mailchimp-lAx4E6Gl06s-unsplash%201.webp" loading="lazy" sizes="100vw" srcset="https://cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50aee_mailchimp-lAx4E6Gl06s-unsplash%25201-p-500.png 500w, https://cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50aee_mailchimp-lAx4E6Gl06s-unsplash%25201-p-800.png 800w, https://cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50aee_mailchimp-lAx4E6Gl06s-unsplash%25201-p-1080.png 1080w, https://cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50aee_mailchimp-lAx4E6Gl06s-unsplash%25201-p-1600.png 1600w, https://cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50aee_mailchimp-lAx4E6Gl06s-unsplash%25201-p-2000.png 2000w, https://cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50aee_mailchimp-lAx4E6Gl06s-unsplash%201.webp 2728w" alt="Building Hero Image" class="image-cover" id="philosophy-image"></div> 
                 </div> 
             </div> 
         </div>
@@ -294,17 +340,17 @@
                     <div class="questions-wrapper">
                         <div href="#" data-ix="show-answer" class="question-container dark">
                             <div class="question-header">
-                                <h3 class="heading h5"></h3><img
-
+                                <h3 class="heading h5">Invest in the best</h3><img
+                                    src="../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50ae7_White%20Plus%20Icon.svg"
                                     width="22" alt="" class="question-plus-icon" />
                             </div>
                             <div data-ix="hide-on-load" class="question-answer">
-                                <p class="paragraph"></p>
+                                <p class="paragraph"We back ambitious founders and businesses with the vision to lead and the drive to grow. Our approach combines disciplined investing with bold decision-making to identify opportunities others overlook. Every partnership is built on trust and a shared commitment to success.></p>
                             </div>
                         </div>
                         <div href="#" data-ix="show-answer" class="question-container dark">
                             <div class="question-header">
-                                <h3 class="heading h5"></h3><img
+                                <h3 class="heading h5">Provide financial advice</h3><img
                                     src="../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50ae7_White%20Plus%20Icon.svg"
                                     width="22" alt="" class="question-plus-icon" />
                             </div>
@@ -314,7 +360,7 @@
                         </div>
                         <div href="#" data-ix="show-answer" class="question-container dark">
                             <div class="question-header">
-                                <h3 class="heading h5"></h3><img
+                                <h3 class="heading h5">Partner for growth</h3><img
                                     src="../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50ae7_White%20Plus%20Icon.svg"
                                     width="22" alt="" class="question-plus-icon" />
                             </div>
@@ -324,7 +370,7 @@
                         </div>
                         <div href="#" data-ix="show-answer" class="question-container dark">
                             <div class="question-header">
-                                <h3 class="heading h5"></h3><img
+                                <h3 class="heading h5">Acquire and grow companies</h3><img
                                     src="../cdn.prod.website-files.com/687563dc787e44a7f4a50a72/687563dc787e44a7f4a50ae7_White%20Plus%20Icon.svg"
                                     width="22" alt="" class="question-plus-icon" />
                             </div>
